@@ -1,7 +1,12 @@
 from typing import Dict, List
-from textual.app import App, ComposeResult, RenderResult
-from textual.widgets import Header, Footer, Tree, Static, Input, Button, Markdown
+
+
+
+from textual.app import App, ComposeResult
+from textual.binding import Binding
+from textual.widgets import Header, Footer, Tree, Static
 from textual.screen import Screen
+
 from physics_TUI.chapters.chapter3 import Chapter3
 from physics_TUI.base_chapter import PhysicsChapter
 
@@ -16,19 +21,20 @@ class ChapterView(Screen):
         yield Header(self.chapter.title)
         
         # Display equations
-        yield Static("# Equations", classes="section-title")
+        yield Static("# Equations\n", classes="section-title")
         for eq in self.chapter.get_equations():
             yield Static(f"## {eq.name}")
             yield Static(f"Formula: {eq.formula}")
             yield Static("Variables:")
             for var, desc in eq.variables.items():
                 yield Static(f"- {var}: {desc}")
-        
+            yield Static(f"\n")
+
         # Display definitions
-        yield Static("# Definitions", classes="section-title")
+        yield Static("# Definitions\n ", classes="section-title")
         for defn in self.chapter.get_definitions():
-            yield Static(f"## {defn.term}")
-            yield Static(defn.meaning)
+            yield Static(f"## {defn.term}:")
+            yield Static(f"{defn.meaning}\n")
             
         yield Footer()
 
@@ -39,12 +45,14 @@ class physicsTUIApp(App):
     """
 
     CSS_PATH = "appearance.tcss"
-    BINDINGS = [("d", "toggle_dark", "Toggle dark mode")]
+    BINDINGS = [
+        Binding("b", "back", "Back", tooltip="Navigate back"),
+        Binding("f", "forward", "Forward", tooltip="Navigate forward"),
+        ("d", "toggle_dark", "Toggle dark mode")]
     
     def __init__(self) -> None:
         super().__init__()
         self.chapters: List[PhysicsChapter] =  [Chapter3()]
-
 
     def compose(self) -> ComposeResult:
         """Create Child widgets for the app."""

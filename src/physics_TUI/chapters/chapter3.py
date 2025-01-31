@@ -121,7 +121,7 @@ class Chapter3(PhysicsChapter):
                 }
             ),
             Equation(
-                name="Velocity of free fall form height",
+                name="Velocity of free fall from height",
                 formula="v² = v₀² - 2g(y - y₀)",
                 variables={
                     "y": "Final height",
