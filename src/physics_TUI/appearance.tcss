@@ -1,0 +1,5 @@
+#sidebar {
+    dock: left;
+    width: 15;
+    height: 100%;
+}
