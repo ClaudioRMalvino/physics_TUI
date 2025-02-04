@@ -29,7 +29,7 @@ class Chapter3(PhysicsChapter):
                 }
             ),
             Equation(
-                name="Average Velocity (constant acceleration)",
+                name="Average velocity (constant acceleration)",
                 formula="v = Δx/Δt = (x - xᵢ)/(t - tᵢ)",
                 variables={
                     "Δx": "Displacement in direction",

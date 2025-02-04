@@ -1,10 +1,12 @@
 from typing import List
+
 from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.widgets import Header, Footer, Tree, Markdown
 from textual.containers import Horizontal, VerticalScroll
 
 from physics_TUI.chapters.chapter3 import Chapter3
+from physics_TUI.chapters.chapter4 import Chapter4
 from physics_TUI.base_chapter import PhysicsChapter
 
 class physicsTUIApp(App):
@@ -19,7 +21,9 @@ class physicsTUIApp(App):
     
     def __init__(self) -> None:
         super().__init__()
-        self.chapters: List[PhysicsChapter] = [Chapter3()]
+        self.chapters: List[PhysicsChapter] = [
+            Chapter3(),
+            Chapter4(),]
 
     def compose(self) -> ComposeResult:
         """Create child widgets for the app."""
@@ -51,9 +55,11 @@ class physicsTUIApp(App):
         # Display equations
         content += "## Equations\n"
         for eq in chapter.get_equations():
-            content += f"### {eq.name}\n**Formula**: `{eq.formula}`\n**Variables:**\n"
-            for var, desc in eq.variables.items():
-                content += f"- `{var}`: {desc}\n"
+            content += f"### {eq.name}\n**Formula**: {eq.formula}\n"
+            if eq.variables:
+                content += f"\n**Variables**\n:"
+                for var, desc in eq.variables.items():
+                    content += f"- `{var}`: {desc}\n"
             content += "\n"
 
         # Display definitions
