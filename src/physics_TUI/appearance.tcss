@@ -1,5 +1,22 @@
-#sidebar {
-    dock: left;
-    width: 15;
-    height: 100%;
+Screen {
+    layout: vertical;
+}
+
+Horizontal {
+    layout: horizontal;
+}
+
+Tree {
+    width: 30%;
+    border: solid white;
+}
+
+#content-area {
+    width: 70%;
+    border: solid white;
+    padding: 1;
+}
+
+#content {
+    padding: 1;
 }
