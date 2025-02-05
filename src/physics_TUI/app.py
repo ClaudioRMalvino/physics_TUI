@@ -30,21 +30,29 @@ class physicsTUIApp(App):
         yield Header()
         with Horizontal():
             yield Tree("Chapters", id="chapter-tree")
+
             with VerticalScroll(id="content-area"):
                 yield Markdown("# Select a chapter from the left panel.", id="content")
+        
         yield Footer()
 
     def on_mount(self) -> None:
         tree = self.query_one(Tree)
         for chapter in self.chapters:
-            tree.root.add(chapter.title)
+            chapter_branch = tree.root.add(chapter.title)
+
+            if chapter.equations:
+                chapter_branch.add_leaf("Equations")
+
+            if chapter.definitions:
+                chapter_branch.add_leaf("Definitions")
 
     def on_tree_node_selected(self, event: Tree.NodeSelected) -> None:
         """Update the content area when a chapter is selected."""
         selected_title = str(event.node.label)
         
         for chapter in self.chapters:
-            if chapter.title == selected_title:
+            if  chapter.title == selected_title:
                 self.update_content(chapter)
                 break
 
@@ -59,7 +67,7 @@ class physicsTUIApp(App):
             if eq.variables:
                 content += f"\n**Variables**\n:"
                 for var, desc in eq.variables.items():
-                    content += f"- `{var}`: {desc}\n"
+                    content += f"\n- `{var}`: {desc}"
             content += "\n"
 
         # Display definitions
