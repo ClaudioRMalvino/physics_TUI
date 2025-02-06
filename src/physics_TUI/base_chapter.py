@@ -16,6 +16,7 @@ class Definition:
     meaning: str
 
 
+
 class PhysicsChapter:
     """Base class for all physics chapters"""
     def __init__(self, title: str, description: str = ""):

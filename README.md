@@ -1,5 +1,7 @@
 # Physics TUI Project Structure
 
+## WORK IN PROGRESS
+
 ## Project Overview
 - **Name**: physics_tui
 - **Description**: A Terminal User Interface (TUI) for physics reference and calculations

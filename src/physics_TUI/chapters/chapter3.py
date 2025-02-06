@@ -11,7 +11,6 @@ class Chapter3(PhysicsChapter):
         super().__init__("Motion Along a Straight Line", 
                          "Study of motion along one dimension.")
 
-
         self.equations: List[Equation] = [
             Equation(
                 name="Displacement",
@@ -206,3 +205,36 @@ class Chapter3(PhysicsChapter):
             )
         ]
 
+    class Calculate:
+        """ Class holds methods to calculate equations in Chapter 3 """
+
+        def positionFromVelAndAcc(self, 
+            x_0: float=None,
+            v_0: float=None,
+            t: float=None,
+            accel: float=None,
+            x_f: float=None
+        ) -> float:
+            """
+            Calculates position from velocity and acceleration.
+            Can also calculate for desired variable when arg == None and all
+            other args have values.
+
+            Args:
+                x_0 (float, optional): Initial position. Defaults to None.
+                v_0 (float, optional): Initial velocity. Defaults to None.
+                t (float, optional): Elapsed time. Defaults to None.
+                accel (float, optional): Constant acceleration. Defaults to None.
+                x_f (float, optional): Final position. Defaults to None.
+            """
+
+            if x_0 is None and v_0 and t and accel and x_f: 
+                pass
+            elif v_0 is None and x_0 and t and accel and x_f:
+                pass
+            elif t is None and x_0 and v_0 and accel and x_f:
+                pass
+            elif accel is None and x_0 and v_0 and t and x_f:
+                pass
+            else:
+                return x_0 + (v_0*t) + (0.5 * accel * (t**2))
