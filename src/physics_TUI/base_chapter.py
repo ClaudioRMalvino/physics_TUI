@@ -19,8 +19,8 @@ class Definition:
 class PhysicsChapter:
     """Base class for all physics chapters"""
     def __init__(self, title: str, description: str = ""):
-        self.title = title
-        self.description = description
+        self.title: str = title
+        self.description: str = description
         self.equations: List[Equation] = []
         self.definitions: List[Definition] = []
 

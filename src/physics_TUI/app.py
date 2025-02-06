@@ -1,5 +1,7 @@
 from typing import List
 
+import logging
+
 from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.widgets import Header, Footer, Tree, Markdown
@@ -30,7 +32,7 @@ class physicsTUIApp(App):
         yield Header()
         with Horizontal():
             yield Tree("Chapters", id="chapter-tree")
-
+            # yield Markdown("Debug", id="debug")
             with VerticalScroll(id="content-area"):
                 yield Markdown("# Select a chapter from the left panel.", id="content")
         
@@ -48,16 +50,44 @@ class physicsTUIApp(App):
                 chapter_branch.add_leaf("Definitions")
 
     def on_tree_node_selected(self, event: Tree.NodeSelected) -> None:
-        """Update the content area when a chapter is selected."""
-        selected_title = str(event.node.label)
-        
-        for chapter in self.chapters:
-            if  chapter.title == selected_title:
-                self.update_content(chapter)
-                break
+        """Update the content area when a node is selected."""
+        selected_path = []
+        node = event.node
 
-    def update_content(self, chapter: PhysicsChapter) -> None:
-        """Update the content area with chapter details."""
+        # Traverse the tree to get the full path of the selected node
+        while node:
+            selected_path.insert(0, str(node.label))
+            node = node.parent
+    
+        # # Display the selected path in the UI
+        # debug_widget = self.query_one("#debug", Markdown)
+        # debug_widget.update(f"Selected Path: {selected_path}")
+
+        # Ensure the path has at least two levels (chapter + leaf)
+        if len(selected_path) == 3:
+            parent, chapter_title, leaf_type = selected_path
+
+            # Match chapter and update content based on the leaf type
+            for chapter in self.chapters:
+                if chapter.title == chapter_title:
+                    if leaf_type == "Equations":
+                        self.update_content_equations(chapter)
+                    elif leaf_type == "Definitions":
+                        self.update_content_definitions(chapter)
+                    break
+
+    # def on_tree_node_selected(self, event: Tree.NodeSelected) -> None:
+    #     """Update the content area when a chapter is selected."""
+    #     selected_title = str(event.node.label)
+
+        
+    #     for chapter in self.chapters:
+    #         if  chapter.title == selected_title:
+    #             self.update_content_equations(chapter)
+    #             break
+
+    def update_content_equations(self, chapter: PhysicsChapter) -> None:
+        """Update the content area with chapter equations."""
         content = f"# {chapter.title}\n\n"
 
         # Display equations
@@ -69,6 +99,14 @@ class physicsTUIApp(App):
                 for var, desc in eq.variables.items():
                     content += f"\n- `{var}`: {desc}"
             content += "\n"
+
+        # Update the Markdown widget with the new content
+        content_widget = self.query_one("#content", Markdown)
+        content_widget.update(content)
+
+    def update_content_definitions(self, chapter: PhysicsChapter) -> None:
+        """Update the content area with chapter definitions"""
+        content = f"# {chapter.title}\n\n"
 
         # Display definitions
         content += "## Definitions\n"
