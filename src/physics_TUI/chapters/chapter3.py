@@ -1,4 +1,5 @@
-from typing import Dict, List
+from typing import Dict, List, Tuple, Optional
+from math import sqrt
 from physics_TUI.base_chapter import PhysicsChapter, Equation, Definition
 
 
@@ -208,13 +209,13 @@ class Chapter3(PhysicsChapter):
     class Calculate:
         """ Class holds methods to calculate equations in Chapter 3 """
 
-        def positionFromVelAndAcc(self, 
-            x_0: float=None,
-            v_0: float=None,
-            t: float=None,
-            accel: float=None,
-            x_f: float=None
-        ) -> float:
+        @staticmethod
+        def positionFromVelAndAcc( 
+            x_0: Optional[float]=None,
+            v_0: Optional[float]=None,
+            t: Optional[float]=None,
+            accel: Optional[float]=None,
+            x_f: Optional[float]=None ) -> float:
             """
             Calculates position from velocity and acceleration.
             Can also calculate for desired variable when arg == None and all
@@ -227,14 +228,55 @@ class Chapter3(PhysicsChapter):
                 accel (float, optional): Constant acceleration. Defaults to None.
                 x_f (float, optional): Final position. Defaults to None.
             """
+            def quadratic_eq(a: float, b: float, c: float) -> Optional[Tuple[float, float]]:
+                """
+                Function calculates the roots of a quadratic equation ax^2 + bx + c = 0
+                accurately in all cases.
+
+                Returns a tuple containing the two roots.
+                """
+
+                discriminant = b**2 - 4*a*c
+
+                if discriminant < 0:
+                    return None  
+
+                # Choose the appropriate formula based on the sign of b
+                if b >= 0:
+                    x1 = (-b - sqrt(discriminant)) / (2*a)
+                    x2 = (2*c) / (-b - sqrt(discriminant))
+                else:
+                    x1 = (2*c) / (-b + sqrt(discriminant))
+                    x2 = (-b + sqrt(discriminant)) / (2*a)
+
+                return (x1, x2)
 
             if x_0 is None and v_0 and t and accel and x_f: 
-                pass
-            elif v_0 is None and x_0 and t and accel and x_f:
-                pass
-            elif t is None and x_0 and v_0 and accel and x_f:
-                pass
-            elif accel is None and x_0 and v_0 and t and x_f:
-                pass
-            else:
-                return x_0 + (v_0*t) + (0.5 * accel * (t**2))
+                return round(
+                    x_f - (v_0 * t) - (0.5 * accel * (t**2)), 4)
+
+            if v_0 is None and x_0 and t and accel and x_f:
+                return round(
+                    (x_f - x_0 - (0.5 * accel * (t**2)))/t, 4)
+
+            if t is None and x_0 is not None \
+                and v_0 is not None and accel is not None and x_f is not None:
+                
+                if accel == 0 and v_0 == 0:
+                    raise ValueError("v₀ and a cannot both be equal to zero")
+
+                c: float = x_0 - x_f
+                b: float = v_0
+                a: float = (0.5 * accel)
+                roots = quadratic_eq(a, b, c)
+
+                if roots[0] < 0: 
+                    return round(roots[1], 4)
+                if roots[1] < 0:
+                    return round(roots[0], 4)
+
+            if accel is None and x_0 and v_0 and t and x_f:
+                return round(x_f - x_0 - (v_0 *t), 4)
+            
+            return round(
+                (x_0 + (v_0 * t) + (0.5 * accel * (t**2))), 4)

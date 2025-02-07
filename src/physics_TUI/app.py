@@ -1,7 +1,5 @@
 from typing import List
 
-import logging
-
 from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.widgets import Header, Footer, Tree, Markdown
@@ -18,7 +16,8 @@ class physicsTUIApp(App):
 
     CSS_PATH = "appearance.tcss"
     BINDINGS = [
-        Binding("d", "toggle_dark", "Toggle dark mode"),
+        Binding("d", "toggle_dark", "Toggle dark mode")
+        ,
     ]
     
     def __init__(self) -> None:
@@ -32,7 +31,6 @@ class physicsTUIApp(App):
         yield Header()
         with Horizontal():
             yield Tree("Chapters", id="chapter-tree")
-            # yield Markdown("Debug", id="debug")
             with VerticalScroll(id="content-area"):
                 yield Markdown("# Select a chapter from the left panel.", id="content")
         
@@ -49,6 +47,8 @@ class physicsTUIApp(App):
             if chapter.definitions:
                 chapter_branch.add_leaf("Definitions")
 
+            chapter_branch.add_leaf("Calculations")
+
     def on_tree_node_selected(self, event: Tree.NodeSelected) -> None:
         """Update the content area when a node is selected."""
         selected_path = []
@@ -58,10 +58,6 @@ class physicsTUIApp(App):
         while node:
             selected_path.insert(0, str(node.label))
             node = node.parent
-    
-        # # Display the selected path in the UI
-        # debug_widget = self.query_one("#debug", Markdown)
-        # debug_widget.update(f"Selected Path: {selected_path}")
 
         # Ensure the path has at least two levels (chapter + leaf)
         if len(selected_path) == 3:
@@ -75,16 +71,6 @@ class physicsTUIApp(App):
                     elif leaf_type == "Definitions":
                         self.update_content_definitions(chapter)
                     break
-
-    # def on_tree_node_selected(self, event: Tree.NodeSelected) -> None:
-    #     """Update the content area when a chapter is selected."""
-    #     selected_title = str(event.node.label)
-
-        
-    #     for chapter in self.chapters:
-    #         if  chapter.title == selected_title:
-    #             self.update_content_equations(chapter)
-    #             break
 
     def update_content_equations(self, chapter: PhysicsChapter) -> None:
         """Update the content area with chapter equations."""
