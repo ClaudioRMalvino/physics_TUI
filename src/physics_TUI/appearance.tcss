@@ -20,3 +20,84 @@ Tree {
 #content {
     padding: 1;
 }
+
+/* Header for calculation list */
+#calc-header {
+    text-align: center;
+    margin-bottom: 2;
+    text-style: bold;
+    color: white;
+}
+
+/* OptionList styling */
+#equation-list {
+    width: 100%;
+    height: auto;
+    padding: 1;
+}
+
+/* Style individual options in the OptionList */
+OptionList > Option {
+    margin: 1 0;
+    padding: 1 2;
+    border: solid white 30%;
+}
+
+/* Calculate button styling */
+#calculate-button, #calc-button {
+    margin: 2 0;
+    width: 30%;
+    border: round $primary;
+}
+
+#result-display {
+    margin-top: 1;
+    text-align: center;
+    min-height: 3;
+    border-top: solid gray;
+    padding-top: 1;
+}
+
+/* Additional utility styles */
+.hidden {
+    display: none;
+}
+
+/* Calculator screen styling */
+#calc-scroll-container {
+    width: 100%;
+    height: 100%;
+    padding: 1;
+}
+
+#calc-title, #calc-formula, #calc-instructions {
+    margin-bottom: 1;
+    text-align: center;
+}
+
+#input-container {
+    margin: 1 0;
+    width: 100%;
+}
+
+/* Style the variable labels */
+#input-container Static {
+    text-align: left;
+    margin-bottom: 0;
+}
+
+/* Style inputs directly without complex alignment */
+Input {
+    width: 60%;
+    margin-bottom: 1;
+    border: round white;
+    padding: 0 1;
+}
+
+#calc-result {
+    margin-top: 2;
+    text-align: center;
+    min-height: 3;
+    border-top: solid gray;
+    padding-top: 1;
+}

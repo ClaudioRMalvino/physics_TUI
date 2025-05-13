@@ -1,13 +1,115 @@
-from typing import List
+from typing import List, Dict, Any, Optional
+import re
 
 from textual.app import App, ComposeResult
 from textual.binding import Binding
-from textual.widgets import Header, Footer, Tree, Markdown
-from textual.containers import Horizontal, VerticalScroll
+from textual.widgets import Header, Footer, Tree, Markdown, Button, Static, Input, OptionList
+from textual.containers import Horizontal, VerticalScroll, Vertical
+from textual.screen import Screen
 
 from physics_TUI.chapters.chapter3 import Chapter3
 from physics_TUI.chapters.chapter4 import Chapter4
-from physics_TUI.base_chapter import PhysicsChapter
+from physics_TUI.base_chapter import PhysicsChapter, Equation, Definition
+
+class CalculatorScreen(Screen):
+    """Screen for displaying calculator form for an equation"""
+    
+    BINDINGS = [
+        Binding("escape", "go_back", "Back")
+    ]
+    
+    def __init__(self, equation: Equation) -> None:
+        super().__init__()
+        self.equation = equation
+        self.calc_inputs: Dict[str, Input] = {}
+        
+    def compose(self) -> ComposeResult:
+        """Create the calculator form layout"""
+        yield Header()
+        
+        # Make the entire content scrollable
+        with VerticalScroll(id="calc-scroll-container"):
+            yield Static(f"Calculator: {self.equation.name}", id="calc-title")
+            yield Static(f"Formula: {self.equation.formula}", id="calc-formula")
+            yield Static("Enter values (leave one field blank to solve for it):", id="calc-instructions")
+            
+            # Input fields container
+            with VerticalScroll(id="input-container"):
+                for var, desc in self.equation.variables.items():
+                    yield Static(f"{var}: {desc}")
+                    input_field = Input(placeholder=f"Enter value for {var}")
+                    
+                    # Properly sanitize variable name for ID
+                    # First replace Unicode characters (like subscripts)
+                    sanitized_var = re.sub(r'[^\x00-\x7F]', '_', var)
+                    # Then replace any remaining non-alphanumeric chars (except - and _)
+                    sanitized_var = re.sub(r'[^a-zA-Z0-9\-_]', '_', sanitized_var)
+                    
+                    input_field.id = f"input-{sanitized_var}"
+                    self.calc_inputs[var] = input_field
+                    yield input_field
+            
+            yield Button("Calculate", id="calc-button", variant="primary")
+            yield Static("", id="calc-result")
+        
+        yield Footer()
+    
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        """Handle calculator button press"""
+        if event.button.id == "calc-button":
+            self.perform_calculation()
+    
+    def perform_calculation(self) -> None:
+        """Execute the calculation based on input values"""
+        if not hasattr(self.equation, 'calculation') or self.equation.calculation is None:
+            self.query_one("#calc-result").update("Error: No calculation function for this equation")
+            return
+        
+        # Variable name mapping for calculation function
+        # This maps from the display variable names (x₀) to the function parameter names (x_0)
+        var_mapping = {
+            'x₀': 'x_0',
+            'v₀': 'v_0',
+            't': 't',
+            'a': 'accel',
+            'x': 'x_f'
+        }
+        
+        # Collect inputs
+        kwargs = {}
+        blank_var = None
+        
+        for var, input_widget in self.calc_inputs.items():
+            if input_widget.value.strip():
+                try:
+                    # Use the mapping to get the correct parameter name
+                    param_name = var_mapping.get(var, var)
+                    kwargs[param_name] = float(input_widget.value)
+                except ValueError:
+                    self.query_one("#calc-result").update(f"Error: Invalid value for {var}")
+                    return
+            else:
+                blank_var = var
+        
+        if blank_var is None:
+            self.query_one("#calc-result").update("Please leave one field blank to solve for the unknown")
+            return
+        
+        # Convert blank variable to function parameter name
+        blank_param = var_mapping.get(blank_var, blank_var)
+        
+        try:
+            # Call the calculation function with the provided inputs
+            result = self.equation.calculation(**kwargs)
+            self.query_one("#calc-result").update(f"Result: {blank_var} = {result}")
+        except Exception as e:
+            error_message = f"Error: {str(e)}"
+            self.query_one("#calc-result").update(error_message)
+    
+    def action_go_back(self) -> None:
+        """Go back to the previous screen"""
+        self.app.pop_screen()
+
 
 class physicsTUIApp(App):
     """
@@ -16,15 +118,19 @@ class physicsTUIApp(App):
 
     CSS_PATH = "appearance.tcss"
     BINDINGS = [
-        Binding("d", "toggle_dark", "Toggle dark mode")
-        ,
+        Binding("d", "toggle_dark", "Toggle dark mode"),
+        Binding("q", "quit", "Quit"),
     ]
     
     def __init__(self) -> None:
         super().__init__()
         self.chapters: List[PhysicsChapter] = [
             Chapter3(),
-            Chapter4(),]
+            Chapter4(),
+        ]
+        self.current_chapter: Optional[PhysicsChapter] = None
+        self.showing_equation_list = False
+        self.calculable_equations: List[Equation] = []
 
     def compose(self) -> ComposeResult:
         """Create child widgets for the app."""
@@ -33,6 +139,7 @@ class physicsTUIApp(App):
             yield Tree("Chapters", id="chapter-tree")
             with VerticalScroll(id="content-area"):
                 yield Markdown("# Select a chapter from the left panel.", id="content")
+                yield OptionList(id="equation-list", classes="hidden")
         
         yield Footer()
 
@@ -47,7 +154,9 @@ class physicsTUIApp(App):
             if chapter.definitions:
                 chapter_branch.add_leaf("Definitions")
 
-            chapter_branch.add_leaf("Calculations")
+            # Add Calculations leaf only if the chapter has equations with calculation functions
+            if any(hasattr(eq, 'calculation') and eq.calculation is not None for eq in chapter.equations):
+                chapter_branch.add_leaf("Calculations")
 
     def on_tree_node_selected(self, event: Tree.NodeSelected) -> None:
         """Update the content area when a node is selected."""
@@ -63,17 +172,30 @@ class physicsTUIApp(App):
         if len(selected_path) == 3:
             parent, chapter_title, leaf_type = selected_path
 
-            # Match chapter and update content based on the leaf type
+            # Find the selected chapter
             for chapter in self.chapters:
                 if chapter.title == chapter_title:
+                    self.current_chapter = chapter  # Set current chapter
+                    
                     if leaf_type == "Equations":
                         self.update_content_equations(chapter)
                     elif leaf_type == "Definitions":
                         self.update_content_definitions(chapter)
+                    elif leaf_type == "Calculations":
+                        self.show_calculations_list(chapter)
                     break
 
     def update_content_equations(self, chapter: PhysicsChapter) -> None:
         """Update the content area with chapter equations."""
+        self.showing_equation_list = False
+        
+        # Hide equation list and show content
+        equation_list = self.query_one("#equation-list")
+        equation_list.add_class("hidden")
+        
+        content_widget = self.query_one("#content", Markdown)
+        content_widget.remove_class("hidden")
+        
         content = f"# {chapter.title}\n\n"
 
         # Display equations
@@ -87,11 +209,19 @@ class physicsTUIApp(App):
             content += "\n"
 
         # Update the Markdown widget with the new content
-        content_widget = self.query_one("#content", Markdown)
         content_widget.update(content)
 
     def update_content_definitions(self, chapter: PhysicsChapter) -> None:
         """Update the content area with chapter definitions"""
+        self.showing_equation_list = False
+        
+        # Hide equation list and show content
+        equation_list = self.query_one("#equation-list")
+        equation_list.add_class("hidden")
+        
+        content_widget = self.query_one("#content", Markdown)
+        content_widget.remove_class("hidden")
+        
         content = f"# {chapter.title}\n\n"
 
         # Display definitions
@@ -100,9 +230,78 @@ class physicsTUIApp(App):
             content += f"### {defn.term}\n{defn.meaning}\n\n"
 
         # Update the Markdown widget with the new content
-        content_widget = self.query_one("#content", Markdown)
         content_widget.update(content)
-
+    
+    def show_calculations_list(self, chapter: PhysicsChapter) -> None:
+        """Show list of calculable equations using OptionList"""
+        self.showing_equation_list = True
+        self.current_chapter = chapter  # Ensure current_chapter is set
+        
+        # Get equations with calculation functions
+        self.calculable_equations = [eq for eq in chapter.equations if hasattr(eq, 'calculation') and eq.calculation is not None]
+        
+        if not self.calculable_equations:
+            # If no calculable equations, show message in the content area
+            equation_list = self.query_one("#equation-list")
+            equation_list.add_class("hidden")
+            
+            content_widget = self.query_one("#content", Markdown)
+            content_widget.remove_class("hidden")
+            content_widget.update(f"# {chapter.title}\n\n## No calculators available for this chapter.")
+            return
+        
+        # Hide content and show equation list
+        content_widget = self.query_one("#content")
+        content_widget.add_class("hidden")
+        
+        equation_list = self.query_one("#equation-list", OptionList)
+        equation_list.remove_class("hidden")
+        
+        # Configure the option list
+        equation_list.can_focus = True
+        
+        # Clear and populate the option list
+        equation_list.clear_options()
+        
+        
+        calc_header = self.query_one("#content-area").query_one("#calc-header", Static) if self.query_one("#content-area").query("#calc-header") else None
+        
+        if calc_header:
+            calc_header.update(f"Calculable Equations for {chapter.title}")
+        else:
+           
+            header = Static(f"Calculable Equations for {chapter.title}", id="calc-header")
+            self.query_one("#content-area").mount(header, before=equation_list)
+        
+        # Add each calculable equation to the option list
+        equation_names = []
+        
+        for eq in self.calculable_equations:
+            option_text = f"{eq.name}: {eq.formula}"
+            equation_names.append(option_text)
+        
+        # Add all options at once
+        equation_list.add_options(equation_names)
+        equation_list.focus()  
+                
+    def on_option_list_option_selected(self, event: OptionList.OptionSelected) -> None:
+        """Handle equation selection from OptionList"""
+        # Make sure we're in equation list mode and have a chapter
+        if not self.showing_equation_list or not self.current_chapter:
+            return
+        
+        # Get the selected index
+        selected_index = event.option_index
+        
+        # Check if we have calculable equations and the index is valid
+        if not self.calculable_equations:
+            return
+        
+        if 0 <= selected_index < len(self.calculable_equations):
+            selected_equation = self.calculable_equations[selected_index]
+            # Push to the calculator screen instead of modifying the current screen
+            self.push_screen(CalculatorScreen(selected_equation))
+    
     def action_toggle_dark(self) -> None:
         """An action to toggle dark mode."""
         self.theme = (

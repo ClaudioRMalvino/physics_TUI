@@ -87,8 +87,10 @@ class Chapter3(PhysicsChapter):
                     "x₀": "Initial position",
                     "v₀": "Intiial velocity",
                     "t": "Time",
-                    "a": "Acceleration"
-                }
+                    "a": "Acceleration",
+                    "x": "Final Position"
+                },
+                calculation=self.Calculate.positionFromVelAndAcc
             ),
             Equation(
                 name="Velocity from distance",
@@ -97,9 +99,10 @@ class Chapter3(PhysicsChapter):
                     "x": "Final position",
                     "x₀": "Initial position",
                     "v₀": "Intiial velocity",
-                    "a": "Acceleration"
-                    
-                }
+                    "a": "Acceleration",
+                    "v": "Final velocity"
+                },
+                calculation=self.Calculate.velocityFromDistance
             ),
             Equation(
                 name="Velocity of free fall",
@@ -210,25 +213,7 @@ class Chapter3(PhysicsChapter):
         """ Class holds methods to calculate equations in Chapter 3 """
 
         @staticmethod
-        def positionFromVelAndAcc( 
-            x_0: Optional[float]=None,
-            v_0: Optional[float]=None,
-            t: Optional[float]=None,
-            accel: Optional[float]=None,
-            x_f: Optional[float]=None ) -> float:
-            """
-            Calculates position from velocity and acceleration.
-            Can also calculate for desired variable when arg == None and all
-            other args have values.
-
-            Args:
-                x_0 (float, optional): Initial position. Defaults to None.
-                v_0 (float, optional): Initial velocity. Defaults to None.
-                t (float, optional): Elapsed time. Defaults to None.
-                accel (float, optional): Constant acceleration. Defaults to None.
-                x_f (float, optional): Final position. Defaults to None.
-            """
-            def quadratic_eq(a: float, b: float, c: float) -> Optional[Tuple[float, float]]:
+        def quadratic_eq(a: float, b: float, c: float) -> Optional[Tuple[float, float]]:
                 """
                 Function calculates the roots of a quadratic equation ax^2 + bx + c = 0
                 accurately in all cases.
@@ -251,32 +236,132 @@ class Chapter3(PhysicsChapter):
 
                 return (x1, x2)
 
-            if x_0 is None and v_0 and t and accel and x_f: 
+        @staticmethod
+        def positionFromVelAndAcc( 
+            x_0: Optional[float]=None,
+            v_0: Optional[float]=None,
+            t: Optional[float]=None,
+            accel: Optional[float]=None,
+            x_f: Optional[float]=None ) -> float:
+            """
+            Calculates position from velocity and acceleration.
+            Can also calculate for desired variable when arg == None and all
+            other args have values.
+
+            Args:
+                x_0 (float, optional): Initial position. Defaults to None.
+                v_0 (float, optional): Initial velocity. Defaults to None.
+                t (float, optional): Elapsed time. Defaults to None.
+                accel (float, optional): Constant acceleration. Defaults to None.
+                x_f (float, optional): Final position. Defaults to None.
+            """
+
+            if x_0 is None and v_0 is not None and t is not None \
+                and accel is not None and x_f is not None: 
+                # Solves for x_0 (initial position)
                 return round(
                     x_f - (v_0 * t) - (0.5 * accel * (t**2)), 4)
 
-            if v_0 is None and x_0 and t and accel and x_f:
+            if v_0 is None and x_0 is not None and t is not None \
+                 and accel is not None and x_f is not None:
+                # Solves for v_0 (initial velocity)
                 return round(
                     (x_f - x_0 - (0.5 * accel * (t**2)))/t, 4)
 
-            if t is None and x_0 is not None \
-                and v_0 is not None and accel is not None and x_f is not None:
-                
+            if t is None and x_0 is not None and v_0 is not None \
+                and accel is not None and x_f is not None:
+                # Solves for t (elapsed time)
                 if accel == 0 and v_0 == 0:
                     raise ValueError("v₀ and a cannot both be equal to zero")
 
                 c: float = x_0 - x_f
                 b: float = v_0
                 a: float = (0.5 * accel)
-                roots = quadratic_eq(a, b, c)
+                roots = Chapter3.Calculate.quadratic_eq(a, b, c)
 
                 if roots[0] < 0: 
                     return round(roots[1], 4)
                 if roots[1] < 0:
                     return round(roots[0], 4)
 
-            if accel is None and x_0 and v_0 and t and x_f:
+            if accel is None and x_0 is not None and v_0 is not None \
+                and t is not None and x_f is not None:
                 return round(x_f - x_0 - (v_0 *t), 4)
+            
+            # Solves for x_f (final position)
             
             return round(
                 (x_0 + (v_0 * t) + (0.5 * accel * (t**2))), 4)
+        
+        @staticmethod
+        def velocityFromDistance(
+            x_0: Optional[float]=None,
+            v_0: Optional[float]=None,
+            accel: Optional[float]=None,
+            x_f: Optional[float]=None,
+            v_f: Optional[float]=None
+        ) -> float:
+            """
+            Calculates final velocity as a function of displacement, acceleration,
+            and initial velocity.
+            Can also calculate for desired variable when arg == None and all
+            other args have values.
+
+            Args:
+                x_0 (Optional[float], optional): initial position. Defaults to None.
+                v_0 (Optional[float], optional): initial velocity. Defaults to None.
+                accel (Optional[float], optional): constant acceleration. Defaults to None.
+                x_f (Optional[float], optional): final position. Defaults to None.
+                v_f (Optional[float], optional): finasl velocity. Defaults to None.
+
+            Returns:
+                float: value of whichever variable was left set to None.
+            """
+            if x_0 is None and v_0 is not None and accel is not None \
+                and x_f is not None and v_f is not None:
+                # Solves for x_0 (initial position)
+
+                if accel==0:
+                    raise ValueError("acceleration cannot be equal to zero")
+
+                return round(
+                    -( (( (v_f**2) - (v_0**2) ) / (2*accel) ) - x_f), 4) 
+            
+            if v_0 is None and x_0 is not None and x_f is not None \
+                and accel is not None:
+                # Solves for v_0 (initial velocity)
+                determinant = (v_f**2) - ( 2*accel*(x_f - x_0) )
+
+                if determinant < 0:
+                    raise ValueError("The determinant cannot be negative")
+
+                return round(sqrt( determinant), 4)
+                
+            
+            if accel is None and x_0 is not None and v_0 is not None \
+                and x_f is not None and v_f is not None:
+                # Solves for acceleration
+
+                if x_f==0 and x_0==0:
+                    raise ValueError("x_f and x_0 cannot both be equal to zero")
+                    
+                return round(
+                    ( (v_f**2) - (v_0**2) ) / (2*(x_f - x_0) ), 4)
+            
+            if x_f is None and x_0 and v_0 and v_f:
+                # Solves for x_f (final position)
+
+                if accel==0:
+                    raise ValueError("acceleration cannot be equal to zero")
+
+                return round(
+                    (( (v_f**2) - (v_0**2) ) / (2*accel) ) - x_0, 4)
+
+            determinant =  (v_0**2) + 2*accel*(x_f - x_0)
+
+            if determinant < 0:
+                raise ValueError("The determinant cannot be negative")
+
+            # Returns v_f (final velocity)
+            return round( sqrt(determinant), 4)
+           
