@@ -2,6 +2,8 @@ from typing import Dict, List, Tuple, Optional
 from math import sqrt
 from physics_TUI.base_chapter import PhysicsChapter, Equation, Definition
 
+# Constants
+gravity: float = 9.82
 
 class Chapter3(PhysicsChapter):
     """
@@ -119,9 +121,10 @@ class Chapter3(PhysicsChapter):
                 variables={
                     "y₀": "Initial height",
                     "v₀": "Initial velocity",
-                    "g": "Accelration due to gravity: 9.8 m/s",
+                    "g": "Acceleration due to gravity: 9.8 m/s",
                     "t": "Time"
-                }
+                },
+                calculation=self.Calculate.heightOfFreeFall
             ),
             Equation(
                 name="Velocity of free fall from height",
@@ -130,7 +133,7 @@ class Chapter3(PhysicsChapter):
                     "y": "Final height",
                     "y₀": "Initial height",
                     "v₀": "Initial velocity",
-                    "g": "Accelration due to gravity: 9.8 m/s",
+                    "g": "Acceleration due to gravity: 9.8 m/s",
                 }
             ),
             Equation(
@@ -315,7 +318,7 @@ class Chapter3(PhysicsChapter):
                 v_f (Optional[float], optional): finasl velocity. Defaults to None.
 
             Returns:
-                float: value of whichever variable was left set to None.
+                float: value of whichever argument was left set to None.
             """
             if x_0 is None and v_0 is not None and accel is not None \
                 and x_f is not None and v_f is not None:
@@ -365,3 +368,54 @@ class Chapter3(PhysicsChapter):
             # Returns v_f (final velocity)
             return round( sqrt(determinant), 4)
            
+        @staticmethod
+        def heightOfFreeFall(
+            y_0: Optional[float]=None,
+            v_0: Optional[float]=None,
+            t: Optional[float]=None,
+            y_f: Optional[float]=None
+        ) -> float:
+            """
+            Calculates height as a function of time, initial velocity,
+            and initial position.
+            Can also calculate for desired variable when arg == None and all
+            other args have values.
+
+            Args:
+                y_0 (Optional[float], optional): initial height. Defaults to None.
+                v_0 (Optional[float], optional): initial velocity. Defaults to None.
+                t (Optional[float], optional): elapsed time. Defaults to None.
+
+            Returns:
+                float: value of whichever arguement was left set to None
+            """
+            
+            if y_0 is None and v_0 is not None and t is not None \
+                and y_f is not None: 
+                # Solves for x_0 (initial position)
+                return round(
+                    y_f - (v_0 * t) - (0.5 * gravity * (t**2)), 4)
+
+            if v_0 is None and y_0 is not None and t is not None \
+                and y_f is not None:
+                # Solves for v_0 (initial velocity)
+                return round(
+                    (y_f - y_0 - (0.5 * gravity * (t**2)))/t, 4)
+
+            if t is None and y_0 is not None and v_0 is not None \
+                and y_f is not None:
+                # Solves for t (elapsed time)
+                c: float = y_0 - y_f
+                b: float = v_0
+                a: float = (0.5 * gravity)
+                roots = Chapter3.Calculate.quadratic_eq(a, b, c)
+
+                if roots[0] < 0: 
+                    return round(roots[1], 4)
+                if roots[1] < 0:
+                    return round(roots[0], 4)
+
+            # Solves for y_f (final position)
+            
+            return round(
+                (y_0 + (v_0 * t) + (0.5 * gravity * (t**2))), 4)
