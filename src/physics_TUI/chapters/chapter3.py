@@ -15,13 +15,14 @@ class Chapter3(PhysicsChapter):
                          "Study of motion along one dimension.")
 
         self.var_mapping: Dict[str, str] = {
-            'x₀': 'x_0',
-            'v₀': 'v_0',
-            't': 't',
-            'a': 'accel',
-            'x': 'x_f',
-            'y₀': 'y_0',
-            'y': 'y_f',
+            "x₀": "x_0",
+            "v₀": "v_0",
+            "t": "t",
+            "a": "accel",
+            "x": "x_f",
+            "y₀": "y_0",
+            "y": "y_f",
+            "v": "v_f"
         }
     
         self.equations: List[Equation] = [
@@ -121,7 +122,7 @@ class Chapter3(PhysicsChapter):
                 formula="v = v₀ - gt",
                 variables={
                     "v₀": "Initial velocity",
-                    "g": "Accelration due to gravity: 9.8 m/s",
+                    "g": "Accelration due to gravity: 9.82 m/s",
                     "t": "Time"
                 }
             ),
@@ -131,7 +132,7 @@ class Chapter3(PhysicsChapter):
                 variables={
                     "y₀": "Initial height",
                     "v₀": "Initial velocity",
-                    "g": "Acceleration due to gravity: 9.8 m/s [constant]",
+                    "g": "Acceleration due to gravity: 9.82 m/s [constant]",
                     "t": "Time",
                     "y": "Final Position"
                 },
@@ -144,8 +145,11 @@ class Chapter3(PhysicsChapter):
                     "y": "Final height",
                     "y₀": "Initial height",
                     "v₀": "Initial velocity",
-                    "g": "Acceleration due to gravity: 9.8 m/s",
-                }
+                    "g": "Acceleration due to gravity: 9.82 m/s [constant]",
+                    "v": "Final velocity"
+                },
+                calculation=self.Calculate.velFreeFallFromHeight
+                
             ),
             Equation(
                 name="Velocity from acceleration",
@@ -265,11 +269,11 @@ class Chapter3(PhysicsChapter):
             other args have values.
 
             Args:
-                x_0 (float, optional): Initial position. Defaults to None.
-                v_0 (float, optional): Initial velocity. Defaults to None.
-                t (float, optional): Elapsed time. Defaults to None.
-                accel (float, optional): Constant acceleration. Defaults to None.
-                x_f (float, optional): Final position. Defaults to None.
+                x_0 (float, optional): Initial position [m]. Defaults to None.
+                v_0 (float, optional): Initial velocity [m/s]. Defaults to None.
+                t (float, optional): Elapsed time [s]. Defaults to None.
+                accel (float, optional): Constant acceleration [m/s^2]. Defaults to None.
+                x_f (float, optional): Final position [m]. Defaults to None.
             """
 
             if x_0 is None: 
@@ -321,11 +325,11 @@ class Chapter3(PhysicsChapter):
             other args have values.
 
             Args:
-                x_0 (Optional[float], optional): initial position. Defaults to None.
-                v_0 (Optional[float], optional): initial velocity. Defaults to None.
-                accel (Optional[float], optional): constant acceleration. Defaults to None.
-                x_f (Optional[float], optional): final position. Defaults to None.
-                v_f (Optional[float], optional): finasl velocity. Defaults to None.
+                x_0 (Optional[float], optional): initial position [m]. Defaults to None.
+                v_0 (Optional[float], optional): initial velocity [m/s]. Defaults to None.
+                accel (Optional[float], optional): constant acceleration [m/s^2]. Defaults to None.
+                x_f (Optional[float], optional): final position [m]. Defaults to None.
+                v_f (Optional[float], optional): finasl velocity [m/s^2]. Defaults to None.
 
             Returns:
                 float: value of whichever argument was left set to None.
@@ -375,56 +379,6 @@ class Chapter3(PhysicsChapter):
             # Returns v_f (final velocity)
             return round( sqrt(determinant), 4)
            
-        # @staticmethod
-        # def heightOfFreeFall(
-        #     y_0: Optional[float]=None,
-        #     v_0: Optional[float]=None,
-        #     t: Optional[float]=None,
-        #     y_f: Optional[float]=None
-        # ) -> float:
-        #     """
-        #     Calculates height as a function of time, initial velocity,
-        #     and initial position.
-        #     Can also calculate for desired variable when arg == None and all
-        #     other args have values.
-
-        #     Args:
-        #         y_0 (Optional[float], optional): initial height. Defaults to None.
-        #         v_0 (Optional[float], optional): initial velocity. Defaults to None.
-        #         t (Optional[float], optional): elapsed time. Defaults to None.
-
-        #     Returns:
-        #         float: value of whichever arguement was left set to None
-        #     """
-            
-        #     if y_0 is None and v_0 is not None and t is not None \
-        #         and y_f is not None: 
-        #         # Solves for x_0 (initial position)
-        #         return round(
-        #             y_f - (v_0 * t) - (0.5 * gravity * (t**2)), 4)
-
-        #     if v_0 is None and y_0 is not None and t is not None \
-        #         and y_f is not None:
-        #         # Solves for v_0 (initial velocity)
-        #         return round(
-        #             (y_f - y_0 - (0.5 * gravity * (t**2)))/t, 4)
-
-        #     if t is None and y_0 is not None and v_0 is not None \
-        #         and y_f is not None:
-        #         # Solves for t (elapsed time)
-        #         c: float = y_0 - y_f
-        #         b: float = v_0
-        #         a: float = (0.5 * gravity)
-        #         roots = Chapter3.Calculate.quadratic_eq(a, b, c)
-
-        #         if roots[0] < 0: 
-        #             return round(roots[1], 4)
-        #         if roots[1] < 0:
-        #             return round(roots[0], 4)
-
-        #     # Solves for y_f (final position)
-        #     return round(
-        #         (y_0 + (v_0 * t) + (0.5 * gravity * (t**2))), 4)
             
         @staticmethod
         def heightOfFreeFall(
@@ -468,3 +422,54 @@ class Chapter3(PhysicsChapter):
             else:  # y_f is None
                 # Solves for y_f (final position)
                 return round(y_0 + (v_0 * t) + (0.5 * gravity * (t**2)), 4)
+
+        @staticmethod
+        def velFreeFallFromHeight(
+            y_0: Optional[float]=None,
+            v_0: Optional[float]=None,
+            y_f: Optional[float]=None,
+            v_f: Optional[float]=None
+        ) -> float:
+            """ Calculates final velocity as a function of displacement, acceleration,
+            and initial velocity along the y-axis.
+            Can also calculate for desired variable when arg == None and all
+            other args have values.
+
+            Args:
+                y_0 (Optional[float], optional): initial height [m]. Defaults to None.
+                v_0 (Optional[float], optional): initial velocity [m/s]. Defaults to None.
+                y_f (Optional[float], optional): final height [m]. Defaults to None.
+                v (Optional[float], optional): final velocity [m/s]. Defaults to None.
+
+            Returns:
+                float: value of whichever argument was left set to None.
+            """
+            if y_0 is None:
+                # Solves for y_0 (initial height)
+
+                return round(
+                    -( (( (v_f**2) - (v_0**2) ) / (2*gravity) ) - y_f), 4) 
+            
+            if v_0 is None:
+                # Solves for v_0 (initial velocity)
+                determinant = (v_f**2) - ( 2*gravity*(y_f - y_0) )
+
+                if determinant < 0:
+                    raise ValueError("The determinant cannot be negative")
+
+                return round(sqrt( determinant), 4)
+
+            if y_f is None:
+                # Solves for y_f (final position)
+                return round(
+                    (( (v_f**2) - (v_0**2) ) / (2*gravity) ) - y_0, 4)
+
+            determinant =  (v_0**2) + 2*gravity*(y_f - y_0)
+
+            if determinant < 0:
+                raise ValueError("The determinant cannot be negative")
+
+            # Returns v_f (final velocity)
+            return round( sqrt(determinant), 4)
+           
+            

@@ -233,7 +233,9 @@ class physicsTUIApp(App):
         self.current_chapter = chapter  # Ensure current_chapter is set
         
         # Get equations with calculation functions
-        self.calculable_equations = [eq for eq in chapter.equations if hasattr(eq, 'calculation') and eq.calculation is not None]
+        self.calculable_equations = [
+            eq for eq in chapter.equations if hasattr(eq, 'calculation') and eq.calculation is not None
+            ]
         
         if not self.calculable_equations:
             # If no calculable equations, show message in the content area
@@ -272,7 +274,7 @@ class physicsTUIApp(App):
         equation_names = []
         
         for eq in self.calculable_equations:
-            option_text = f"{eq.name}: {eq.formula}"
+            option_text = f"{eq.name}: {eq.formula} \n"
             equation_names.append(option_text)
         
         # Add all options at once

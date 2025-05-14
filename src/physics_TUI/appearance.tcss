@@ -39,7 +39,7 @@ Tree {
 /* Style individual options in the OptionList */
 OptionList > Option {
     margin: 1 0;
-    padding: 1 2;
+    padding: 1 0;
     border: solid white 30%;
 }
 
