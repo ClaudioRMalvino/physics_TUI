@@ -18,10 +18,11 @@ class CalculatorScreen(Screen):
         Binding("escape", "go_back", "Back")
     ]
     
-    def __init__(self, equation: Equation) -> None:
+    def __init__(self, equation: Equation, current_chapter: Optional[PhysicsChapter]=None) -> None:
         super().__init__()
         self.equation = equation
         self.calc_inputs: Dict[str, Input] = {}
+        self.current_chapter = current_chapter
         
     def compose(self) -> ComposeResult:
         """Create the calculator form layout"""
@@ -34,15 +35,17 @@ class CalculatorScreen(Screen):
             yield Static("Enter values (leave one field blank to solve for it):", id="calc-instructions")
             
             # Input fields container
-            with VerticalScroll(id="input-container"):
+            with Vertical(id="input-container"):
                 for var, desc in self.equation.variables.items():
+                    # Skip variables marked as constants in their description
+                    if '[constant]' in desc:  # Check for [constant] in description
+                        continue
+                    
                     yield Static(f"{var}: {desc}")
                     input_field = Input(placeholder=f"Enter value for {var}")
                     
                     # Properly sanitize variable name for ID
-                    # First replace Unicode characters (like subscripts)
                     sanitized_var = re.sub(r'[^\x00-\x7F]', '_', var)
-                    # Then replace any remaining non-alphanumeric chars (except - and _)
                     sanitized_var = re.sub(r'[^a-zA-Z0-9\-_]', '_', sanitized_var)
                     
                     input_field.id = f"input-{sanitized_var}"
@@ -66,16 +69,12 @@ class CalculatorScreen(Screen):
             return
         
         # Variable name mapping for calculation function
-        # This maps from the display variable names (x₀) to the function parameter names (x_0)
-        var_mapping = {
-            'x₀': 'x_0',
-            'v₀': 'v_0',
-            't': 't',
-            'a': 'accel',
-            'x': 'x_f'
-        }
+        var_mapping = {}
         
-        # Collect inputs
+        # This maps from the display variable names (x₀) to the function parameter names (x_0)
+        if self.current_chapter and hasattr(self.current_chapter, 'var_mapping'):
+            var_mapping = self.current_chapter.var_mapping
+        
         kwargs = {}
         blank_var = None
         
@@ -95,9 +94,6 @@ class CalculatorScreen(Screen):
             self.query_one("#calc-result").update("Please leave one field blank to solve for the unknown")
             return
         
-        # Convert blank variable to function parameter name
-        blank_param = var_mapping.get(blank_var, blank_var)
-        
         try:
             # Call the calculation function with the provided inputs
             result = self.equation.calculation(**kwargs)
@@ -105,7 +101,7 @@ class CalculatorScreen(Screen):
         except Exception as e:
             error_message = f"Error: {str(e)}"
             self.query_one("#calc-result").update(error_message)
-    
+            
     def action_go_back(self) -> None:
         """Go back to the previous screen"""
         self.app.pop_screen()
@@ -118,7 +114,6 @@ class physicsTUIApp(App):
 
     CSS_PATH = "appearance.tcss"
     BINDINGS = [
-        Binding("d", "toggle_dark", "Toggle dark mode"),
         Binding("q", "quit", "Quit"),
     ]
     
@@ -300,7 +295,7 @@ class physicsTUIApp(App):
         if 0 <= selected_index < len(self.calculable_equations):
             selected_equation = self.calculable_equations[selected_index]
             # Push to the calculator screen instead of modifying the current screen
-            self.push_screen(CalculatorScreen(selected_equation))
+            self.push_screen(CalculatorScreen(selected_equation, self.current_chapter))
     
     def action_toggle_dark(self) -> None:
         """An action to toggle dark mode."""

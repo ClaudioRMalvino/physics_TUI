@@ -25,6 +25,7 @@ class PhysicsChapter:
         self.description: str = description
         self.equations: List[Equation] = []
         self.definitions: List[Definition] = []
+        self.var_mapping: Dict[str, str] = {} 
     
 
     def get_equations(self) -> List[Equation]:

@@ -171,3 +171,53 @@ class TestVelocityFromDistance(unittest.TestCase):
                         v_f=v_f[i]
                     )
                     self.assertAlmostEqual(result, expected[i], places=2)
+
+class TestHeightofFreeFall(unittest.TestCase):
+
+    def test_solving_for_y_f(self) -> None:
+        """
+        Tests the main use case for calculating y_f (final height)
+        """
+        y_0 = [0.0, 5.0, 10]
+        v_0 = [0.0, 25, 50]
+        t = [0.0, 15.0, 20]
+
+        expected = [0,-724.75, -954]
+
+        results = []
+
+        for i in range(len(expected)):
+            result = Chapter3.Calculate.heightOfFreeFall(
+                y_0=y_0[i],
+                v_0=v_0[i],
+                t=t[i]
+            )
+            results.append(result)
+        print(results)
+        for i in range(len(expected)):
+            self.assertAlmostEqual(results[i], expected[i], places=7)
+
+    def test_solving_for_t(self) -> None:
+
+        """
+        Tests for the more complicated task of solving for time.
+        """
+        y_0 = [0.0, 5.0, 10]
+        v_0 = [0.0, 25, 50]
+        y_f = [0.0, 30, 0]
+
+
+        expected = [0, 1.367, 10.3795]
+
+        results = []
+
+        for i in range(len(expected)):
+            result = Chapter3.Calculate.heightOfFreeFall(
+                y_0=y_0[i],
+                v_0=v_0[i],
+                y_f=y_f[i]
+            )
+            results.append(result)
+        print(results)
+        for i in range(len(expected)):
+            self.assertAlmostEqual(results[i], expected[i], places=7)
