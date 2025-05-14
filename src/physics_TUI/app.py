@@ -3,7 +3,7 @@ import re
 
 from textual.app import App, ComposeResult
 from textual.binding import Binding
-from textual.widgets import Header, Footer, Tree, Markdown, Button, Static, Input, OptionList
+from textual.widgets import Header, Footer, Tree, Button, Static, Input, OptionList
 from textual.containers import Horizontal, VerticalScroll, Vertical
 from textual.screen import Screen
 
@@ -133,7 +133,8 @@ class physicsTUIApp(App):
         with Horizontal():
             yield Tree("Chapters", id="chapter-tree")
             with VerticalScroll(id="content-area"):
-                yield Markdown("# Select a chapter from the left panel.", id="content")
+                # Back to using a single Static widget
+                yield Static("", id="content", markup=True)
                 yield OptionList(id="equation-list", classes="hidden")
         
         yield Footer()
@@ -152,6 +153,35 @@ class physicsTUIApp(App):
             # Add Calculations leaf only if the chapter has equations with calculation functions
             if any(hasattr(eq, 'calculation') and eq.calculation is not None for eq in chapter.equations):
                 chapter_branch.add_leaf("Calculations")
+        
+        # Set initial content
+        content_widget = self.query_one("#content", Static)
+        
+        welcome_content = """
+[bold #bb9af7]┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃            WELCOME TO PHYSICS TUI!               ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛[/]
+
+[bold #7aa2f7]╔══════════════════════════════════════════════════╗
+║  Physics Reference & Calculator                  ║
+╚══════════════════════════════════════════════════╝[/]
+
+[bold #9ece6a]▸[/] [#c0caf5]Select a chapter from the left panel[/]
+[bold #9ece6a]▸[/] [#c0caf5]Navigate with arrow keys[/]
+[bold #9ece6a]▸[/] [#c0caf5]Press [bold #e0af68]Enter[/] to select[/]
+[bold #9ece6a]▸[/] [#c0caf5]Press [bold #e0af68]Q[/] to quit[/]
+
+[bold #2ac3de]━━━ Features ━━━[/]
+[#ff9e64]✦[/] [#c0caf5]Physics equations and definitions[/]
+[#ff9e64]✦[/] [#c0caf5]Interactive calculators[/]
+[#ff9e64]✦[/] [#c0caf5]Chapter-based organization[/]
+
+[#565f89]─────────────────────────────────────────────────────[/]
+[italic #7aa2f7]
+“I... a universe of atoms, an atom in the universe.” [/]
+[italic #565f89]- Richard Feynman[/]"""
+        
+        content_widget.update(welcome_content)
 
     def on_tree_node_selected(self, event: Tree.NodeSelected) -> None:
         """Update the content area when a node is selected."""
@@ -188,22 +218,35 @@ class physicsTUIApp(App):
         equation_list = self.query_one("#equation-list")
         equation_list.add_class("hidden")
         
-        content_widget = self.query_one("#content", Markdown)
+        content_widget = self.query_one("#content", Static)
         content_widget.remove_class("hidden")
         
-        content = f"# {chapter.title}\n\n"
+        # Build content string
+        title_length = len(chapter.title)
+        padding = max(0, (50 - title_length) // 2)
+        
+        content = f"""[bold #bb9af7 on #24283b]┏━{'━' * 50}━┓
+┃{' ' * padding}{chapter.title.upper()}{' ' * (50 - title_length - padding)}┃
+┗━{'━' * 50}━┛[/]
 
-        # Display equations
-        content += "## Equations\n"
+[bold #7aa2f7]╔══════════════════════════════════════════════════╗
+║{'EQUATIONS'.center(50)}║
+╚══════════════════════════════════════════════════╝[/]\n"""
+        
         for eq in chapter.get_equations():
-            content += f"### {eq.name}\n**Formula**: {eq.formula}\n"
+            name_padding = max(0, 45 - len(eq.name))
+            content += f"\n[bold #2ac3de]┌─ {eq.name} {'─' * name_padding}┐[/]\n"
+            content += f"[#c0caf5]│ Formula:[/] [#e0af68]{eq.formula}[/]\n"
+            
             if eq.variables:
-                content += f"\n**Variables**\n:"
+                content += f"[#c0caf5]│[/]\n"
+                content += f"[#c0caf5]│ Variables:[/]\n"
                 for var, desc in eq.variables.items():
-                    content += f"\n- `{var}`: {desc}"
-            content += "\n"
-
-        # Update the Markdown widget with the new content
+                    content += f"[#c0caf5]│[/]   [#9ece6a]◆[/] [bold #ff9e64]{var}[/]: [#c0caf5]{desc}[/]\n"
+            
+            content += f"[bold #2ac3de]└{'─' * 48}┘[/]"
+        
+        # Update the Static widget
         content_widget.update(content)
 
     def update_content_definitions(self, chapter: PhysicsChapter) -> None:
@@ -214,17 +257,47 @@ class physicsTUIApp(App):
         equation_list = self.query_one("#equation-list")
         equation_list.add_class("hidden")
         
-        content_widget = self.query_one("#content", Markdown)
+        content_widget = self.query_one("#content", Static)
         content_widget.remove_class("hidden")
         
-        content = f"# {chapter.title}\n\n"
+        # Build content string
+        title_length = len(chapter.title)
+        padding = max(0, (50 - title_length) // 2)
+        
+        content = f"""[bold #bb9af7 on #24283b]┏━{'━' * 50}━┓
+┃{' ' * padding}{chapter.title.upper()}{' ' * (50 - title_length - padding)}┃
+┗━{'━' * 50}━┛[/]
 
-        # Display definitions
-        content += "## Definitions\n"
+[bold #7aa2f7]╔══════════════════════════════════════════════════╗
+║{'DEFINITIONS'.center(50)}║
+╚══════════════════════════════════════════════════╝[/]\n"""
+        
         for defn in chapter.get_definitions():
-            content += f"### {defn.term}\n{defn.meaning}\n\n"
-
-        # Update the Markdown widget with the new content
+            term_padding = max(0, 45 - len(defn.term))
+            content += f"\n[bold #2ac3de]╭─ {defn.term} {'─' * term_padding}╮[/]\n"
+            
+            # Word wrap the definition for better display
+            words = defn.meaning.split()
+            lines = []
+            current_line = ""
+            
+            for word in words:
+                if len(current_line) + len(word) + 1 <= 46:
+                    current_line += (word + " ") if current_line else word
+                else:
+                    lines.append(current_line)
+                    current_line = word
+            
+            if current_line:
+                lines.append(current_line)
+            
+            # Display wrapped definition
+            for line in lines:
+                content += f"[#c0caf5]│ {line:<47}│[/]\n"
+            
+            content += f"[bold #2ac3de]╰{'─' * 48}╯[/]"
+        
+        # Update the Static widget
         content_widget.update(content)
     
     def show_calculations_list(self, chapter: PhysicsChapter) -> None:
@@ -235,16 +308,20 @@ class physicsTUIApp(App):
         # Get equations with calculation functions
         self.calculable_equations = [
             eq for eq in chapter.equations if hasattr(eq, 'calculation') and eq.calculation is not None
-            ]
+        ]
         
         if not self.calculable_equations:
             # If no calculable equations, show message in the content area
             equation_list = self.query_one("#equation-list")
             equation_list.add_class("hidden")
             
-            content_widget = self.query_one("#content", Markdown)
+            content_widget = self.query_one("#content", Static)
             content_widget.remove_class("hidden")
-            content_widget.update(f"# {chapter.title}\n\n## No calculators available for this chapter.")
+            
+            content = f"""[bold #bb9af7 on #24283b]{chapter.title}[/]
+
+[bold #f7768e]No calculators available for this chapter.[/]"""
+            content_widget.update(content)
             return
         
         # Hide content and show equation list
@@ -260,13 +337,11 @@ class physicsTUIApp(App):
         # Clear and populate the option list
         equation_list.clear_options()
         
-        
         calc_header = self.query_one("#content-area").query_one("#calc-header", Static) if self.query_one("#content-area").query("#calc-header") else None
         
         if calc_header:
             calc_header.update(f"Calculable Equations for {chapter.title}")
         else:
-           
             header = Static(f"Calculable Equations for {chapter.title}", id="calc-header")
             self.query_one("#content-area").mount(header, before=equation_list)
         
