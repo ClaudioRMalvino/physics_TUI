@@ -10,5 +10,7 @@ setup(
     },
     install_requires=[
         "textual>=0.38.1",
+        "numpy",
+        "scipy"
     ],
 )

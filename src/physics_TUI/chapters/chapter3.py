@@ -2,8 +2,8 @@ from typing import Dict, List, Tuple, Optional
 from math import sqrt
 from physics_TUI.base_chapter import PhysicsChapter, Equation, Definition
 
-# Constants
-gravity: float = -9.82
+# Constant
+g: float = -9.82 # gravitational acceleration on Earth [m/s^2]
 
 class Chapter3(PhysicsChapter):
     """
@@ -228,7 +228,9 @@ class Chapter3(PhysicsChapter):
         ]
 
     class Calculate:
-        """ Class holds methods to calculate equations in Chapter 3 """
+        """ 
+        Class holds methods to calculate equations in Chapter 3 
+        """
 
         @staticmethod
         def quadratic_eq(a: float, b: float, c: float) -> Optional[Tuple[float, float]]:
@@ -275,7 +277,9 @@ class Chapter3(PhysicsChapter):
                 accel (float, optional): Constant acceleration [m/s^2]. Defaults to None.
                 x_f (float, optional): Final position [m]. Defaults to None.
             """
-
+            if t is not None and t < 0:
+                raise ValueError("Time cannot be a negative value")
+                
             if x_0 is None: 
                 # Solves for x_0 (initial position)
                 return round(
@@ -391,22 +395,24 @@ class Chapter3(PhysicsChapter):
             Calculates height as a function of time, initial velocity,
             and initial position.
             """
+            if t is not None and t < 0:
+                raise ValueError("Time cannot be a negative value")
 
             if y_0 is None:
                 # Solves for y_0 (initial position)
-                return round(y_f - (v_0 * t) - (0.5 * gravity * (t**2)), 4)
+                return round(y_f - (v_0 * t) - (0.5 * g * (t**2)), 4)
             
             elif v_0 is None:
                 # Solves for v_0 (initial velocity)
                 if t == 0:
                     raise ValueError("Cannot solve for v_0 when t=0")
-                return round((y_f - y_0 - (0.5 * gravity * (t**2)))/t, 4)
-            
+                return round((y_f - y_0 - (0.5 * g * (t**2)))/t, 4)
+        
             elif t is None:
                 # Solves for t (elapsed time)
                 c = y_0 - y_f
                 b = v_0
-                a = 0.5 * gravity
+                a = 0.5 * g
                 roots = Chapter3.Calculate.quadratic_eq(a, b, c)
                 
                 if roots is None:
@@ -421,7 +427,7 @@ class Chapter3(PhysicsChapter):
             
             else:  # y_f is None
                 # Solves for y_f (final position)
-                return round(y_0 + (v_0 * t) + (0.5 * gravity * (t**2)), 4)
+                return round(y_0 + (v_0 * t) + (0.5 * g * (t**2)), 4)
 
         @staticmethod
         def velFreeFallFromHeight(
@@ -448,11 +454,11 @@ class Chapter3(PhysicsChapter):
                 # Solves for y_0 (initial height)
 
                 return round(
-                    -( (( (v_f**2) - (v_0**2) ) / (2*gravity) ) - y_f), 4) 
+                    -( (( (v_f**2) - (v_0**2) ) / (2*g) ) - y_f), 4) 
             
             if v_0 is None:
                 # Solves for v_0 (initial velocity)
-                determinant = (v_f**2) - ( 2*gravity*(y_f - y_0) )
+                determinant = (v_f**2) - ( 2*g*(y_f - y_0) )
 
                 if determinant < 0:
                     raise ValueError("The determinant cannot be negative")
@@ -462,9 +468,9 @@ class Chapter3(PhysicsChapter):
             if y_f is None:
                 # Solves for y_f (final position)
                 return round(
-                    (( (v_f**2) - (v_0**2) ) / (2*gravity) ) - y_0, 4)
+                    (( (v_f**2) - (v_0**2) ) / (2*g) ) - y_0, 4)
 
-            determinant =  (v_0**2) + 2*gravity*(y_f - y_0)
+            determinant =  (v_0**2) + 2*g*(y_f - y_0)
 
             if determinant < 0:
                 raise ValueError("The determinant cannot be negative")

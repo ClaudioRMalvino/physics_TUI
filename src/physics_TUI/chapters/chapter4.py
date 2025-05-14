@@ -1,5 +1,11 @@
-from typing import Dict, List
+from typing import Dict, List, Optional, Tuple
 from physics_TUI.base_chapter import PhysicsChapter, Equation, Definition
+from math import sin, asin, tan, pi, sqrt
+
+# Constants
+
+g: float = 9.82 # gravitational acceleration on Earth [m/s^2]
+
 
 class Chapter4(PhysicsChapter):
     """
@@ -9,6 +15,15 @@ class Chapter4(PhysicsChapter):
     def __init__(self) -> None:
         super().__init__("Motion in Two and Three Dimensions",
                     "Study of motion in two and three dimensions.")
+        
+        self.var_mapping: Dict[str, str] = {
+            "v₀": "v_0",
+            "t": "t",
+            "x": "x",
+            "y": "y",
+            "v": "v_f",
+            "θ": "theta"
+        }
 
         self.equations: List[Equation] = [
             Equation(
@@ -57,8 +72,9 @@ class Chapter4(PhysicsChapter):
                 variables={
                     "v₀": "Initial velocity",
                     "θ": "Launch angle",
-                    "g": "Acceleration due to gravity"
-                }
+                    "g": "Acceleration due to gravity [constant]"
+                },
+                calculation=self.Calculate.timeOfFlight
             ),
             Equation(
                 name="Trajectory",
@@ -68,7 +84,8 @@ class Chapter4(PhysicsChapter):
                     "v₀": "Initial velocity",
                     "x": "Position along he x-axis",
                     "g": "Acceleartion due to gravity"
-                }
+                },
+                calculation=self.Calculate.trajectory
             ),
             Equation(
                 name="Range",
@@ -230,3 +247,120 @@ class Chapter4(PhysicsChapter):
                     tangent to the trajectory."
             )
         ]
+    
+    class Calculate:
+        """
+        Class holds methods to calculate equations in chapter 4
+        """
+
+        @staticmethod
+        def quadratic_eq(a: float, b: float, c: float) -> Optional[Tuple[float, float]]:
+                """
+                Function calculates the roots of a quadratic equation ax^2 + bx + c = 0
+                accurately in all cases.
+
+                Returns a tuple containing the two roots.
+                """
+
+                discriminant = b**2 - 4*a*c
+
+                if discriminant < 0:
+                    return None  
+
+                if b == 0 and c == 0:
+                    return (0.0, 0.0)
+                
+                # Choose the appropriate formula based on the sign of b
+                if b >= 0:
+                    x1 = (-b - sqrt(discriminant)) / (2*a)
+                    x2 = (2*c) / (-b - sqrt(discriminant))
+                else:
+                    x1 = (2*c) / (-b + sqrt(discriminant))
+                    x2 = (-b + sqrt(discriminant)) / (2*a)
+
+                return (x1, x2)
+
+        @staticmethod
+        def timeOfFlight(
+            v_0: Optional[float]=None,
+            theta: Optional[float]=None,
+            t: Optional[float]=None,
+        ) -> float:
+            """
+            Function calculates the time of flight of a projectile.
+            Can also calculate for desired variable when arg == None and all
+            other args have values.
+
+            Args:
+                v_0 (Optional[float], optional): initial velocity. Defaults to None.
+                theta (Optiona[float], optional): launch angle in degrees. Defaults to None.
+
+            Returns:
+                float: _description_
+            """         
+            if t is not None and t < 0:
+                raise ValueError("Time cannot be a negative value")
+
+            if theta is not None:
+                # Converts degrees to radians 
+                theta_radians: float = theta * (pi/180)
+            else:
+                # Solves for theta (launch angle)
+                return asin( (t * g) / (2 * v_0) )
+
+            if v_0 is None:
+                # Solves for v_0 (initial velocity)
+                return ( (t * g) / (2.0 * sin(theta_radians)) )     
+
+            return ( (2 * v_0 * sin(theta_radians) ) / g )
+
+        @staticmethod
+        def trajectory(
+            theta: Optional[float]=None,
+            v_0: Optional[float]=None,
+            x: Optional[float]=None,
+            y: Optional[float]=None
+        ) -> float:
+            """
+            Function calculates the trajectory of a porjectile as function of 
+            theta, initial velocity, and position along the x axis.
+            Can also calculate for desired variable when arg == None and all
+            other args have values.           
+
+            Args:
+                theta (Optional[float], optional): launch angle [degrees]_. Defaults to None.
+                v_0 (Optional[float], optional): _initial velocity [m/s]_. Defaults to None.
+                x (Optional[float], optional): position  along the x-axis [m]. Defaults to None.
+                y (Optional[float], optional): position  along the y-axis [m]. Defaults to None.
+
+            Returns:
+                float: _description_
+            """
+
+            if theta is not None: 
+                # Converts degrees to radians
+                theta_radian: float = theta * (pi/180)
+            else: 
+                raise ValueError("Cannot solve for theta with this equation.\n \
+                    Please input a vlue for theta.")
+            
+            if v_0 is None:
+                # Solves for v_0 (initial velocity)
+                determinant: float = (g / 2)*( ( (-x**2) / y ) + ( x / tan(theta_radian) ) )
+                
+                return sqrt(determinant) / cos(theta_radian)
+            
+            if x is None:
+
+                c: float = y
+                b: float = tan(theta_radian)
+                a: float =  g / (2 * (v_0 * cos(theta_radian))**2)
+                roots = Chapter4.Calculate.quadratic_eq(a, b, c)
+
+                return (round(roots[0], 4), round(roots[1], 4))
+            
+            return tan(theta_radian) * x - \
+                   ( ( g / (2 * (v_0 * cos(theta_radian))**2) ) * (x**2) ) 
+
+
+

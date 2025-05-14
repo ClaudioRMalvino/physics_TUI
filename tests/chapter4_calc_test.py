@@ -54,10 +54,10 @@ class TestTimeoOfFlight(unittest.TestCase):
             self.assertAlmostEqual(results[i], expected[i], places=2)
     
     # TO DO: Write test case for x variable
-    
-    #def test_solving_for_x(self) -> None:
+
+    #def test_solving_for_theta(self) -> None:
         """
-        Tests the functions ability to solve for x (position)
+        Tests the functions ability to solve for theta (launch angle)
         """
 
         # initial conditions
