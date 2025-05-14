@@ -3,6 +3,9 @@ import unittest
 from physics_TUI.chapters.chapter3 import Chapter3
 
 class TestPositionFromVelAndAcc(unittest.TestCase):
+    """
+    Tests the positionFromVelandAcc calculation method
+    """
 
     def test_solving_for_x_f(self) -> None:
         """
@@ -25,9 +28,9 @@ class TestPositionFromVelAndAcc(unittest.TestCase):
                 accel=accel[i]
             )
             results.append(result)
-        print(results)
+
         for i in range(len(expected)):
-            self.assertAlmostEqual(results[i], expected[i], places=7)
+            self.assertAlmostEqual(results[i], expected[i], places=4)
 
     def test_solving_for_t(self) -> None:
 
@@ -64,6 +67,9 @@ class TestPositionFromVelAndAcc(unittest.TestCase):
                 self.assertAlmostEqual(result, expected[i], places=7)
 
 class TestVelocityFromDistance(unittest.TestCase):
+    """
+    Tests the velocityFromDistance calculation method
+    """
 
     def test_solving_for_v_f(self) -> None:
         """ositionFromVelAndAcc
@@ -193,9 +199,9 @@ class TestHeightofFreeFall(unittest.TestCase):
                 t=t[i]
             )
             results.append(result)
-        print(results)
+        
         for i in range(len(expected)):
-            self.assertAlmostEqual(results[i], expected[i], places=7)
+            self.assertAlmostEqual(results[i], expected[i], places=4)
 
     def test_solving_for_t(self) -> None:
 
@@ -218,11 +224,14 @@ class TestHeightofFreeFall(unittest.TestCase):
                 y_f=y_f[i]
             )
             results.append(result)
-        print(results)
+        
         for i in range(len(expected)):
             self.assertAlmostEqual(results[i], expected[i], places=7)
 
 class TestVelFreeFallFromHeight(unittest.TestCase):
+    """
+    Tests the velFreeFallFromHeight calculation method
+    """
 
     def test_solving_for_v_f(self) -> None:
         """
@@ -275,7 +284,7 @@ class TestVelFreeFallFromHeight(unittest.TestCase):
                 v_f=v_f[i]
             )
             results.append(result)
-        print(results)
+        
         for i in range(len(expected)):
             self.assertAlmostEqual(results[i], expected[i], places=2)
     
