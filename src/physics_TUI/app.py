@@ -28,80 +28,34 @@ class CalculatorScreen(Screen):
         """Create the calculator form layout"""
         yield Header()
         
-        # Make the entire content scrollable
+        # Single scrollable container
         with VerticalScroll(id="calc-scroll-container"):
             yield Static(f"Calculator: {self.equation.name}", id="calc-title")
             yield Static(f"Formula: {self.equation.formula}", id="calc-formula")
             yield Static("Enter values (leave one field blank to solve for it):", id="calc-instructions")
             
-            # Input fields container
-            with Vertical(id="input-container"):
-                for var, desc in self.equation.variables.items():
-                    # Skip variables marked as constants in their description
-                    if '[constant]' in desc:  # Check for [constant] in description
-                        continue
-                    
-                    yield Static(f"{var}: {desc}")
-                    input_field = Input(placeholder=f"Enter value for {var}")
-                    
-                    # Properly sanitize variable name for ID
-                    sanitized_var = re.sub(r'[^\x00-\x7F]', '_', var)
-                    sanitized_var = re.sub(r'[^a-zA-Z0-9\-_]', '_', sanitized_var)
-                    
-                    input_field.id = f"input-{sanitized_var}"
-                    self.calc_inputs[var] = input_field
-                    yield input_field
+            # Input fields in the same scrollable container
+            for var, desc in self.equation.variables.items():
+                # Skip variables marked as constants in their description
+                if '[constant]' in desc:
+                    continue
+                
+                yield Static(f"{var}: {desc}", classes="input-label")
+                input_field = Input(placeholder=f"Enter value for {var}")
+                
+                # Properly sanitize variable name for ID
+                sanitized_var = re.sub(r'[^\x00-\x7F]', '_', var)
+                sanitized_var = re.sub(r'[^a-zA-Z0-9\-_]', '_', sanitized_var)
+                
+                input_field.id = f"input-{sanitized_var}"
+                self.calc_inputs[var] = input_field
+                yield input_field
             
             yield Button("Calculate", id="calc-button", variant="primary")
             yield Static("", id="calc-result")
         
         yield Footer()
-    
-    def on_button_pressed(self, event: Button.Pressed) -> None:
-        """Handle calculator button press"""
-        if event.button.id == "calc-button":
-            self.perform_calculation()
-    
-    def perform_calculation(self) -> None:
-        """Execute the calculation based on input values"""
-        if not hasattr(self.equation, 'calculation') or self.equation.calculation is None:
-            self.query_one("#calc-result").update("Error: No calculation function for this equation")
-            return
-        
-        # Variable name mapping for calculation function
-        var_mapping = {}
-        
-        # This maps from the display variable names (x₀) to the function parameter names (x_0)
-        if self.current_chapter and hasattr(self.current_chapter, 'var_mapping'):
-            var_mapping = self.current_chapter.var_mapping
-        
-        kwargs = {}
-        blank_var = None
-        
-        for var, input_widget in self.calc_inputs.items():
-            if input_widget.value.strip():
-                try:
-                    # Use the mapping to get the correct parameter name
-                    param_name = var_mapping.get(var, var)
-                    kwargs[param_name] = float(input_widget.value)
-                except ValueError:
-                    self.query_one("#calc-result").update(f"Error: Invalid value for {var}")
-                    return
-            else:
-                blank_var = var
-        
-        if blank_var is None:
-            self.query_one("#calc-result").update("Please leave one field blank to solve for the unknown")
-            return
-        
-        try:
-            # Call the calculation function with the provided inputs
-            result = self.equation.calculation(**kwargs)
-            self.query_one("#calc-result").update(f"Result: {blank_var} = {result}")
-        except Exception as e:
-            error_message = f"Error: {str(e)}"
-            self.query_one("#calc-result").update(error_message)
-            
+
     def action_go_back(self) -> None:
         """Go back to the previous screen"""
         self.app.pop_screen()

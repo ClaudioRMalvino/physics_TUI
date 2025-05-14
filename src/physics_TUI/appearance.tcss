@@ -45,9 +45,13 @@ OptionList > Option {
 
 /* Calculate button styling */
 #calculate-button, #calc-button {
-    margin: 2 0;
+    margin: 1 12;
     width: 30%;
-    border: round $primary;
+    background: $primary 20%;
+    color: #c0caf5;
+    text-style: bold;
+    text-align: center;
+    
 }
 
 #result-display {
@@ -76,8 +80,8 @@ OptionList > Option {
 }
 
 #input-container {
-    margin: 1 0;
-    width: 100%;
+    margin: 5 10;
+    width: 80%;
 }
 
 /* Style the variable labels */
@@ -88,9 +92,9 @@ OptionList > Option {
 
 /* Style inputs directly without complex alignment */
 Input {
-    width: 60%;
+    width: 80%;
     margin-bottom: 1;
-    border: round white;
+    border: solid $primary;
     padding: 0 1;
 }
 
