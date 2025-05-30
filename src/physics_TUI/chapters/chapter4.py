@@ -1,21 +1,19 @@
 from typing import Dict, List, Optional, Tuple
 from physics_TUI.base_chapter import PhysicsChapter, Equation, Definition
-from math import sin, asin, tan, pi, sqrt
+from math import cos, sin, asin, tan, pi, sqrt
 
-# Constants
-
-g: float = 9.82 # gravitational acceleration on Earth [m/s^2]
-
+# Constant
+g: float = -9.82 # gravitational acceleration on Earth [m/s^2]
 
 class Chapter4(PhysicsChapter):
     """
-    Chapter on two and three dimensional motion. 
+    Chapter on two and three dimensional motion.
     """
 
     def __init__(self) -> None:
         super().__init__("Motion in Two and Three Dimensions",
                     "Study of motion in two and three dimensions.")
-        
+
         self.var_mapping: Dict[str, str] = {
             "v₀": "v_0",
             "t": "t",
@@ -72,7 +70,7 @@ class Chapter4(PhysicsChapter):
                 variables={
                     "v₀": "Initial velocity",
                     "θ": "Launch angle",
-                    "g": "Acceleration due to gravity [constant]"
+                    "g": "Acceleration due to gravity"
                 },
                 calculation=self.Calculate.timeOfFlight
             ),
@@ -95,6 +93,7 @@ class Chapter4(PhysicsChapter):
                     "v₀": "Initial velocity",
                     "g": "Acceleartion due to gravity"
                 }
+
             ),
             Equation(
                 name="Centripetal acceleration",
@@ -247,7 +246,7 @@ class Chapter4(PhysicsChapter):
                     tangent to the trajectory."
             )
         ]
-    
+
     class Calculate:
         """
         Class holds methods to calculate equations in chapter 4
@@ -265,11 +264,11 @@ class Chapter4(PhysicsChapter):
                 discriminant = b**2 - 4*a*c
 
                 if discriminant < 0:
-                    return None  
+                    raise ValueError("Determinant cannot be negative. Outputs imaginary number.")
 
                 if b == 0 and c == 0:
                     return (0.0, 0.0)
-                
+
                 # Choose the appropriate formula based on the sign of b
                 if b >= 0:
                     x1 = (-b - sqrt(discriminant)) / (2*a)
@@ -297,22 +296,27 @@ class Chapter4(PhysicsChapter):
 
             Returns:
                 float: _description_
-            """         
+            """
+
+            if v_0 == 0 and t == 0:
+                raise ValueError("Division by zero is undefined")
             if t is not None and t < 0:
                 raise ValueError("Time cannot be a negative value")
 
             if theta is not None:
-                # Converts degrees to radians 
+                # Converts degrees to radians
                 theta_radians: float = theta * (pi/180)
             else:
                 # Solves for theta (launch angle)
-                return asin( (t * g) / (2 * v_0) )
+                # The below solution is not yielding real results, results are complex numbers.
+                # return asin( (t * (-g)) / (2 * v_0) )
+                raise ValueError("Cannot solve for theta with this equation. Yields complex numbers. \n Please input a value for theta.")
 
             if v_0 is None:
                 # Solves for v_0 (initial velocity)
-                return ( (t * g) / (2.0 * sin(theta_radians)) )     
+                return ( (t * (-g)) / (2.0 * sin(theta_radians)) )
 
-            return ( (2 * v_0 * sin(theta_radians) ) / g )
+            return ( (2 * v_0 * sin(theta_radians) ) / (-g) )
 
         @staticmethod
         def trajectory(
@@ -322,14 +326,14 @@ class Chapter4(PhysicsChapter):
             y: Optional[float]=None
         ) -> float:
             """
-            Function calculates the trajectory of a porjectile as function of 
+            Function calculates the trajectory of a porjectile as function of
             theta, initial velocity, and position along the x axis.
             Can also calculate for desired variable when arg == None and all
-            other args have values.           
+            other args have values.
 
             Args:
-                theta (Optional[float], optional): launch angle [degrees]_. Defaults to None.
-                v_0 (Optional[float], optional): _initial velocity [m/s]_. Defaults to None.
+                theta (Optional[float], optional): launch angle [degrees]. Defaults to None.
+                v_0 (Optional[float], optional): initial velocity [m/s]. Defaults to None.
                 x (Optional[float], optional): position  along the x-axis [m]. Defaults to None.
                 y (Optional[float], optional): position  along the y-axis [m]. Defaults to None.
 
@@ -337,30 +341,42 @@ class Chapter4(PhysicsChapter):
                 float: _description_
             """
 
-            if theta is not None: 
+            if theta is not None:
                 # Converts degrees to radians
                 theta_radian: float = theta * (pi/180)
-            else: 
-                raise ValueError("Cannot solve for theta with this equation.\n \
-                    Please input a vlue for theta.")
-            
+            else:
+                raise ValueError("Cannot solve for theta with this equation. Please input a value for theta.")
+
             if v_0 is None:
+
+                if x == 0 and y == 0:
+                    raise ValueError("Division by zero is undefined")
+
                 # Solves for v_0 (initial velocity)
-                determinant: float = (g / 2)*( ( (-x**2) / y ) + ( x / tan(theta_radian) ) )
-                
+                determinant: float = ((-g) / 2.0)*( ( ((-x)**2) / y ) + ( x / tan(theta_radian) ) )
+
+                if determinant < 0:
+                    raise ValueError("Determinant cannot be negative. Outputs imaginary number.")
+
                 return sqrt(determinant) / cos(theta_radian)
-            
+
             if x is None:
+                if v_0 == 0 or theta == 90.0 or theta == 270.0:
+                    raise ValueError("Division by zero is undefined")
+                if y > 0.0 or y < 0.0:
+                    raise ValueError("Can only solve for x when y is zero.")
 
                 c: float = y
                 b: float = tan(theta_radian)
                 a: float =  g / (2 * (v_0 * cos(theta_radian))**2)
                 roots = Chapter4.Calculate.quadratic_eq(a, b, c)
 
-                return (round(roots[0], 4), round(roots[1], 4))
-            
+                if roots[0] < 0:
+                    return round(roots[1], 4)
+                if roots[1] < 0:
+                    return round(roots[0], 4)
+                else:
+                    return round(max(roots[0], roots[1]), 2)
+
             return tan(theta_radian) * x - \
-                   ( ( g / (2 * (v_0 * cos(theta_radian))**2) ) * (x**2) ) 
-
-
-
+                   ( ( g / (2 * (v_0 * cos(theta_radian))**2) ) * (x**2) )

@@ -13,47 +13,47 @@ from physics_TUI.base_chapter import PhysicsChapter, Equation, Definition
 
 class CalculatorScreen(Screen):
     """Screen for displaying calculator form for an equation"""
-    
+
     BINDINGS = [
         Binding("escape", "go_back", "Back")
     ]
-    
+
     def __init__(self, equation: Equation, current_chapter: Optional[PhysicsChapter]=None) -> None:
         super().__init__()
         self.equation = equation
         self.calc_inputs: Dict[str, Input] = {}
         self.current_chapter = current_chapter
-        
+
     def compose(self) -> ComposeResult:
         """Create the calculator form layout"""
         yield Header()
-        
+
         # Single scrollable container
         with VerticalScroll(id="calc-scroll-container"):
             yield Static(f"Calculator: {self.equation.name}", id="calc-title")
             yield Static(f"Formula: {self.equation.formula}", id="calc-formula")
             yield Static("Enter values (leave one field blank to solve for it):", id="calc-instructions")
-            
+
             # Input fields in the same scrollable container
             for var, desc in self.equation.variables.items():
                 # Skip variables marked as constants in their description
                 if '[constant]' in desc:
                     continue
-                
+
                 yield Static(f"{var}: {desc}", classes="input-label")
                 input_field = Input(placeholder=f"Enter value for {var}")
-                
+
                 # Properly sanitize variable name for ID
                 sanitized_var = re.sub(r'[^\x00-\x7F]', '_', var)
                 sanitized_var = re.sub(r'[^a-zA-Z0-9\-_]', '_', sanitized_var)
-                
+
                 input_field.id = f"input-{sanitized_var}"
                 self.calc_inputs[var] = input_field
                 yield input_field
-            
+
             yield Button("Calculate", id="calc-button", variant="primary")
             yield Static("", id="calc-result")
-        
+
         yield Footer()
 
     def action_go_back(self) -> None:
@@ -70,7 +70,7 @@ class physicsTUIApp(App):
     BINDINGS = [
         Binding("q", "quit", "Quit"),
     ]
-    
+
     def __init__(self) -> None:
         super().__init__()
         self.chapters: List[PhysicsChapter] = [
@@ -90,7 +90,7 @@ class physicsTUIApp(App):
                 # Back to using a single Static widget
                 yield Static("", id="content", markup=True)
                 yield OptionList(id="equation-list", classes="hidden")
-        
+
         yield Footer()
 
     def on_mount(self) -> None:
@@ -107,10 +107,10 @@ class physicsTUIApp(App):
             # Add Calculations leaf only if the chapter has equations with calculation functions
             if any(hasattr(eq, 'calculation') and eq.calculation is not None for eq in chapter.equations):
                 chapter_branch.add_leaf("Calculations")
-        
+
         # Set initial content
         content_widget = self.query_one("#content", Static)
-        
+
         welcome_content = """
 [bold #bb9af7]┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃            WELCOME TO PHYSICS TUI!               ┃
@@ -134,7 +134,7 @@ class physicsTUIApp(App):
 [italic #7aa2f7]
 “I... a universe of atoms, an atom in the universe.” [/]
 [italic #565f89]- Richard Feynman[/]"""
-        
+
         content_widget.update(welcome_content)
 
     def on_tree_node_selected(self, event: Tree.NodeSelected) -> None:
@@ -155,7 +155,7 @@ class physicsTUIApp(App):
             for chapter in self.chapters:
                 if chapter.title == chapter_title:
                     self.current_chapter = chapter  # Set current chapter
-                    
+
                     if leaf_type == "Equations":
                         self.update_content_equations(chapter)
                     elif leaf_type == "Definitions":
@@ -167,18 +167,18 @@ class physicsTUIApp(App):
     def update_content_equations(self, chapter: PhysicsChapter) -> None:
         """Update the content area with chapter equations."""
         self.showing_equation_list = False
-        
+
         # Hide equation list and show content
         equation_list = self.query_one("#equation-list")
         equation_list.add_class("hidden")
-        
+
         content_widget = self.query_one("#content", Static)
         content_widget.remove_class("hidden")
-        
+
         # Build content string
         title_length = len(chapter.title)
         padding = max(0, (50 - title_length) // 2)
-        
+
         content = f"""[bold #bb9af7 on #24283b]┏━{'━' * 50}━┓
 ┃{' ' * padding}{chapter.title.upper()}{' ' * (50 - title_length - padding)}┃
 ┗━{'━' * 50}━┛[/]
@@ -186,38 +186,35 @@ class physicsTUIApp(App):
 [bold #7aa2f7]╔══════════════════════════════════════════════════╗
 ║{'EQUATIONS'.center(50)}║
 ╚══════════════════════════════════════════════════╝[/]\n"""
-        
+
         for eq in chapter.get_equations():
             name_padding = max(0, 45 - len(eq.name))
             content += f"\n[bold #2ac3de]┌─ {eq.name} {'─' * name_padding}┐[/]\n"
             content += f"[#c0caf5]│ Formula:[/] [#e0af68]{eq.formula}[/]\n"
-            
+
             if eq.variables:
                 content += f"[#c0caf5]│[/]\n"
                 content += f"[#c0caf5]│ Variables:[/]\n"
                 for var, desc in eq.variables.items():
                     content += f"[#c0caf5]│[/]   [#9ece6a]◆[/] [bold #ff9e64]{var}[/]: [#c0caf5]{desc}[/]\n"
-            
+
             content += f"[bold #2ac3de]└{'─' * 48}┘[/]"
-        
-        # Update the Static widget
+
         content_widget.update(content)
 
     def update_content_definitions(self, chapter: PhysicsChapter) -> None:
         """Update the content area with chapter definitions"""
         self.showing_equation_list = False
-        
-        # Hide equation list and show content
+
         equation_list = self.query_one("#equation-list")
         equation_list.add_class("hidden")
-        
+
         content_widget = self.query_one("#content", Static)
         content_widget.remove_class("hidden")
-        
-        # Build content string
+
         title_length = len(chapter.title)
         padding = max(0, (50 - title_length) // 2)
-        
+
         content = f"""[bold #bb9af7 on #24283b]┏━{'━' * 50}━┓
 ┃{' ' * padding}{chapter.title.upper()}{' ' * (50 - title_length - padding)}┃
 ┗━{'━' * 50}━┛[/]
@@ -225,109 +222,105 @@ class physicsTUIApp(App):
 [bold #7aa2f7]╔══════════════════════════════════════════════════╗
 ║{'DEFINITIONS'.center(50)}║
 ╚══════════════════════════════════════════════════╝[/]\n"""
-        
+
         for defn in chapter.get_definitions():
             term_padding = max(0, 45 - len(defn.term))
             content += f"\n[bold #2ac3de]╭─ {defn.term} {'─' * term_padding}╮[/]\n"
-            
-            # Word wrap the definition for better display
+
             words = defn.meaning.split()
             lines = []
             current_line = ""
-            
+
             for word in words:
                 if len(current_line) + len(word) + 1 <= 46:
                     current_line += (word + " ") if current_line else word
                 else:
                     lines.append(current_line)
                     current_line = word
-            
+
             if current_line:
                 lines.append(current_line)
-            
-            # Display wrapped definition
+
             for line in lines:
                 content += f"[#c0caf5]│ {line:<47}│[/]\n"
-            
+
             content += f"[bold #2ac3de]╰{'─' * 48}╯[/]"
-        
-        # Update the Static widget
+
         content_widget.update(content)
-    
+
     def show_calculations_list(self, chapter: PhysicsChapter) -> None:
         """Show list of calculable equations using OptionList"""
         self.showing_equation_list = True
-        self.current_chapter = chapter  # Ensure current_chapter is set
-        
+        self.current_chapter = chapter
+
         # Get equations with calculation functions
         self.calculable_equations = [
             eq for eq in chapter.equations if hasattr(eq, 'calculation') and eq.calculation is not None
         ]
-        
+
         if not self.calculable_equations:
-            # If no calculable equations, show message in the content area
+
             equation_list = self.query_one("#equation-list")
             equation_list.add_class("hidden")
-            
+
             content_widget = self.query_one("#content", Static)
             content_widget.remove_class("hidden")
-            
+
             content = f"""[bold #bb9af7 on #24283b]{chapter.title}[/]
 
 [bold #f7768e]No calculators available for this chapter.[/]"""
             content_widget.update(content)
             return
-        
+
         # Hide content and show equation list
         content_widget = self.query_one("#content")
         content_widget.add_class("hidden")
-        
+
         equation_list = self.query_one("#equation-list", OptionList)
         equation_list.remove_class("hidden")
-        
+
         # Configure the option list
         equation_list.can_focus = True
-        
+
         # Clear and populate the option list
         equation_list.clear_options()
-        
+
         calc_header = self.query_one("#content-area").query_one("#calc-header", Static) if self.query_one("#content-area").query("#calc-header") else None
-        
+
         if calc_header:
             calc_header.update(f"Calculable Equations for {chapter.title}")
         else:
             header = Static(f"Calculable Equations for {chapter.title}", id="calc-header")
             self.query_one("#content-area").mount(header, before=equation_list)
-        
-        # Add each calculable equation to the option list
+
+
         equation_names = []
-        
+
         for eq in self.calculable_equations:
             option_text = f"{eq.name}: {eq.formula} \n"
             equation_names.append(option_text)
-        
-        # Add all options at once
+
         equation_list.add_options(equation_names)
-        equation_list.focus()  
-                
+        equation_list.focus()
+
     def on_option_list_option_selected(self, event: OptionList.OptionSelected) -> None:
         """Handle equation selection from OptionList"""
         # Make sure we're in equation list mode and have a chapter
         if not self.showing_equation_list or not self.current_chapter:
             return
-        
+
         # Get the selected index
         selected_index = event.option_index
-        
+
         # Check if we have calculable equations and the index is valid
         if not self.calculable_equations:
             return
-        
+
         if 0 <= selected_index < len(self.calculable_equations):
             selected_equation = self.calculable_equations[selected_index]
             # Push to the calculator screen instead of modifying the current screen
             self.push_screen(CalculatorScreen(selected_equation, self.current_chapter))
-    
+
     def action_toggle_dark(self) -> None:
         """An action to toggle dark mode."""
         self.theme = (
