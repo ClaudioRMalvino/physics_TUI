@@ -349,12 +349,12 @@ class Chapter3(PhysicsChapter):
             
             if v_0 is None:
                 # Solves for v_0 (initial velocity)
-                determinant = (v_f**2) - ( 2*accel*(x_f - x_0) )
+                discriminant = (v_f**2) - ( 2*accel*(x_f - x_0) )
 
-                if determinant < 0:
-                    raise ValueError("The determinant cannot be negative")
+                if  discriminant < 0:
+                    raise ValueError("The discriminant cannot be negative")
 
-                return round(sqrt( determinant), 4)
+                return round(sqrt(  discriminant), 4)
                 
             
             if accel is None:
@@ -375,13 +375,13 @@ class Chapter3(PhysicsChapter):
                 return round(
                     (( (v_f**2) - (v_0**2) ) / (2*accel) ) - x_0, 4)
 
-            determinant =  (v_0**2) + 2*accel*(x_f - x_0)
+            discriminant =  (v_0**2) + 2*accel*(x_f - x_0)
 
-            if determinant < 0:
-                raise ValueError("The determinant cannot be negative")
+            if  discriminant < 0:
+                raise ValueError("The discriminant cannot be negative")
 
             # Returns v_f (final velocity)
-            return round( sqrt(determinant), 4)
+            return round(sqrt(discriminant), 4)
            
             
         @staticmethod
@@ -458,24 +458,24 @@ class Chapter3(PhysicsChapter):
             
             if v_0 is None:
                 # Solves for v_0 (initial velocity)
-                determinant = (v_f**2) - ( 2*g*(y_f - y_0) )
+                discriminant = (v_f**2) - ( 2*g*(y_f - y_0) )
 
-                if determinant < 0:
-                    raise ValueError("The determinant cannot be negative")
+                if  discriminant < 0:
+                    raise ValueError("The discriminant cannot be negative")
 
-                return round(sqrt( determinant), 4)
+                return round(sqrt(discriminant), 4)
 
             if y_f is None:
                 # Solves for y_f (final position)
                 return round(
                     (( (v_f**2) - (v_0**2) ) / (2*g) ) - y_0, 4)
 
-            determinant =  (v_0**2) + 2*g*(y_f - y_0)
+            discriminant =  (v_0**2) + 2*g*(y_f - y_0)
 
-            if determinant < 0:
-                raise ValueError("The determinant cannot be negative")
+            if  discriminant < 0:
+                raise ValueError("The discriminant cannot be negative")
 
             # Returns v_f (final velocity)
-            return round( sqrt(determinant), 4)
+            return round( sqrt(discriminant), 4)
            
             

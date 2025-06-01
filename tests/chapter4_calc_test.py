@@ -63,8 +63,8 @@ class TestTimeoOfFlight(unittest.TestCase):
         #TO DO: DOUBLE CHECK WHY SOLUTIONS TO THE ANGLE ARE COMPLEX AND SOLVE FOR EXPECTED VALUES TO COMPLETE TESTING
 
         expected = [
-            ValueError("Division by zero is undefined"),
-            ValueError("Time cannot be a negative value"),
+            ValueError("Cannot solve for theta with this equation. Yields complex numbers. \n Please input a value for theta."),
+            ValueError("Cannot solve for theta with this equation. Yields complex numbers. \n Please input a value for theta."),
             ValueError("Cannot solve for theta with this equation. Yields complex numbers. \n Please input a value for theta.")]
 
 
@@ -118,7 +118,7 @@ class TestTrajectory(unittest.TestCase):
                 )
             self.assertEqual(str(context.exception), str(expected[i]))
 
-    def test_solving_for_v_0(self):
+    def test_solving_for_v_0(self) -> None:
         """
         Test solves for v_0 (initial velocity)
         """
@@ -130,7 +130,7 @@ class TestTrajectory(unittest.TestCase):
 
         expected = [
             ValueError("Division by zero is undefined"),
-            ValueError("Determinant cannot be negative. Outputs imaginary number."),
+            ValueError("Discriminant cannot be negative. Outputs imaginary number."),
             88.30
         ]
 
@@ -151,7 +151,7 @@ class TestTrajectory(unittest.TestCase):
                     )
                 self.assertAlmostEqual(result, expected[i], places=2)
 
-    def test_solving_for_x(self):
+    def test_solving_for_x(self) -> None:
         """
         Function tests solving for horizontal position (x)
         """
@@ -184,7 +184,7 @@ class TestTrajectory(unittest.TestCase):
                     )
                 self.assertAlmostEqual(result, expected[i], places=1)
 
-        def test_solving_for_y(self):
+        def test_solving_for_y(self) -> None:
             """
             Function tests solving for vertical position (y)
             """
@@ -215,3 +215,23 @@ class TestTrajectory(unittest.TestCase):
                             x=x[i]
                         )
                     self.assertAlmostEqual(result, expected[i], places=1)
+
+class TestRange(unittest.TestCase):
+    """
+    Tests for the range function
+    """
+    
+    def test_solving_for_R(self) -> None:
+
+        # Initial conditions
+        v_0 = [0.0, 10.0, 40.0]
+        theta = [10.0, 25.0, 45.0]
+
+        expected = [0.0, 7.80, 162.93]
+
+        for i in range(len(expected)):
+            result = Chapter4.Calculate.projectileRange(
+                v_0=v_0[i],
+                theta=theta[i]
+            )
+            self.assertAlmostEqual(result, expected[i], places=2)

@@ -71,7 +71,7 @@ class TestVelocityFromDistance(unittest.TestCase):
         x_f = [0.0, 15.0, 20.0]
         accel = [0.0, 5.0, -10.0]
 
-        expected = [0, 26.93, ValueError("The determinant cannot be negative")]
+        expected = [0, 26.93, ValueError("The discriminant cannot be negative")]
 
         for i in range(len(expected)):
             if isinstance(expected[i], ValueError):
@@ -125,7 +125,7 @@ class TestVelocityFromDistance(unittest.TestCase):
         accel = [0.0, 5.0, 20.0]
         v_f = [0.0, 60, 10.0]
 
-        expected = [0, 58.31, ValueError("The determinant cannot be negative")]
+        expected = [0, 58.31, ValueError("The discriminant cannot be negative")]
 
         for i in range(len(expected)):
             if isinstance(expected[i], ValueError):
@@ -197,7 +197,7 @@ class TestVelFreeFallFromHeight(unittest.TestCase):
         v_0 = [0.0, 25.0, 5.0]
         y_f = [0.0, 15.0, 20.0]
 
-        expected = [0, 20.70266, ValueError("The determinant cannot be negative")]
+        expected = [0, 20.70266, ValueError("The discriminant cannot be negative")]
 
         for i in range(len(expected)):
             if isinstance(expected[i], ValueError):
@@ -245,7 +245,7 @@ class TestVelFreeFallFromHeight(unittest.TestCase):
         y_f = [0.0, 25.0, 50.0]
         v_f = [0.0, 60.0, 5.0]
 
-        expected = [0, 63.188, ValueError("The determinant cannot be negative")]
+        expected = [0, 63.188, ValueError("The discriminant cannot be negative")]
 
         for i in range(len(expected)):
             if isinstance(expected[i], ValueError):
