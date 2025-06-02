@@ -124,15 +124,14 @@ class TestTrajectory(unittest.TestCase):
         """
 
         # Initial conditions
-        theta = [0.0, 45.0, 67.0]
-        x = [0.0, -10.0, 100]
-        y = [0.0, 20, 50]
+        theta = [0.0, 45.0, 30.0]
+        x = [0.0, -10.0, 50]
+        y = [0.0, 20, 30]
 
         expected = [
             ValueError("Division by zero is undefined"),
-            ValueError("Discriminant cannot be negative. Outputs imaginary number."),
-            88.30
-        ]
+            ValueError("Radicand cannot be negative. Outputs imaginary number."),
+            4.626]
 
         for i in range(len(expected)):
             if isinstance(expected[i], ValueError):
@@ -162,9 +161,9 @@ class TestTrajectory(unittest.TestCase):
         y = [0.0, 0.0, 10.0]
 
         expected = [
-            ValueError("Division by zero is undefined"),
-            63.64,
-            ValueError("Can only solve for x when y is zero.")
+            ValueError("Cannot solve for x with this equation. Consider calculating the range."),
+            ValueError("Cannot solve for x with this equation. Consider calculating the range."),
+            ValueError("Cannot solve for x with this equation. Consider calculating the range.")
         ]
 
         for i in range(len(expected)):
@@ -184,37 +183,37 @@ class TestTrajectory(unittest.TestCase):
                     )
                 self.assertAlmostEqual(result, expected[i], places=1)
 
-        def test_solving_for_y(self) -> None:
-            """
-            Function tests solving for vertical position (y)
-            """
-            # Initial conditions
-            theta = [0.0, 45.0, 67.0]
-            v_0 = [0.0, 25.0, 80.0]
-            x = [0.0, 15.0, 30.0]
+    def test_solving_for_y(self) -> None:
+        """
+        Function tests solving for vertical position (y)
+        """
+        # Initial conditions
+        theta = [0.0, 45.0, 67.0]
+        v_0 = [0.0, 25.0, 80.0]
+        x = [0.0, 15.0, 30.0]
 
-            expected = [
-                ValueError("Division by zero is undefined"),
-                18.53,
-                75.20
-            ]
+        expected = [
+            ValueError("Division by zero is undefined"),
+            11.46,
+            66.15
+        ]
 
-            for i in range(len(expected)):
-                if isinstance(expected[i], ValueError):
-                    with self.assertRaises(ValueError) as context:
-                        Chapter4.Calculate.trajectory(
-                            theta=theta[i],
-                            v_0=v_0[i],
-                            x=x[i]
-                        )
-                    self.assertEqual(str(context.exception), str(expected[i]))
-                else:
-                    result = Chapter4.Calculate.trajectory(
-                            theta=theta[i],
-                            v_0=v_0[i],
-                            x=x[i]
-                        )
-                    self.assertAlmostEqual(result, expected[i], places=1)
+        for i in range(len(expected)):
+            if isinstance(expected[i], ValueError):
+                with self.assertRaises(ValueError) as context:
+                    Chapter4.Calculate.trajectory(
+                        theta=theta[i],
+                        v_0=v_0[i],
+                        x=x[i]
+                    )
+                self.assertEqual(str(context.exception), str(expected[i]))
+            else:
+                result = Chapter4.Calculate.trajectory(
+                        theta=theta[i],
+                        v_0=v_0[i],
+                        x=x[i]
+                    )
+                self.assertAlmostEqual(result, expected[i], places=1)
 
 class TestRange(unittest.TestCase):
     """
@@ -222,6 +221,9 @@ class TestRange(unittest.TestCase):
     """
     
     def test_solving_for_R(self) -> None:
+        """
+        Function tests solving for the projectile range (R)
+        """
 
         # Initial conditions
         v_0 = [0.0, 10.0, 40.0]
@@ -235,3 +237,64 @@ class TestRange(unittest.TestCase):
                 theta=theta[i]
             )
             self.assertAlmostEqual(result, expected[i], places=2)
+    
+    def test_solving_for_v_0(self) -> None:
+        """
+        Function tests solving for initial velocity (v_0)
+        """
+
+        # Initial conditions
+        R = [0.0, 40.0, 80.0]
+        theta = [0.0, 45.0, 135.0 ]
+
+        expected = [
+            ValueError("Division by zero is undefined."),
+            19.81,
+            ValueError("Radicand cannot be negative. Outputs imaginary number.")
+        ]
+
+        for i in range(len(expected)):
+            if isinstance(expected[i], ValueError):
+                with self.assertRaises(ValueError) as context:
+                    Chapter4.Calculate.projectileRange(
+                        theta=theta[i],
+                        r_total=R[i]
+                    )
+                self.assertEqual(str(context.exception), str(expected[i]))
+            else:
+                result = Chapter4.Calculate.projectileRange(
+                        theta=theta[i],
+                        r_total=R[i]
+                    )
+                self.assertAlmostEqual(result, expected[i], places=1)
+
+    def test_solving_for_theta(self) -> None:
+        """
+        Function tests solving for initial velocity (v_0)
+        """
+
+        # Initial conditions
+        R = [0.0, 120, 30]
+        v_0 = [0.0, 20, 20]
+
+        expected = [
+            ValueError("Division by zero is undefined."),
+            ValueError("No real solution exists. Range too large for given velocity."),
+
+
+        ]
+
+        for i in range(len(expected)):
+            if isinstance(expected[i], ValueError):
+                with self.assertRaises(ValueError) as context:
+                    Chapter4.Calculate.projectileRange(
+                        v_0=v_0[i],
+                        r_total=R[i]
+                    )
+                self.assertEqual(str(context.exception), str(expected[i]))
+            else:
+                result = Chapter4.Calculate.projectileRange(
+                        v_0=v_0[i],
+                        r_total=R[i]
+                    )
+                self.assertAlmostEqual(result, expected[i], places=1)

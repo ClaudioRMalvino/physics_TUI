@@ -350,25 +350,20 @@ class Chapter4(PhysicsChapter):
                     raise ValueError("Division by zero is undefined")
 
                 # Solves for v_0 (initial velocity)
-                disciminant: float = (g / 2)*( ( (-x**2) / y ) + ( x / tan(theta_radian) ) )
+                radicand: float = (g / 2)*( ( (-x**2) / y ) + ( x / tan(theta_radian) ) )
 
-                if disciminant < 0:
-                    raise ValueError("Discriminant cannot be negative. Outputs imaginary number.")
+                if radicand < 0:
+                    raise ValueError("Radicand cannot be negative. Outputs imaginary number.")
                 
-                return sqrt(disciminant) / cos(theta_radian)
+                return sqrt(radicand) / cos(theta_radian)
             
             if x is None:
-
-                if y == 0:
-                    raise ValueError("Division by zero is undefined")
-
-                c: float = y
-                b: float = tan(theta_radian)
-                a: float =  g / (2 * (v_0 * cos(theta_radian))**2)
-                roots = Chapter4.Calculate.quadratic_eq(a, b, c)
-
-                return (round(roots[0], 4), round(roots[1], 4))
+                
+                raise ValueError("Cannot solve for x with this equation. Consider calculating the range.")
             
+            if v_0 == 0 or theta == 90 or theta == 270:
+                raise ValueError("Division by zero is undefined")
+
             return tan(theta_radian) * x - \
                    ( ( g / (2 * (v_0 * cos(theta_radian))**2) ) * (x**2) ) 
 
@@ -400,19 +395,32 @@ class Chapter4(PhysicsChapter):
 
             if v_0 == None:
 
-                if theta == 0:
-                    raise valueError("Division by zero is undefined.")
+                if theta == 0.0:
+                    raise ValueError("Division by zero is undefined.")
+
                 else:
+                    # Solves for v_0
                     radicand = (r_total * g) / sin(2*theta_radian)
+                    
+                    if radicand < 0:
+                        raise ValueError("Radicand cannot be negative. Outputs imaginary number.")
                     return sqrt(radicand)
 
             if theta == None:
 
-                if v_0 == 0:
+                if v_0 == 0.0:
                     raise ValueError("Division by zero is undefined.")
 
+
                 argument = (r_total * g) / (v_0**2)
-                return (0.5) * asin(argument)
+
+                if argument > 1:
+                    raise ValueError("No real solution exists. Range too large for given velocity.")
+                if argument < 0:
+                    raise ValueError("Range cannot be negative.")
+
+                # Solves for theta
+                return  (asin(argument) / 2.0) * (180/pi)
             
             return ((v_0**2) * sin(2 * theta_radian) ) / g
 
