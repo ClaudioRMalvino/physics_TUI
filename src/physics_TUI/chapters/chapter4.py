@@ -103,7 +103,8 @@ class Chapter4(PhysicsChapter):
                 variables={
                     "v": "Velocity",
                     "r": "Radius"
-                }
+                },
+                calculation=self.Calculate.centripetalAccel
             ),
             Equation(
                 name="Position vector (uniform cirular motion)",
@@ -376,7 +377,7 @@ class Chapter4(PhysicsChapter):
         ) -> float:
 
             """
-            Function calculates the range of a porjectile as function of 
+            Function calculates the range of a projectile as function of 
             theta and initial velocity.
             Can also calculate for desired variable when arg == None and all
             other args have values.           
@@ -424,4 +425,44 @@ class Chapter4(PhysicsChapter):
             
             return ((v_0**2) * sin(2 * theta_radian) ) / g
 
+        @staticmethod
+        def centripetalAccel(
+            accel: Optional[float]=None,
+            velocity: Optional[float]=None,
+            radius: Optional[float]=None
+        ) -> float:
+            """
+            Function calculates the centripetal acceleration of a projectile as function of 
+            velocity and radius.
+            Can also calculate for desired variable when arg == None and all
+            other args have values.           
+
+            Args:
+                accel (Optional[float], optional): centripetal acceleration. Defaults to None.
+                velocity (Optional[float], optional): velocity. Defaults to None.
+                radius (Optional[float], optional): radius. Defaults to None.
+
+            Returns:
+                float: the result of whichever variable was left equal to None
+            """
+
+            if radius <= 0:
+                raise ValueError("Radius cannot be less than or equal to zero.")
+
+            if velocity == None:
+                radicand: float = accel * radius
+
+                if radicand < 0:
+                    raise ValueError("Radicand cannot be negative. Yields an imaginary number.")
+
+                return sqrt(radicand)
+
+            if radius == None:
+
+                if accel == 0:
+                    raise ValueError("Division by zero is undefined.")
+                return ( (velocity**2 ) / accel )
+            
+            return (velocity**2) / radius
+    
 
