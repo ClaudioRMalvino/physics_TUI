@@ -38,7 +38,7 @@ class Chapter4(PhysicsChapter):
             ),
             Equation(
                 name="Velocity vector",
-                formula="v(t) = lim(Δt→0) [(r(t + Δt) − r(t)) / Δt] = dr/dt",
+                formula="v(t) = lim(Δt→0) ((r(t + Δt) − r(t)) / Δt) = dr/dt",
                 variables={}
             ),
             Equation(
@@ -58,7 +58,7 @@ class Chapter4(PhysicsChapter):
             ),
             Equation(
                 name="Instantaneous acceleration",
-                formula="a(t) = lim(Δt→0) [(v(t + Δt) − v(t)) / Δt] = dv/dt",
+                formula="a(t) = lim(Δt→0) ((v(t + Δt) − v(t)) / Δt) = dv/dt",
                 variables={}
             ),
             Equation(
