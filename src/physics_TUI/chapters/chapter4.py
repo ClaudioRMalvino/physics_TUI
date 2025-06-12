@@ -383,9 +383,9 @@ class Chapter4(PhysicsChapter):
             other args have values.           
 
             Args:
-                r_total (Optional[float], optional): total range of the projectile. Defaults to None.
-                v_0 (Optional[float], optional): initial. Defaults to None.
-                theta (Optional[float], optional): theta. Defaults to None.
+                r_total (Optional[float], optional): total range of the projectile [m]. Defaults to None.
+                v_0 (Optional[float], optional): initial velocity [m/s]. Defaults to None.
+                theta (Optional[float], optional): theta [degrees]. Defaults to None.
 
             Returns:
                 float: the result of whichever variable was left equal to None
@@ -438,9 +438,9 @@ class Chapter4(PhysicsChapter):
             other args have values.           
 
             Args:
-                accel (Optional[float], optional): centripetal acceleration. Defaults to None.
-                velocity (Optional[float], optional): velocity. Defaults to None.
-                radius (Optional[float], optional): radius. Defaults to None.
+                accel (Optional[float], optional): centripetal acceleration [m/s^2]. Defaults to None.
+                velocity (Optional[float], optional): velocity [m/s]. Defaults to None.
+                radius (Optional[float], optional): radius [m]. Defaults to None.
 
             Returns:
                 float: the result of whichever variable was left equal to None
