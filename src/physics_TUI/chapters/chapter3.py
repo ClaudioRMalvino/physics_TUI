@@ -270,6 +270,9 @@ class Chapter3(PhysicsChapter):
                 return round(x_f - (v_0 * t) - (0.5 * accel * (t**2)), 4)
 
             if v_0 is None:
+                if t == 0:
+                    raise ValueError("Division by zero is undefined")
+                    
                 # Solves for v_0 (initial velocity)
                 return round((x_f - x_0 - (0.5 * accel * (t**2))) / t, 4)
 
@@ -295,7 +298,10 @@ class Chapter3(PhysicsChapter):
                 and t is not None
                 and x_f is not None
             ):
-                return round(x_f - x_0 - (v_0 * t), 4)
+                if t == 0:
+                    raise ValueError("Divison by zero is undefined.")
+
+                return round( (x_f - x_0 - (v_0 * t) ) * (2 / (t * t)), 4)
 
             # Solves for x_f (final position)
 

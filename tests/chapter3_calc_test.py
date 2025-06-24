@@ -18,7 +18,7 @@ class TestPositionFromVelAndAcc(unittest.TestCase):
         t: List[float] = [0.0, 15.0, 20.0]
         accel: List[float] = [0.0, 5.0, 10.0]
 
-        expected: List[Any] = [0, 942.5, 3010]
+        expected: List[float] = [0, 942.5, 3010]
 
         results = []
 
@@ -57,6 +57,112 @@ class TestPositionFromVelAndAcc(unittest.TestCase):
                 )
                 self.assertAlmostEqual(result, expected[i], places=7)
 
+    def test_solving_for_accel(self) -> None:
+        """
+        Tests solving for acceleration (accel)
+        """
+
+        # Initial conditions
+
+        x_0: List[float] = [0.0, 5.0, 10.0]
+        v_0: List[float] = [0.0, 25.0, 50.0]
+        t: List[float] = [0.0, 15.0, 20.0]
+        x_f: List[float] = [0, 942.5, 3010]
+
+        expected: List[Any] = [
+            ValueError("Divison by zero is undefined."),
+            5.0, 
+            10.0]
+
+        for i in range(len(expected)):
+                if isinstance(expected[i], ValueError):
+                    with self.assertRaises(ValueError) as context:
+                        Chapter3.Calculate.positionFromVelAndAcc(
+                            x_0=x_0[i],
+                            v_0=v_0[i],
+                            t=t[i],
+                            x_f=x_f[i]
+                        )
+                    self.assertEqual(str(context.exception), str(expected[i]))
+                else:
+                    result = Chapter3.Calculate.positionFromVelAndAcc(
+                            x_0=x_0[i],
+                            v_0=v_0[i],
+                            t=t[i],
+                            x_f=x_f[i]
+                        )
+                    self.assertAlmostEqual(result, expected[i], places=2)
+    
+    def test_solving_for_x_0(self) -> None:
+        """
+        Function tests solving for initial position (x_0)
+        """
+
+        # Initial conditions
+
+        v_0: List[float] = [0.0, 25.0, 50.0]
+        t: List[float] = [0.0, 15.0, 20.0]
+        accel: List[float] = [0.0, 5.0, 10.0]
+        x_f: List[float] = [0, 942.5, 3010]
+
+        expected: List[float] = [0.0, 5.0, 10.0]
+
+        for i in range(len(expected)):
+                if isinstance(expected[i], ValueError):
+                    with self.assertRaises(ValueError) as context:
+                        Chapter3.Calculate.positionFromVelAndAcc(
+                            accel=accel[i],
+                            v_0=v_0[i],
+                            t=t[i],
+                            x_f=x_f[i]
+                        )
+                    self.assertEqual(str(context.exception), str(expected[i]))
+                else:
+                    result = Chapter3.Calculate.positionFromVelAndAcc(
+                            accel=accel[i],
+                            v_0=v_0[i],
+                            t=t[i],
+                            x_f=x_f[i]
+                        )
+                    self.assertAlmostEqual(result, expected[i], places=2)
+
+    def test_solving_for_v_0(self) -> None:
+        """
+        Function tests solving for intiial velocity (v_0)
+        """
+
+        # Initial conditions
+
+        x_0: List[float] = [0.0, 5.0, 10.0]
+        t: List[float] = [0.0, 15.0, 20.0]
+        accel: List[float] = [0.0, 5.0, 10.0]
+        x_f: List[float] = [0, 942.5, 3010]
+
+        expected: List[Any] = [
+            ValueError("Division by zero is undefined"), 
+            25.0, 
+            50.0]
+
+        for i in range(len(expected)):
+                if isinstance(expected[i], ValueError):
+                    with self.assertRaises(ValueError) as context:
+                        Chapter3.Calculate.positionFromVelAndAcc(
+                            accel=accel[i],
+                            x_0=x_0[i],
+                            t=t[i],
+                            x_f=x_f[i]
+                        )
+                    self.assertEqual(str(context.exception), str(expected[i]))
+                else:
+                    result = Chapter3.Calculate.positionFromVelAndAcc(
+                            accel=accel[i],
+                            x_0=x_0[i],
+                            t=t[i],
+                            x_f=x_f[i]
+                        )
+                    self.assertAlmostEqual(result, expected[i], places=2)
+
+
 
 class TestVelocityFromDistance(unittest.TestCase):
     """
@@ -64,9 +170,10 @@ class TestVelocityFromDistance(unittest.TestCase):
     """
 
     def test_solving_for_v_f(self) -> None:
-        """ositionFromVelAndAcc
-        Tests the main use case for calculating final velocity
         """
+        Function tests solving for final velocity (V_f)
+        """
+
         x_0: List[float] = [0.0, 5.0, 10.0]
         v_0: List[float] = [0.0, 25.0, 5.0]
         x_f: List[float] = [0.0, 15.0, 20.0]
