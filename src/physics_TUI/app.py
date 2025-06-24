@@ -236,7 +236,7 @@ class physicsTUIApp(App):
                     current_line += (word + " ") if current_line else word
                 else:
                     lines.append(current_line)
-                    current_line = word
+                    current_line = word 
 
             if current_line:
                 lines.append(current_line)

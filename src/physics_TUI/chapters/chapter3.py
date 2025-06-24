@@ -3,7 +3,8 @@ from math import sqrt
 from physics_TUI.base_chapter import PhysicsChapter, Equation, Definition
 
 # Constant
-g: float = -9.82 # gravitational acceleration on Earth [m/s^2]
+g: float = -9.82  # gravitational acceleration on Earth [m/s^2]
+
 
 class Chapter3(PhysicsChapter):
     """
@@ -11,8 +12,9 @@ class Chapter3(PhysicsChapter):
     """
 
     def __init__(self) -> None:
-        super().__init__("Motion Along a Straight Line", 
-                         "Study of motion along one dimension.")
+        super().__init__(
+            "Motion Along a Straight Line", "Study of motion along one dimension."
+        )
 
         self.var_mapping: Dict[str, str] = {
             "x₀": "x_0",
@@ -22,9 +24,9 @@ class Chapter3(PhysicsChapter):
             "x": "x_f",
             "y₀": "y_0",
             "y": "y_f",
-            "v": "v_f"
+            "v": "v_f",
         }
-    
+
         self.equations: List[Equation] = [
             Equation(
                 name="Displacement",
@@ -32,49 +34,36 @@ class Chapter3(PhysicsChapter):
                 variables={
                     "x": "Final position",
                     "x₀": "Initial position",
-                }
+                },
             ),
             Equation(
                 name="Total Displacement",
                 formula="Δx = ∑Δxᵢ",
-                variables={
-                    "Δxᵢ": "All steps taken"
-                }
+                variables={"Δxᵢ": "All steps taken"},
             ),
             Equation(
                 name="Average velocity (constant acceleration)",
                 formula="v = Δx/Δt = (x - xᵢ)/(t - tᵢ)",
-                variables={
-                    "Δx": "Displacement in direction",
-                    "Δt": "Elapsed time"}
+                variables={"Δx": "Displacement in direction", "Δt": "Elapsed time"},
             ),
             Equation(
-                name="Instantaneous velocity",
-                formula="v(t) = dx(t)/dt",
-                variables={}
+                name="Instantaneous velocity", formula="v(t) = dx(t)/dt", variables={}
             ),
             Equation(
                 name="Average speed",
                 formula="s = (Total distance)/(Elapsed time)",
-                variables={}
+                variables={},
             ),
-            Equation(
-                name="Instantaneous speed",
-                formula="|v(t)|",
-                variables={}
-            ),
+            Equation(name="Instantaneous speed", formula="|v(t)|", variables={}),
             Equation(
                 name="Average acceleration",
                 formula="a = Δv/Δt",
-                variables={
-                    "Δv": "Change in velocity",
-                    "Δt": "Elapsed time"
-                }
+                variables={"Δv": "Change in velocity", "Δt": "Elapsed time"},
             ),
             Equation(
                 name="Instantaneous acceleration",
                 formula="a(t) = dv(t)/dt",
-                variables={}
+                variables={},
             ),
             Equation(
                 name="Position from avg. velocity",
@@ -82,16 +71,13 @@ class Chapter3(PhysicsChapter):
                 variables={
                     "x₀": "Initial position",
                     "v": "Average velocity",
-                    "t": "time"
-                }
+                    "t": "time",
+                },
             ),
             Equation(
                 name="Velocity from acceleration",
                 formula="v(t) = v₀ + at",
-                variables={
-                    "v₀": "Initial velocity",
-                    "a": "Acceleration"
-                }
+                variables={"v₀": "Initial velocity", "a": "Acceleration"},
             ),
             Equation(
                 name="Position from velocity and acceleration",
@@ -101,9 +87,9 @@ class Chapter3(PhysicsChapter):
                     "v₀": "Intiial velocity",
                     "t": "Time",
                     "a": "Acceleration",
-                    "x": "Final Position"
+                    "x": "Final Position",
                 },
-                calculation=self.Calculate.positionFromVelAndAcc
+                calculation=self.Calculate.positionFromVelAndAcc,
             ),
             Equation(
                 name="Velocity from distance",
@@ -113,9 +99,9 @@ class Chapter3(PhysicsChapter):
                     "x₀": "Initial position",
                     "v₀": "Intiial velocity",
                     "a": "Acceleration",
-                    "v": "Final velocity"
+                    "v": "Final velocity",
                 },
-                calculation=self.Calculate.velocityFromDistance
+                calculation=self.Calculate.velocityFromDistance,
             ),
             Equation(
                 name="Velocity of free fall",
@@ -123,8 +109,8 @@ class Chapter3(PhysicsChapter):
                 variables={
                     "v₀": "Initial velocity",
                     "g": "Accelration due to gravity: 9.82 m/s",
-                    "t": "Time"
-                }
+                    "t": "Time",
+                },
             ),
             Equation(
                 name="Height of free fall",
@@ -134,9 +120,9 @@ class Chapter3(PhysicsChapter):
                     "v₀": "Initial velocity",
                     "g": "Acceleration due to gravity: 9.82 m/s [constant]",
                     "t": "Time",
-                    "y": "Final Position"
+                    "y": "Final Position",
                 },
-                calculation=self.Calculate.heightOfFreeFall
+                calculation=self.Calculate.heightOfFreeFall,
             ),
             Equation(
                 name="Velocity of free fall from height",
@@ -146,125 +132,123 @@ class Chapter3(PhysicsChapter):
                     "y₀": "Initial height",
                     "v₀": "Initial velocity",
                     "g": "Acceleration due to gravity: 9.82 m/s [constant]",
-                    "v": "Final velocity"
+                    "v": "Final velocity",
                 },
-                calculation=self.Calculate.velFreeFallFromHeight
-                
+                calculation=self.Calculate.velFreeFallFromHeight,
             ),
             Equation(
                 name="Velocity from acceleration",
                 formula="v(t) = ∫ a(t)dt + C₁",
-                variables={}
-
+                variables={},
             ),
             Equation(
                 name="Position from velocity",
                 formula="x(t) = ∫ V(t)dt + C₂",
-                variables={}
-            )
+                variables={},
+            ),
         ]
 
         self.definitions: List[Definition] = [
             Definition(
                 term="acceleration due to gravity",
-                meaning="acceleration of an object as a result of gravity"
+                meaning="acceleration of an object as a result of gravity",
             ),
             Definition(
                 term="average acceleration",
-                meaning="the rate of change in velocity; the change in velocity over time"
+                meaning="the rate of change in velocity; the change in velocity over time",
             ),
             Definition(
                 term="average speed",
-                meaning="the total distance traveled divided by elapsed time"
+                meaning="the total distance traveled divided by elapsed time",
             ),
             Definition(
                 term="average velocity",
-                meaning="the displacement divided by the time over which displacement occurs under constant acceleration"      
+                meaning="the displacement divided by the time over which displacement occurs under constant acceleration",
             ),
             Definition(
-                term="displacement",
-                meaning="the change in position of an object"
+                term="displacement", meaning="the change in position of an object"
             ),
             Definition(
                 term="distance traveled",
-                meaning="the total length of the path traveled between two positions"
+                meaning="the total length of the path traveled between two positions",
             ),
             Definition(
                 term="elapsed time",
-                meaning="the difference between the ending time and the beginning time"
+                meaning="the difference between the ending time and the beginning time",
             ),
             Definition(
                 term="free fall",
-                meaning="the state of movement that results from gravitational force only"
+                meaning="the state of movement that results from gravitational force only",
             ),
             Definition(
                 term="instantaneous acceleration",
-                meaning="acceleration at a specific point in time"
+                meaning="acceleration at a specific point in time",
             ),
             Definition(
                 term="instantaneous speed",
-                meaning="the absolute value of the instantaneous velocity"
+                meaning="the absolute value of the instantaneous velocity",
             ),
             Definition(
                 term="instantaneous velocity",
-                meaning="the velocity at a specific instant or time point"
+                meaning="the velocity at a specific instant or time point",
             ),
             Definition(
                 term="kinematics",
-                meaning="the description of motion through properties such as position, time, velocity, and acceleration"
+                meaning="the description of motion through properties such as position, time, velocity, and acceleration",
             ),
             Definition(
                 term="position",
-                meaning="the location of an object at a particular time"
+                meaning="the location of an object at a particular time",
             ),
             Definition(
                 term="total displacement",
-                meaning="the sum of individual displacements over a given time period"
+                meaning="the sum of individual displacements over a given time period",
             ),
             Definition(
                 term="two-body pursuit problem",
-                meaning="a kinematics problem in which the unknowns are calculated by solving the kinematic equations simultaneously for two moving objects"
-            )
+                meaning="a kinematics problem in which the unknowns are calculated by solving the kinematic equations simultaneously for two moving objects",
+            ),
         ]
 
     class Calculate:
-        """ 
-        Class holds methods to calculate equations in Chapter 3 
+        """
+        Class holds methods to calculate equations in Chapter 3
         """
 
         @staticmethod
         def quadratic_eq(a: float, b: float, c: float) -> Optional[Tuple[float, float]]:
-                """
-                Function calculates the roots of a quadratic equation ax^2 + bx + c = 0
-                accurately in all cases.
+            """
+            Function calculates the roots of a quadratic equation ax^2 + bx + c = 0
+            accurately in all cases.
 
-                Returns a tuple containing the two roots.
-                """
+            Returns a tuple containing the two roots.
+            """
 
-                discriminant = b**2 - 4*a*c
+            discriminant = b**2 - 4 * a * c
 
-                if discriminant < 0:
-                    return None  
+            if discriminant < 0:
+                return None
 
-                if b == 0 and c == 0:
-                    return (0.0, 0.0)
-                # Choose the appropriate formula based on the sign of b
-                if b >= 0:
-                    x1 = (-b - sqrt(discriminant)) / (2*a)
-                    x2 = (2*c) / (-b - sqrt(discriminant))
-                else:
-                    x1 = (2*c) / (-b + sqrt(discriminant))
-                    x2 = (-b + sqrt(discriminant)) / (2*a)
+            if b == 0 and c == 0:
+                return (0.0, 0.0)
+            # Choose the appropriate formula based on the sign of b
+            if b >= 0:
+                x1 = (-b - sqrt(discriminant)) / (2 * a)
+                x2 = (2 * c) / (-b - sqrt(discriminant))
+            else:
+                x1 = (2 * c) / (-b + sqrt(discriminant))
+                x2 = (-b + sqrt(discriminant)) / (2 * a)
 
-                return (x1, x2)
+            return (x1, x2)
 
         @staticmethod
-        def positionFromVelAndAcc( 
-            x_0: Optional[float]=None,
-            v_0: Optional[float]=None,
-            t: Optional[float]=None,
-            accel: Optional[float]=None,
-            x_f: Optional[float]=None ) -> float:
+        def positionFromVelAndAcc(
+            x_0: Optional[float] = None,
+            v_0: Optional[float] = None,
+            t: Optional[float] = None,
+            accel: Optional[float] = None,
+            x_f: Optional[float] = None,
+        ) -> float:
             """
             Calculates position from velocity and acceleration.
             Can also calculate for desired variable when arg == None and all
@@ -279,16 +263,14 @@ class Chapter3(PhysicsChapter):
             """
             if t is not None and t < 0:
                 raise ValueError("Time cannot be a negative value")
-                
-            if x_0 is None: 
+
+            if x_0 is None:
                 # Solves for x_0 (initial position)
-                return round(
-                    x_f - (v_0 * t) - (0.5 * accel * (t**2)), 4)
+                return round(x_f - (v_0 * t) - (0.5 * accel * (t**2)), 4)
 
             if v_0 is None:
                 # Solves for v_0 (initial velocity)
-                return round(
-                    (x_f - x_0 - (0.5 * accel * (t**2)))/t, 4)
+                return round((x_f - x_0 - (0.5 * accel * (t**2))) / t, 4)
 
             if t is None:
                 # Solves for t (elapsed time)
@@ -297,30 +279,34 @@ class Chapter3(PhysicsChapter):
 
                 c: float = x_0 - x_f
                 b: float = v_0
-                a: float = (0.5 * accel)
+                a: float = 0.5 * accel
                 roots = Chapter3.Calculate.quadratic_eq(a, b, c)
 
-                if roots[0] < 0: 
+                if roots[0] < 0:
                     return round(roots[1], 4)
                 if roots[1] < 0:
                     return round(roots[0], 4)
 
-            if accel is None and x_0 is not None and v_0 is not None \
-                and t is not None and x_f is not None:
-                return round(x_f - x_0 - (v_0 *t), 4)
-            
+            if (
+                accel is None
+                and x_0 is not None
+                and v_0 is not None
+                and t is not None
+                and x_f is not None
+            ):
+                return round(x_f - x_0 - (v_0 * t), 4)
+
             # Solves for x_f (final position)
-            
-            return round(
-                (x_0 + (v_0 * t) + (0.5 * accel * (t**2))), 4)
-        
+
+            return round((x_0 + (v_0 * t) + (0.5 * accel * (t**2))), 4)
+
         @staticmethod
         def velocityFromDistance(
-            x_0: Optional[float]=None,
-            v_0: Optional[float]=None,
-            accel: Optional[float]=None,
-            x_f: Optional[float]=None,
-            v_f: Optional[float]=None
+            x_0: Optional[float] = None,
+            v_0: Optional[float] = None,
+            accel: Optional[float] = None,
+            x_f: Optional[float] = None,
+            v_f: Optional[float] = None,
         ) -> float:
             """
             Calculates final velocity as a function of displacement, acceleration,
@@ -341,55 +327,50 @@ class Chapter3(PhysicsChapter):
             if x_0 is None:
                 # Solves for x_0 (initial position)
 
-                if accel==0:
+                if accel == 0:
                     raise ValueError("acceleration cannot be equal to zero")
 
-                return round(
-                    -( (( (v_f**2) - (v_0**2) ) / (2*accel) ) - x_f), 4) 
-            
+                return round(-((((v_f**2) - (v_0**2)) / (2 * accel)) - x_f), 4)
+
             if v_0 is None:
                 # Solves for v_0 (initial velocity)
-                discriminant = (v_f**2) - ( 2*accel*(x_f - x_0) )
+                discriminant = (v_f**2) - (2 * accel * (x_f - x_0))
 
-                if  discriminant < 0:
+                if discriminant < 0:
                     raise ValueError("The discriminant cannot be negative")
 
-                return round(sqrt(  discriminant), 4)
-                
-            
+                return round(sqrt(discriminant), 4)
+
             if accel is None:
                 # Solves for acceleration
 
-                if x_f==0 and x_0==0:
+                if x_f == 0 and x_0 == 0:
                     raise ValueError("x_f and x_0 cannot both be equal to zero")
-                    
-                return round(
-                    ( (v_f**2) - (v_0**2) ) / (2*(x_f - x_0) ), 4)
-            
+
+                return round(((v_f**2) - (v_0**2)) / (2 * (x_f - x_0)), 4)
+
             if x_f is None:
                 # Solves for x_f (final position)
 
-                if accel==0:
+                if accel == 0:
                     raise ValueError("acceleration cannot be equal to zero")
 
-                return round(
-                    (( (v_f**2) - (v_0**2) ) / (2*accel) ) - x_0, 4)
+                return round((((v_f**2) - (v_0**2)) / (2 * accel)) - x_0, 4)
 
-            discriminant =  (v_0**2) + 2*accel*(x_f - x_0)
+            discriminant = (v_0**2) + 2 * accel * (x_f - x_0)
 
-            if  discriminant < 0:
+            if discriminant < 0:
                 raise ValueError("The discriminant cannot be negative")
 
             # Returns v_f (final velocity)
             return round(sqrt(discriminant), 4)
-           
-            
+
         @staticmethod
         def heightOfFreeFall(
-            y_0: Optional[float]=None,
-            v_0: Optional[float]=None,
-            t: Optional[float]=None,
-            y_f: Optional[float]=None
+            y_0: Optional[float] = None,
+            v_0: Optional[float] = None,
+            t: Optional[float] = None,
+            y_f: Optional[float] = None,
         ) -> float:
             """
             Calculates height as a function of time, initial velocity,
@@ -401,42 +382,42 @@ class Chapter3(PhysicsChapter):
             if y_0 is None:
                 # Solves for y_0 (initial position)
                 return round(y_f - (v_0 * t) - (0.5 * g * (t**2)), 4)
-            
+
             elif v_0 is None:
                 # Solves for v_0 (initial velocity)
                 if t == 0:
                     raise ValueError("Cannot solve for v_0 when t=0")
-                return round((y_f - y_0 - (0.5 * g * (t**2)))/t, 4)
-        
+                return round((y_f - y_0 - (0.5 * g * (t**2))) / t, 4)
+
             elif t is None:
                 # Solves for t (elapsed time)
                 c = y_0 - y_f
                 b = v_0
                 a = 0.5 * g
                 roots = Chapter3.Calculate.quadratic_eq(a, b, c)
-                
+
                 if roots is None:
                     raise ValueError("No real solution for time")
-                
+
                 # Return the non-negative root, preferring the smaller positive one
                 valid_roots = [r for r in roots if r >= 0]
                 if not valid_roots:
                     raise ValueError("No positive time solution")
-                
+
                 return round(min(valid_roots), 4)
-            
+
             else:  # y_f is None
                 # Solves for y_f (final position)
                 return round(y_0 + (v_0 * t) + (0.5 * g * (t**2)), 4)
 
         @staticmethod
         def velFreeFallFromHeight(
-            y_0: Optional[float]=None,
-            v_0: Optional[float]=None,
-            y_f: Optional[float]=None,
-            v_f: Optional[float]=None
+            y_0: Optional[float] = None,
+            v_0: Optional[float] = None,
+            y_f: Optional[float] = None,
+            v_f: Optional[float] = None,
         ) -> float:
-            """ Calculates final velocity as a function of displacement, acceleration,
+            """Calculates final velocity as a function of displacement, acceleration,
             and initial velocity along the y-axis.
             Can also calculate for desired variable when arg == None and all
             other args have values.
@@ -453,29 +434,25 @@ class Chapter3(PhysicsChapter):
             if y_0 is None:
                 # Solves for y_0 (initial height)
 
-                return round(
-                    -( (( (v_f**2) - (v_0**2) ) / (2*g) ) - y_f), 4) 
-            
+                return round(-((((v_f**2) - (v_0**2)) / (2 * g)) - y_f), 4)
+
             if v_0 is None:
                 # Solves for v_0 (initial velocity)
-                discriminant = (v_f**2) - ( 2*g*(y_f - y_0) )
+                discriminant = (v_f**2) - (2 * g * (y_f - y_0))
 
-                if  discriminant < 0:
+                if discriminant < 0:
                     raise ValueError("The discriminant cannot be negative")
 
                 return round(sqrt(discriminant), 4)
 
             if y_f is None:
                 # Solves for y_f (final position)
-                return round(
-                    (( (v_f**2) - (v_0**2) ) / (2*g) ) - y_0, 4)
+                return round((((v_f**2) - (v_0**2)) / (2 * g)) - y_0, 4)
 
-            discriminant =  (v_0**2) + 2*g*(y_f - y_0)
+            discriminant = (v_0**2) + 2 * g * (y_f - y_0)
 
-            if  discriminant < 0:
+            if discriminant < 0:
                 raise ValueError("The discriminant cannot be negative")
 
             # Returns v_f (final velocity)
-            return round( sqrt(discriminant), 4)
-           
-            
+            return round(sqrt(discriminant), 4)
