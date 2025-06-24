@@ -10,7 +10,7 @@ class TestTimeoOfFlight(unittest.TestCase):
 
     def test_solving_for_t(self) -> None:
         """
-        Tests the main use case  of calculating for t (time of flight)
+        Tests the main use case of calculating for t (time of flight)
         """
 
         # Initial conditions

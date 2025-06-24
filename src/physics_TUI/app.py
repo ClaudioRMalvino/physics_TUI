@@ -9,6 +9,7 @@ from textual.screen import Screen
 
 from physics_TUI.chapters.chapter3 import Chapter3
 from physics_TUI.chapters.chapter4 import Chapter4
+from physics_TUI.chapters.chapter5 import Chapter5
 from physics_TUI.base_chapter import PhysicsChapter, Equation, Definition
 
 class CalculatorScreen(Screen):
@@ -76,6 +77,7 @@ class physicsTUIApp(App):
         self.chapters: List[PhysicsChapter] = [
             Chapter3(),
             Chapter4(),
+            Chapter5()
         ]
         self.current_chapter: Optional[PhysicsChapter] = None
         self.showing_equation_list = False
@@ -233,7 +235,7 @@ class physicsTUIApp(App):
 
             for word in words:
                 if len(current_line) + len(word) + 1 <= 46:
-                    current_line += (word + " ") if current_line else word
+                    current_line += (" " + word) if current_line else word
                 else:
                     lines.append(current_line)
                     current_line = word 

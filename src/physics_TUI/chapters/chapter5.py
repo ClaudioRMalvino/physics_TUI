@@ -1,5 +1,10 @@
+from typing import Dict, List, Optional
 from physics_TUI.base_chapter import PhysicsChapter, Equation, Definition
+from math import pi, cos, acos
 
+# Constants
+
+g: float = 9.82 # gravitational acceleration on Earth [m/s^2]
 
 class Chapter5(PhysicsChapter):
     """
@@ -10,23 +15,30 @@ class Chapter5(PhysicsChapter):
         super().__init__("Newton's Laws of Motion")
 
         # TO-DO: complete the map once all calculation methods have been developed
-        self.var_mapping: Dict[str, str] = {}
+        self.var_mapping: Dict[str, str] = {
+            "N": "normal_F",
+            "m": "mass",
+            "θ": "theta",
+            "F": "force",
+            "k": "spring_const",
+            "x": "displacement"
+        }
 
         self.equations: List[Equation] = [
             Equation(
                 name="Net external force",
                 formula="F(net) = ∑F",
                 variables={
-                    "F": "Force vector [N]",
-                    "F(net)": "Sum of all force vectors [N]",
+                    "F": "Force vector, (N)",
+                    "F(net)": "Sum of all force vectors (N)",
                 },
             ),
             Equation(
                 name="Newton's first law",
                 formula="v = constant ⟺ F(Net) = 0",
                 variables={
-                    "v": "Velocity [m/s]",
-                    "F(net)": "Sum of all force vectors [N]",
+                    "v": "Velocity (m/s)",
+                    "F(net)": "Sum of all force vectors (N)",
                 },
             ),
             Equation(
@@ -34,26 +46,26 @@ class Chapter5(PhysicsChapter):
                 formula="F(net) = ∑ma",
                 variables={
                     "F(net)": "Sum of all force vectors",
-                    "m": "Mass of the object [kg]",
-                    "a": "Acceleration vector [m/s²]",
+                    "m": "Mass of the object (kg)",
+                    "a": "Acceleration vector (m/s²)",
                 },
             ),
             Equation(
                 name="Newton's second law, component form",
                 formula="∑F(x) = ma(x), ∑F(y) = ma(y), and ∑F(z) = ma(z)",
                 variables={
-                    "m": "Mass of the object [kg]",
-                    "a(x)": "X component of acceleration [m/s²]",
-                    "a(y)": "y component of acceleration [m/s²]",
-                    "a(z)": "z component of acceleration [m/s²]",
+                    "m": "Mass of the object (kg)",
+                    "a(x)": "X component of acceleration (m/s²)",
+                    "a(y)": "y component of acceleration (m/s²)",
+                    "a(z)": "z component of acceleration (m/s²)",
                 },
             ),
             Equation(
                 name="Newton's second law, momentum form",
                 formula="F(net) = dp/dt = d(mv)/dt",
                 variables={
-                    "F(net)": "Sum of all force vectors [N]",
-                    "p": "Time dependent momentum vector [kg⋅m/s]",
+                    "F(net)": "Sum of all force vectors (N)",
+                    "p": "Time dependent momentum vector (kg⋅m/s)",
                     "d/dt": "First order derivative with respect to time",
                 },
             ),
@@ -61,40 +73,42 @@ class Chapter5(PhysicsChapter):
                 name="Weight",
                 formula="w = mg",
                 variables={
-                    "w": "Weight [N]",
-                    "g": "Acceleration due to gravity [m/s²]",
+                    "w": "Weight (N)",
+                    "g": "Acceleration due to gravity (m/s²)",
                 },
             ),
             Equation(
                 name="Newton's third law",
                 formula="F(AB) = - F(BA)",
                 variables={
-                    "F(AB)": "Force acted upon B by A [N]",
-                    "F(BA)": "Force acted upon A by B [N]",
+                    "F(AB)": "Force acted upon B by A (N)",
+                    "F(BA)": "Force acted upon A by B (N)",
                 },
             ),
             Equation(
                 name="Normal force (resting)",
                 formula="N = mgcosθ",
                 variables={
-                    "N": "Normal force [N]",
-                    "m": "Mass of the object [kg]",
-                    "g": "Acceleration due to gravity [m/s²]",
+                    "N": "Normal force (N)",
+                    "m": "Mass of the object (kg)",
+                    "g": "Acceleration due to gravity (m/s²)",
                     "θ": "Angle between the normal vector and gravitational vector [radians]",
                 },
+                calculation=self.Calculate.normalForce
             ),
             Equation(
                 name="Hooke's Law",
                 formula="F = -kx",
                 variables={
-                    "F": "Restorative force [N]",
-                    "k": "Spring constant [kg/s²]",
+                    "F": "Restorative force (N)",
+                    "k": "Spring constant (kg/s²)",
                     "x": "Distance from point of equilibrium",
                 },
+                calculation=self.Calculate.hookesLaw
             ),
         ]
 
-        definitions: List[Definition] = [
+        self.definitions: List[Definition] = [
             Definition(
                 term="dynamics",
                 meaning="study of how forces affect the motion of objects and systems",
@@ -193,3 +207,98 @@ class Chapter5(PhysicsChapter):
 
         # TO-DO: Decide which equations are needed and how best to calculate knowing 
         # the typical problem which they are used to solve.
+
+        @staticmethod
+        def normalForce(
+            normal_F: Optional[float]=None,
+            mass: Optional[float]=None,
+            theta: Optional[float]=None,
+        ) -> float:
+            """
+            Function calculates the normal force of an object resting on a surface.
+            Can also calculate for desired variable when arg == None and all other args
+            have values.
+
+            Args:
+                normal_F (Optional[float], optional): normal force [N]. Defaults to None.
+                mass (Optiona[float], optional): mass of the object [kg]. Defaults to None.
+                theta (Optional[float], optional): angle between the normal force and gravitational force. Defaults to None.
+
+            Returns:
+                float: the result of whichever variable was left equal to None
+            """
+
+            if mass is not None and mass < 0:
+                raise ValueError("Mass cannot be negative.")
+
+            if theta is not None:
+                # Converts degrees to radians
+                theta_radians: float = theta * (pi/180)
+            else:
+                # Calculates for theta
+                arg: float = normal_F/(mass * g)
+                return acos(arg) * (180/pi)
+            
+            if mass == None:
+
+                if theta == 90.0 or theta == 270.0:
+                    raise ValueError("Division by zero is undefined.")
+
+                # Calculates for the mass
+                result = normal_F / (g*cos(theta_radians))
+
+                if result < 0:
+                    raise ValueError("Mass cannot be negative.")
+                else:
+                    return result
+            
+            return mass * g * cos(theta_radians)
+
+        @staticmethod
+        def hookesLaw(
+            force: Optional[float]=None,
+            spring_const: Optional[float]=None,
+            displacement: Optional[float]=None
+        ) -> float:
+            """
+            Function calculates the restorative force of a spring system 
+            as a fuction of displacement and the spring constant.
+            Can also calculate for desired variable when arg == None and all 
+            other args have values
+
+            Args:
+                force (Optional[float], optional): restorative force [N]. Defaults to None.
+                spring_const (Optional[float], optional): displacement [m]. Defaults to None.
+                displacement (Optional[float], optional): spring constant [kg*m/s^2]. Defaults to None.
+
+            Returns:
+                float: the result of whichever variable was left equal to None
+            """
+
+            if spring_const is not None and spring_const < 0:
+                raise ValueError("Spring constant (k) cannot be a negative value.")
+
+            if spring_const == None:
+
+                if displacement == 0:
+                    raise ValueError("Divison by zero is undefined.")
+
+                # Calculates the spring constant
+                result = -force / displacement
+
+                if result < 0:
+                    raise ValueError("Spring constant cannot be negative. \
+                        Consider the relation between the direction \
+                        of displacment and the restorative force.")
+                
+                return result
+            
+            if displacement == None:
+                
+                if spring_const == 0:
+                    raise ValueError("Divison by zero is undefined.")
+
+                # Calculates the displacement
+                return -force / spring_const
+            
+            return -spring_const * displacement
