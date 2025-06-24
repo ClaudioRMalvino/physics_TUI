@@ -298,3 +298,73 @@ class TestRange(unittest.TestCase):
                         r_total=R[i]
                     )
                 self.assertAlmostEqual(result, expected[i], places=1)
+
+class TestCentripetalAccel(unittest.TestCase):
+    """
+    Conducts test for the centripetalAccel function
+    
+    """
+    
+    def test_solving_for_accel(self) -> None:
+        """
+        Function tests solving for centripetal acceleration
+        """
+        
+        # Initial conditions
+        velocity = [10.0, 0.0, 50, 10.0]
+        radius = [0.0, 10.0, 2, -1]
+        
+        expected = [
+            ValueError("Radius cannot be less than or equal to zero."),
+            0.0,
+            1250,
+            ValueError("Radius cannot be less than or equal to zero.")
+        ]
+        
+        for i in range(len(expected)):
+            if isinstance(expected[i], ValueError):
+                with self.assertRaises(ValueError) as context:
+                    Chapter4.Calculate.centripetalAccel(
+                        velocity=velocity[i],
+                        radius=radius[i]
+                    )
+                self.assertEqual(str(context.exception), str(expected[i]))
+            else:
+                result = Chapter4.Calculate.centripetalAccel(
+                        velocity=velocity[i],
+                        radius=radius[i]
+                    )
+                self.assertAlmostEqual(result, expected[i], places=1)
+    
+    def test_solving_for_velocity(self) -> None:
+        """
+        Function tests solving for velocity
+        """
+
+        # Initial conditions
+        accel = [0.0, -10.0, 10.0, 10.0]
+        radius = [1.0, 1.0, -1.0, 20.0]
+        
+        expected = [
+            0.0,
+            ValueError("Radicand cannot be negative. Yields an imaginary number."),
+            ValueError("Radius cannot be less than or equal to zero."),
+            14.142
+        ]
+        
+        for i in range(len(expected)):
+            if isinstance(expected[i], ValueError):
+                with self.assertRaises(ValueError) as context:
+                    Chapter4.Calculate.centripetalAccel(
+                        accel=accel[i],
+                        radius=radius[i]
+                    )
+                self.assertEqual(str(context.exception), str(expected[i]))
+            else:
+                result = Chapter4.Calculate.centripetalAccel(
+                        accel=accel[i],
+                        radius=radius[i]
+                    )
+                self.assertAlmostEqual(result, expected[i], places=2)
+        
+        
