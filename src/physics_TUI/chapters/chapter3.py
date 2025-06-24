@@ -224,20 +224,21 @@ class Chapter3(PhysicsChapter):
             Returns a tuple containing the two roots.
             """
 
-            discriminant = b**2 - 4 * a * c
+            discriminant: float = b**2 - 4 * a * c
 
             if discriminant < 0:
                 return None
 
             if b == 0 and c == 0:
                 return (0.0, 0.0)
+
             # Choose the appropriate formula based on the sign of b
             if b >= 0:
-                x1 = (-b - sqrt(discriminant)) / (2 * a)
-                x2 = (2 * c) / (-b - sqrt(discriminant))
+                x1: float = (-b - sqrt(discriminant)) / (2 * a)
+                x2: float = (2 * c) / (-b - sqrt(discriminant))
             else:
-                x1 = (2 * c) / (-b + sqrt(discriminant))
-                x2 = (-b + sqrt(discriminant)) / (2 * a)
+                x1: float = (2 * c) / (-b + sqrt(discriminant))
+                x2: float = (-b + sqrt(discriminant)) / (2 * a)
 
             return (x1, x2)
 
@@ -280,7 +281,7 @@ class Chapter3(PhysicsChapter):
                 c: float = x_0 - x_f
                 b: float = v_0
                 a: float = 0.5 * accel
-                roots = Chapter3.Calculate.quadratic_eq(a, b, c)
+                roots: Tuple[float, float] = Chapter3.Calculate.quadratic_eq(a, b, c)
 
                 if roots[0] < 0:
                     return round(roots[1], 4)
@@ -334,7 +335,7 @@ class Chapter3(PhysicsChapter):
 
             if v_0 is None:
                 # Solves for v_0 (initial velocity)
-                discriminant = (v_f**2) - (2 * accel * (x_f - x_0))
+                discriminant: float = (v_f**2) - (2 * accel * (x_f - x_0))
 
                 if discriminant < 0:
                     raise ValueError("The discriminant cannot be negative")
@@ -357,7 +358,7 @@ class Chapter3(PhysicsChapter):
 
                 return round((((v_f**2) - (v_0**2)) / (2 * accel)) - x_0, 4)
 
-            discriminant = (v_0**2) + 2 * accel * (x_f - x_0)
+            discriminant: float = (v_0**2) + 2 * accel * (x_f - x_0)
 
             if discriminant < 0:
                 raise ValueError("The discriminant cannot be negative")
@@ -391,16 +392,17 @@ class Chapter3(PhysicsChapter):
 
             elif t is None:
                 # Solves for t (elapsed time)
-                c = y_0 - y_f
-                b = v_0
-                a = 0.5 * g
-                roots = Chapter3.Calculate.quadratic_eq(a, b, c)
+                c: float = y_0 - y_f
+                b: float = v_0
+                a: float = 0.5 * g
+                roots: Tuple[float, float] = Chapter3.Calculate.quadratic_eq(a, b, c)
 
                 if roots is None:
                     raise ValueError("No real solution for time")
 
                 # Return the non-negative root, preferring the smaller positive one
-                valid_roots = [r for r in roots if r >= 0]
+                valid_roots: List[float] = [r for r in roots if r >= 0]
+
                 if not valid_roots:
                     raise ValueError("No positive time solution")
 
@@ -438,7 +440,7 @@ class Chapter3(PhysicsChapter):
 
             if v_0 is None:
                 # Solves for v_0 (initial velocity)
-                discriminant = (v_f**2) - (2 * g * (y_f - y_0))
+                discriminant: float = (v_f**2) - (2 * g * (y_f - y_0))
 
                 if discriminant < 0:
                     raise ValueError("The discriminant cannot be negative")
@@ -449,7 +451,7 @@ class Chapter3(PhysicsChapter):
                 # Solves for y_f (final position)
                 return round((((v_f**2) - (v_0**2)) / (2 * g)) - y_0, 4)
 
-            discriminant = (v_0**2) + 2 * g * (y_f - y_0)
+            discriminant: float = (v_0**2) + 2 * g * (y_f - y_0)
 
             if discriminant < 0:
                 raise ValueError("The discriminant cannot be negative")

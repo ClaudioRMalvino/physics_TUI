@@ -39,7 +39,9 @@ class Chapter4(PhysicsChapter):
             Equation(
                 name="Velocity vector",
                 formula="v(t) = lim(Δt→0) ((r(t + Δt) − r(t)) / Δt) = dr/dt",
-                variables={}
+                variables={
+                    "Δt": "Elapsed time (s)"
+                }
             ),
             Equation(
                 name="Velocity in terms of components",
@@ -164,19 +166,19 @@ class Chapter4(PhysicsChapter):
             ),
             Equation(
                 name="Relative velocity equation (more than two reference frames)",
-                formula="v_PC = v_PA + v_AB + v_BC",
+                formula="v(PC) = v(PA) + v(AB) + v(B)",
                 variables={
-                    "v_PA": "Relative velocity between points P and A",
-                    "v_AB": "Relative velocity between points A and B",
-                    "v_BC": "Relative velocity between points B and C"
+                    "v(PA)": "Relative velocity between points P and A",
+                    "v(AB)": "Relative velocity between points A and B",
+                    "v(BC)": "Relative velocity between points B and C"
                 }
             ),
             Equation(
                 name="Relative acceleration equation",
-                formula="a_PS = a_PS' + a_S'S",
+                formula="a(PS) = a(PS)' + a(S'S)",
                 variables={
-                    "a_PS'": "Acceleration vector in frame S'",
-                    "a_S'S": "Acceleration vector between frames S and S'"
+                    "a(PS)'": "Acceleration vector in frame S'",
+                    "a(S'S)": "Acceleration vector between frames S and S'"
                 }
             )
 
@@ -264,7 +266,7 @@ class Chapter4(PhysicsChapter):
                 Returns a tuple containing the two roots.
                 """
 
-                discriminant = b**2 - 4*a*c
+                discriminant: float = b**2 - 4*a*c
 
                 if discriminant < 0:
                     return None  
@@ -274,11 +276,11 @@ class Chapter4(PhysicsChapter):
                 
                 # Choose the appropriate formula based on the sign of b
                 if b >= 0:
-                    x1 = (-b - sqrt(discriminant)) / (2*a)
-                    x2 = (2*c) / (-b - sqrt(discriminant))
+                    x1: float = (-b - sqrt(discriminant)) / (2*a)
+                    x2: float = (2*c) / (-b - sqrt(discriminant))
                 else:
-                    x1 = (2*c) / (-b + sqrt(discriminant))
-                    x2 = (-b + sqrt(discriminant)) / (2*a)
+                    x1: float = (2*c) / (-b + sqrt(discriminant))
+                    x2: float = (-b + sqrt(discriminant)) / (2*a)
 
                 return (x1, x2)
 
@@ -304,9 +306,8 @@ class Chapter4(PhysicsChapter):
                 # Converts degrees to radians 
                 theta_radians: float = theta * (pi/180)
             else:
-                # Solves for theta (launch angle)
                 raise ValueError("Cannot solve for theta with this equation. Yields complex numbers. \n Please input a value for theta.")
-            
+                
             if t is not None and t < 0:
                 raise ValueError("Time cannot be a negative value")
 
@@ -344,6 +345,7 @@ class Chapter4(PhysicsChapter):
                 theta_radian: float = theta * (pi/180)
             else: 
                 raise ValueError("Cannot solve for theta with this equation. Please input a value for theta.")
+
             
             if v_0 is None:
 
@@ -392,7 +394,7 @@ class Chapter4(PhysicsChapter):
             """
 
             if theta is not None:
-                theta_radian = theta * (pi / 180.0)
+                theta_radian: float = theta * (pi / 180.0)
 
             if v_0 == None:
 
@@ -401,7 +403,7 @@ class Chapter4(PhysicsChapter):
 
                 else:
                     # Solves for v_0
-                    radicand = (r_total * g) / sin(2*theta_radian)
+                    radicand: float = (r_total * g) / sin(2*theta_radian)
                     
                     if radicand < 0:
                         raise ValueError("Radicand cannot be negative. Outputs imaginary number.")
@@ -413,7 +415,7 @@ class Chapter4(PhysicsChapter):
                     raise ValueError("Division by zero is undefined.")
 
 
-                argument = (r_total * g) / (v_0**2)
+                argument: float = (r_total * g) / (v_0**2)
 
                 if argument > 1:
                     raise ValueError("No real solution exists. Range too large for given velocity.")
@@ -421,7 +423,7 @@ class Chapter4(PhysicsChapter):
                     raise ValueError("Range cannot be negative.")
 
                 # Solves for theta
-                return  (asin(argument) / 2.0) * (180/pi)
+                return (asin(argument) / 2.0) * (180/pi)
             
             return ((v_0**2) * sin(2 * theta_radian) ) / g
 
@@ -461,6 +463,7 @@ class Chapter4(PhysicsChapter):
 
                 if accel == 0:
                     raise ValueError("Division by zero is undefined.")
+                    
                 return ( (velocity**2 ) / accel )
             
             return (velocity**2) / radius

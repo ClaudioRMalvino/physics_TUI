@@ -52,12 +52,12 @@ class Chapter5(PhysicsChapter):
             ),
             Equation(
                 name="Newton's second law, component form",
-                formula="∑F(x) = ma(x), ∑F(y) = ma(y), and ∑F(z) = ma(z)",
+                formula="∑Fₓ = maₓ, ∑Fᵧ = maᵧ, and ∑F𝓏 = ma𝓏",
                 variables={
                     "m": "Mass of the object (kg)",
-                    "a(x)": "X component of acceleration (m/s²)",
-                    "a(y)": "y component of acceleration (m/s²)",
-                    "a(z)": "z component of acceleration (m/s²)",
+                    "aₓ": "X component of acceleration (m/s²)",
+                    "aᵧ": "y component of acceleration (m/s²)",
+                    "a𝓏": "z component of acceleration (m/s²)",
                 },
             ),
             Equation(

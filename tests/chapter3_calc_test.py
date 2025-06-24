@@ -1,5 +1,6 @@
 import unittest
 
+from typing import List, Any
 from physics_TUI.chapters.chapter3 import Chapter3
 
 
@@ -12,12 +13,12 @@ class TestPositionFromVelAndAcc(unittest.TestCase):
         """
         Tests the main use case for calculating x(t)
         """
-        x_0 = [0.0, 5.0, 10.0]
-        v_0 = [0.0, 25.0, 50.0]
-        t = [0.0, 15.0, 20.0]
-        accel = [0.0, 5.0, 10.0]
+        x_0: List[float] = [0.0, 5.0, 10.0]
+        v_0: List[float] = [0.0, 25.0, 50.0]
+        t: List[float] = [0.0, 15.0, 20.0]
+        accel: List[float] = [0.0, 5.0, 10.0]
 
-        expected = [0, 942.5, 3010]
+        expected: List[Any] = [0, 942.5, 3010]
 
         results = []
 
@@ -34,12 +35,12 @@ class TestPositionFromVelAndAcc(unittest.TestCase):
         """
         Tests for the more complicated task of solving for time.
         """
-        x_0 = [0.0, 5.0, 10.0]
-        v_0 = [0.0, 25.0, 50.0]
-        accel = [0.0, 5.0, 10.0]
-        x_f = [0.0, 942.5, 3010.0]
+        x_0: List[float] = [0.0, 5.0, 10.0]
+        v_0: List[float] = [0.0, 25.0, 50.0]
+        accel: List[float] = [0.0, 5.0, 10.0]
+        x_f: List[float] = [0.0, 942.5, 3010.0]
 
-        expected = [ValueError("v₀ and a cannot both be equal to zero"), 15.0, 20.0]
+        expected: List[Any] = [ValueError("v₀ and a cannot both be equal to zero"), 15.0, 20.0]
 
         for i in range(len(expected)):
             if isinstance(expected[i], ValueError):
@@ -66,12 +67,12 @@ class TestVelocityFromDistance(unittest.TestCase):
         """ositionFromVelAndAcc
         Tests the main use case for calculating final velocity
         """
-        x_0 = [0.0, 5.0, 10.0]
-        v_0 = [0.0, 25.0, 5.0]
-        x_f = [0.0, 15.0, 20.0]
-        accel = [0.0, 5.0, -10.0]
+        x_0: List[float] = [0.0, 5.0, 10.0]
+        v_0: List[float] = [0.0, 25.0, 5.0]
+        x_f: List[float] = [0.0, 15.0, 20.0]
+        accel: List[float] = [0.0, 5.0, -10.0]
 
-        expected = [0, 26.93, ValueError("The discriminant cannot be negative")]
+        expected: List[Any] = [0, 26.93, ValueError("The discriminant cannot be negative")]
 
         for i in range(len(expected)):
             if isinstance(expected[i], ValueError):
@@ -90,12 +91,12 @@ class TestVelocityFromDistance(unittest.TestCase):
         """
         Tests for the more complicated task of solving for intial position.
         """
-        x_f = [0.0, 5.0, 10.0]
-        v_0 = [0.0, 25.0, 50.0]
-        accel = [0.0, 5.0, 10.0]
-        v_f = [0.0, 60.0, 120.0]
+        x_f: List[float] = [0.0, 5.0, 10.0]
+        v_0: List[float] = [0.0, 25.0, 50.0]
+        accel: List[float] = [0.0, 5.0, 10.0]
+        v_f: List[float] = [0.0, 60.0, 120.0]
 
-        expected = [
+        expected: List[Any] = [
             ValueError("acceleration cannot be equal to zero"),
             -292.5,
             -585,
@@ -120,12 +121,12 @@ class TestVelocityFromDistance(unittest.TestCase):
         """
         Tests for the more complicated task of solving for initial velocity.
         """
-        x_0 = [0.0, 5.0, 10.0]
-        x_f = [0.0, 25.0, 50.0]
-        accel = [0.0, 5.0, 20.0]
-        v_f = [0.0, 60, 10.0]
+        x_0: List[float] = [0.0, 5.0, 10.0]
+        x_f: List[float] = [0.0, 25.0, 50.0]
+        accel: List[float] = [0.0, 5.0, 20.0]
+        v_f: List[float] = [0.0, 60, 10.0]
 
-        expected = [0, 58.31, ValueError("The discriminant cannot be negative")]
+        expected: List[Any] = [0, 58.31, ValueError("The discriminant cannot be negative")]
 
         for i in range(len(expected)):
             if isinstance(expected[i], ValueError):
@@ -147,11 +148,11 @@ class TestHeightofFreeFall(unittest.TestCase):
         """
         Tests the main use case for calculating y_f (final height)
         """
-        y_0 = [0.0, 5.0, 10.0]
-        v_0 = [0.0, 25.0, 50.0]
-        t = [0.0, 15.0, 20.0]
+        y_0: List[float] = [0.0, 5.0, 10.0]
+        v_0: List[float] = [0.0, 25.0, 50.0]
+        t: List[float] = [0.0, 15.0, 20.0]
 
-        expected = [0, -724.75, -954]
+        expected: List[Any] = [0, -724.75, -954]
 
         results = []
 
@@ -166,11 +167,11 @@ class TestHeightofFreeFall(unittest.TestCase):
         """
         Tests for the more complicated task of solving for time.
         """
-        y_0 = [0.0, 5.0, 10.0]
-        v_0 = [0.0, 25.0, 50.0]
-        y_f = [0.0, 30.0, 0.0]
+        y_0: List[float] = [0.0, 5.0, 10.0]
+        v_0: List[float] = [0.0, 25.0, 50.0]
+        y_f: List[float] = [0.0, 30.0, 0.0]
 
-        expected = [0, 1.367, 10.3795]
+        expected: List[Any] = [0, 1.367, 10.3795]
 
         results = []
 
@@ -193,11 +194,11 @@ class TestVelFreeFallFromHeight(unittest.TestCase):
         """
         Tests the main use case for calculating final velocity
         """
-        y_0 = [0.0, 5.0, 10.0]
-        v_0 = [0.0, 25.0, 5.0]
-        y_f = [0.0, 15.0, 20.0]
+        y_0: List[float] = [0.0, 5.0, 10.0]
+        v_0: List[float] = [0.0, 25.0, 5.0]
+        y_f: List[float] = [0.0, 15.0, 20.0]
 
-        expected = [0, 20.70266, ValueError("The discriminant cannot be negative")]
+        expected: List[Any] = [0, 20.70266, ValueError("The discriminant cannot be negative")]
 
         for i in range(len(expected)):
             if isinstance(expected[i], ValueError):
@@ -220,11 +221,11 @@ class TestVelFreeFallFromHeight(unittest.TestCase):
         """
         Tests for the more complicated task of solving for intial position.
         """
-        y_f = [0.0, 5.0, 10.0]
-        v_0 = [0.0, 25.0, 50.0]
-        v_f = [0.0, 60.0, 120.0]
+        y_f: List[float] = [0.0, 5.0, 10.0]
+        v_0: List[float] = [0.0, 25.0, 50.0]
+        v_f: List[float] = [0.0, 60.0, 120.0]
 
-        expected = [0.0, 156.476, 615.906]
+        expected: List[Any] = [0.0, 156.476, 615.906]
 
         results = []
 
@@ -241,11 +242,11 @@ class TestVelFreeFallFromHeight(unittest.TestCase):
         """
         Tests for the more complicated task of solving for initial velocity.
         """
-        y_0 = [0.0, 5.0, 60.0]
-        y_f = [0.0, 25.0, 50.0]
-        v_f = [0.0, 60.0, 5.0]
+        y_0: List[float] = [0.0, 5.0, 60.0]
+        y_f: List[float] = [0.0, 25.0, 50.0]
+        v_f: List[float] = [0.0, 60.0, 5.0]
 
-        expected = [0, 63.188, ValueError("The discriminant cannot be negative")]
+        expected: List[Any] = [0, 63.188, ValueError("The discriminant cannot be negative")]
 
         for i in range(len(expected)):
             if isinstance(expected[i], ValueError):

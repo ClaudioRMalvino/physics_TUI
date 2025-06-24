@@ -1,5 +1,6 @@
 import unittest
 
+from typing import List, Any
 from physics_TUI.chapters.chapter4 import Chapter4
 
 
@@ -14,10 +15,10 @@ class TestTimeoOfFlight(unittest.TestCase):
         """
 
         # Initial conditions
-        v_0 = [0.0, 25.0, 100.0]
-        theta = [10.0, 25.7, 75.8]
+        v_0: List[float] = [0.0, 25.0, 100.0]
+        theta: List[float] = [10.0, 25.7, 75.8]
 
-        expected = [0.0, 2.208, 19.744]
+        expected: List[Any] = [0.0, 2.208, 19.744]
 
         results = []
 
@@ -37,10 +38,10 @@ class TestTimeoOfFlight(unittest.TestCase):
         """
 
         # initial conditions
-        t = [0.0, 5.0, 20.0]
-        theta = [10.0, 25.8, 45.0]
+        t: List[float] = [0.0, 5.0, 20.0]
+        theta: List[float] = [10.0, 25.8, 45.0]
 
-        expected = [0.0, 56.41, 138.88]
+        expected: List[Any] = [0.0, 56.41, 138.88]
 
         results = []
 
@@ -57,16 +58,15 @@ class TestTimeoOfFlight(unittest.TestCase):
         """
 
         # initial conditions
-        v_0 = [0.0, 10.0, 45.0]
-        t = [0.0, -10.0, 10.0]
+        v_0: List[float] = [0.0, 10.0, 56.41]
+        t: List[float] = [0.0, -10.0, 20.0]
 
         #TO DO: DOUBLE CHECK WHY SOLUTIONS TO THE ANGLE ARE COMPLEX AND SOLVE FOR EXPECTED VALUES TO COMPLETE TESTING
 
-        expected = [
+        expected: List[ValueError] = [
             ValueError("Cannot solve for theta with this equation. Yields complex numbers. \n Please input a value for theta."),
             ValueError("Cannot solve for theta with this equation. Yields complex numbers. \n Please input a value for theta."),
             ValueError("Cannot solve for theta with this equation. Yields complex numbers. \n Please input a value for theta.")]
-
 
         for i in range(len(expected)):
             if isinstance(expected[i], ValueError):
@@ -93,11 +93,11 @@ class TestTrajectory(unittest.TestCase):
         Tests solving for theta
         """
 
-        v_0 = [0.0, 50.0, -10.0]
-        x = [0.0, 10, 50]
-        y = [0.0, 10, 25]
+        v_0: List[float] = [0.0, 50.0, -10.0]
+        x: List[float] = [0.0, 10, 50]
+        y: List[float] = [0.0, 10, 25]
 
-        expected = [
+        expected: List[Any] = [
             ValueError(
                 "Cannot solve for theta with this equation. Please input a value for theta."
             ),
@@ -124,11 +124,11 @@ class TestTrajectory(unittest.TestCase):
         """
 
         # Initial conditions
-        theta = [0.0, 45.0, 30.0]
-        x = [0.0, -10.0, 50]
-        y = [0.0, 20, 30]
+        theta: List[float] = [0.0, 45.0, 30.0]
+        x: List[float] = [0.0, -10.0, 50]
+        y: List[float] = [0.0, 20, 30]
 
-        expected = [
+        expected: List[Any] = [
             ValueError("Division by zero is undefined"),
             ValueError("Radicand cannot be negative. Outputs imaginary number."),
             4.626]
@@ -156,11 +156,11 @@ class TestTrajectory(unittest.TestCase):
         """
 
         # Initial conditions
-        theta = [0.0, 45.0, 67.0]
-        v_0 = [0.0, 25.0, 80.0]
-        y = [0.0, 0.0, 10.0]
+        theta: List[float] = [0.0, 45.0, 67.0]
+        v_0: List[float] = [0.0, 25.0, 80.0]
+        y: List[float] = [0.0, 0.0, 10.0]
 
-        expected = [
+        expected: List[ValueError] = [
             ValueError("Cannot solve for x with this equation. Consider calculating the range."),
             ValueError("Cannot solve for x with this equation. Consider calculating the range."),
             ValueError("Cannot solve for x with this equation. Consider calculating the range.")
@@ -188,11 +188,11 @@ class TestTrajectory(unittest.TestCase):
         Function tests solving for vertical position (y)
         """
         # Initial conditions
-        theta = [0.0, 45.0, 67.0]
-        v_0 = [0.0, 25.0, 80.0]
-        x = [0.0, 15.0, 30.0]
+        theta: List[float] = [0.0, 45.0, 67.0]
+        v_0: List[float] = [0.0, 25.0, 80.0]
+        x: List[float] = [0.0, 15.0, 30.0]
 
-        expected = [
+        expected: List[Any] = [
             ValueError("Division by zero is undefined"),
             11.46,
             66.15
@@ -226,10 +226,10 @@ class TestRange(unittest.TestCase):
         """
 
         # Initial conditions
-        v_0 = [0.0, 10.0, 40.0]
-        theta = [10.0, 25.0, 45.0]
+        v_0: List[float] = [0.0, 10.0, 40.0]
+        theta: List[float] = [10.0, 25.0, 45.0]
 
-        expected = [0.0, 7.80, 162.93]
+        expected: List[Any] = [0.0, 7.80, 162.93]
 
         for i in range(len(expected)):
             result = Chapter4.Calculate.projectileRange(
@@ -244,10 +244,10 @@ class TestRange(unittest.TestCase):
         """
 
         # Initial conditions
-        R = [0.0, 40.0, 80.0]
-        theta = [0.0, 45.0, 135.0 ]
+        R: List[float] = [0.0, 40.0, 80.0]
+        theta: List[float] = [0.0, 45.0, 135.0 ]
 
-        expected = [
+        expected: List[Any] = [
             ValueError("Division by zero is undefined."),
             19.81,
             ValueError("Radicand cannot be negative. Outputs imaginary number.")
@@ -274,10 +274,10 @@ class TestRange(unittest.TestCase):
         """
 
         # Initial conditions
-        R = [0.0, 120, 30]
-        v_0 = [0.0, 20, 20]
+        R: List[float] = [0.0, 120, 30]
+        v_0: List[float] = [0.0, 20, 20]
 
-        expected = [
+        expected: List[Any] = [
             ValueError("Division by zero is undefined."),
             ValueError("No real solution exists. Range too large for given velocity."),
 
@@ -311,10 +311,10 @@ class TestCentripetalAccel(unittest.TestCase):
         """
         
         # Initial conditions
-        velocity = [10.0, 0.0, 50, 10.0]
-        radius = [0.0, 10.0, 2, -1]
+        velocity: List[float] = [10.0, 0.0, 50, 10.0]
+        radius: List[float] = [0.0, 10.0, 2, -1]
         
-        expected = [
+        expected: List[Any] = [
             ValueError("Radius cannot be less than or equal to zero."),
             0.0,
             1250,
@@ -342,10 +342,10 @@ class TestCentripetalAccel(unittest.TestCase):
         """
 
         # Initial conditions
-        accel = [0.0, -10.0, 10.0, 10.0]
-        radius = [1.0, 1.0, -1.0, 20.0]
+        accel: List[float] = [0.0, -10.0, 10.0, 10.0]
+        radius: List[float] = [1.0, 1.0, -1.0, 20.0]
         
-        expected = [
+        expected: List[Any] = [
             0.0,
             ValueError("Radicand cannot be negative. Yields an imaginary number."),
             ValueError("Radius cannot be less than or equal to zero."),
