@@ -14,7 +14,6 @@ class Chapter5(PhysicsChapter):
     def __init__(self) -> None:
         super().__init__("Newton's Laws of Motion")
 
-        # TO-DO: complete the map once all calculation methods have been developed
         self.var_mapping: Dict[str, str] = {
             "N": "normal_F",
             "m": "mass",
@@ -74,7 +73,7 @@ class Chapter5(PhysicsChapter):
                 formula="w = mg",
                 variables={
                     "w": "Weight (N)",
-                    "g": "Acceleration due to gravity (m/s²)",
+                    "m": "Mass (kg)"
                 },
             ),
             Equation(
@@ -91,7 +90,6 @@ class Chapter5(PhysicsChapter):
                 variables={
                     "N": "Normal force (N)",
                     "m": "Mass of the object (kg)",
-                    "g": "Acceleration due to gravity (m/s²)",
                     "θ": "Angle between the normal vector and gravitational vector [radians]",
                 },
                 calculation=self.Calculate.normalForce

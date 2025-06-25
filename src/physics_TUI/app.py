@@ -57,6 +57,91 @@ class CalculatorScreen(Screen):
 
         yield Footer()
 
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        """Handle calculate button press"""
+        
+        if event.button.id == "calc-button":
+            try:
+                # Get values from input fields
+                input_values = {}
+                empty_field = None
+                
+                for var, input_widget in self.calc_inputs.items():
+                    value_str = input_widget.value.strip()
+                    if value_str:
+                        try:
+                            input_values[var] = float(value_str)
+                        except ValueError:
+                            self.query_one("#calc-result", Static).update(
+                                f"[red]Error: '{value_str}' is not a valid number for {var}[/]"
+                            )
+                            return
+                    else:
+                        if empty_field is None:
+                            empty_field = var
+                        else:
+                            self.query_one("#calc-result", Static).update(
+                                "[red]Error: Leave exactly one field empty to solve for it[/]"
+                            )
+                            return
+                
+                # Check if we have exactly one empty field
+                if empty_field is None:
+                    self.query_one("#calc-result", Static).update(
+                        "[red]Error: Leave one field empty to solve for it[/]"
+                    )
+                    return
+                
+                # Map display variables to calculation function parameters
+                if self.current_chapter:
+                    mapped_values = {}
+                    for display_var, value in input_values.items():
+                        # Use the variable mapping if available
+                        if hasattr(self.current_chapter, 'var_mapping') and display_var in self.current_chapter.var_mapping:
+                            calc_var = self.current_chapter.var_mapping[display_var]
+                        else:
+                            calc_var = display_var
+                        mapped_values[calc_var] = value
+                    
+                    # Map the empty field too
+                    if hasattr(self.current_chapter, 'var_mapping') and empty_field in self.current_chapter.var_mapping:
+                        empty_calc_var = self.current_chapter.var_mapping[empty_field]
+                    else:
+                        empty_calc_var = empty_field
+                    
+                    # Set the empty field to None in the parameters
+                    mapped_values[empty_calc_var] = None
+                    
+                    # Call the calculation function
+                    if self.equation.calculation:
+                        result = self.equation.calculation(**mapped_values)
+                        
+                        # Display the result
+                        result_text = f"[green]✓ {empty_field} = {result}[/]"
+                        
+                        # Add units if available in variable description
+                        if empty_field in self.equation.variables:
+                            var_desc = self.equation.variables[empty_field]
+                            # Try to extract units from description (simple pattern matching)
+                            if '(' in var_desc and ')' in var_desc:
+                                units = var_desc[var_desc.find('(')+1:var_desc.find(')')]
+                                result_text = f"[green]✓ {empty_field} = {result} {units} [/]"
+                        
+                        self.query_one("#calc-result", Static).update(result_text)
+                    else:
+                        self.query_one("#calc-result", Static).update(
+                            "[red]Error: No calculation function available for this equation[/]"
+                        )
+                else:
+                    self.query_one("#calc-result", Static).update(
+                        "[red]Error: No chapter context available[/]"
+                    )
+                    
+            except Exception as e:
+                # Handle calculation errors
+                error_msg = str(e)
+                self.query_one("#calc-result", Static).update(f"[red]Error: {error_msg}[/]")
+
     def action_go_back(self) -> None:
         """Go back to the previous screen"""
         self.app.pop_screen()

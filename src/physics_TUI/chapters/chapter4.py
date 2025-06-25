@@ -72,9 +72,8 @@ class Chapter4(PhysicsChapter):
                 name="Time of Flight",
                 formula="T_tot = 2v₀sinθ / g",
                 variables={
-                    "v₀": "Initial velocity",
-                    "θ": "Launch angle",
-                    "g": "Acceleration due to gravity [constant]"
+                    "v₀": "Initial velocity (m/s)",
+                    "θ": "Launch angle (degrees)",
                 },
                 calculation=self.Calculate.timeOfFlight
             ),
@@ -82,10 +81,9 @@ class Chapter4(PhysicsChapter):
                 name="Trajectory",
                 formula="y = (tanθ)x − (g / (2(v₀cosθ)²))x²",
                 variables={
-                    "θ": "Launch angle",
-                    "v₀": "Initial velocity",
-                    "x": "Position along he x-axis",
-                    "g": "Acceleartion due to gravity"
+                    "θ": "Launch angle (degrees)",
+                    "v₀": "Initial velocity (m/s)",
+                    "x": "Position along he x-axis (m)",
                 },
                 calculation=self.Calculate.trajectory
             ),
@@ -93,9 +91,8 @@ class Chapter4(PhysicsChapter):
                 name="Range",
                 formula="R = (v₀²sin2θ) / g",
                 variables={
-                    "θ": "Launch angle",
-                    "v₀": "Initial velocity",
-                    "g": "Acceleartion due to gravity"
+                    "θ": "Launch angle (degrees)",
+                    "v₀": "Initial velocity (m/2)",
                 },
                 calculation=self.Calculate.projectileRange
             ),
@@ -103,8 +100,8 @@ class Chapter4(PhysicsChapter):
                 name="Centripetal acceleration",
                 formula="a_c = v² / r",
                 variables={
-                    "v": "Velocity",
-                    "r": "Radius"
+                    "v": "Velocity (m/s)",
+                    "r": "Radius (m)"
                 },
                 calculation=self.Calculate.centripetalAccel
             ),
@@ -112,56 +109,56 @@ class Chapter4(PhysicsChapter):
                 name="Position vector (uniform cirular motion)",
                 formula="r(t) = A cos ωt 𝐢̂ + A sin ωt 𝐣̂",
                 variables= {
-                    "A": "Amplitude",
-                    "ω": "Angular frequency",
-                    "t": "time"
+                    "A": "Amplitude (m)",
+                    "ω": "Angular frequency (rads/s)",
+                    "t": "time (s)"
                 }
             ),
             Equation(
                 name="Velocity vector (uniform cirular motion)",
                 formula="v(t) = dr(t)/dt = −Aω sin ωt 𝐢̂ + Aω cos ωt 𝐣̂",
                 variables={
-                    "A": "Amplitude",
-                    "ω": "Angular frequency",
-                    "t": "time"
+                    "A": "Amplitude (m)",
+                    "ω": "Angular frequency (rads/s)",
+                    "t": "time (s)"
                 }
             ),
             Equation(
                 name="Acceleration vector (uniform circular motion)",
                 formula="a(t) = dv(t)/dt = −Aω² cos ωt 𝐢̂ − Aω² sin ωt 𝐣̂",
                 variables={
-                    "A": "Amplitude",
-                    "ω": "Angular frequency",
-                    "t": "time"
+                    "A": "Amplitude (m)",
+                    "ω": "Angular frequency (rads/s)",
+                    "t": "time (s)"
                 }
             ),
             Equation(
                 name="Tangential acceleration",
-                formula="a_T = d|v|/dt",
+                formula="a(c) = d|v|/dt",
                 variables={}
             ),
                         Equation(
                 name="Total acceleration",
                 formula="a(t) = a_c + a_T",
                 variables={
-                    "a_c": "Centripetal acceleration",
-                    "a_T": "Tangential acceleration"
+                    "a(c)": "Centripetal acceleration (m/s²)",
+                    "a(c)": "Tangential acceleration (m/s²)"
                 }
             ),
             Equation(
                 name="Position vector in frame",
                 formula="r_PS = r_PS' + r_S'S",
                 variables={
-                    "r_PS'": "Position vector in frame S'",
-                    "r_S'S": "Position vector from the origin of S to the origin of S'"
+                    "r(PS')": "Position vector in frame S'",
+                    "r(S'S)": "Position vector from the origin of S to the origin of S'"
                 }
             ),
             Equation(
                 name="Relative velocity equation (two reference frames)",
                 formula="v_PS = v_PS' + v_S'S",
                 variables={
-                    "v_PS'": "Velocity vector in frame S'",
-                    "v_S'S": "Velocity vector between frames S and S'"
+                    "v(PS')": "Velocity vector in frame S'",
+                    "v(S'S)": "Velocity vector between frames S and S'"
                 }
             ),
             Equation(

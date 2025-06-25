@@ -32,8 +32,8 @@ class Chapter3(PhysicsChapter):
                 name="Displacement",
                 formula="Δx = x - x₀",
                 variables={
-                    "x": "Final position",
-                    "x₀": "Initial position",
+                    "x": "Final position (m)",
+                    "x₀": "Initial position (m)",
                 },
             ),
             Equation(
@@ -44,7 +44,7 @@ class Chapter3(PhysicsChapter):
             Equation(
                 name="Average velocity (constant acceleration)",
                 formula="v = Δx/Δt = (x - xᵢ)/(t - tᵢ)",
-                variables={"Δx": "Displacement in direction", "Δt": "Elapsed time"},
+                variables={"Δx": "Displacement in direction (m)", "Δt": "Elapsed time (s)"},
             ),
             Equation(
                 name="Instantaneous velocity", formula="v(t) = dx(t)/dt", variables={}
@@ -58,7 +58,7 @@ class Chapter3(PhysicsChapter):
             Equation(
                 name="Average acceleration",
                 formula="a = Δv/Δt",
-                variables={"Δv": "Change in velocity", "Δt": "Elapsed time"},
+                variables={"Δv": "Change in velocity (m/s)", "Δt": "Elapsed time (s)"},
             ),
             Equation(
                 name="Instantaneous acceleration",
@@ -69,25 +69,25 @@ class Chapter3(PhysicsChapter):
                 name="Position from avg. velocity",
                 formula="x(t) = x₀ + vt",
                 variables={
-                    "x₀": "Initial position",
-                    "v": "Average velocity",
-                    "t": "time",
+                    "x₀": "Initial position (m)",
+                    "v": "Average velocity (m/s)",
+                    "t": "time (s)",
                 },
             ),
             Equation(
                 name="Velocity from acceleration",
                 formula="v(t) = v₀ + at",
-                variables={"v₀": "Initial velocity", "a": "Acceleration"},
+                variables={"v₀": "Initial velocity (m/s)", "a": "Acceleration (m/s²)"},
             ),
             Equation(
                 name="Position from velocity and acceleration",
                 formula="x(t) = x₀ + v₀t + (1/2)at²",
                 variables={
-                    "x₀": "Initial position",
-                    "v₀": "Intiial velocity",
-                    "t": "Time",
-                    "a": "Acceleration",
-                    "x": "Final Position",
+                    "x₀": "Initial position (m)",
+                    "v₀": "Intiial velocity (m/s)",
+                    "t": "Time (s)",
+                    "a": "Acceleration (m/s²)",
+                    "x": "Final Position (m)",
                 },
                 calculation=self.Calculate.positionFromVelAndAcc,
             ),
@@ -95,11 +95,11 @@ class Chapter3(PhysicsChapter):
                 name="Velocity from distance",
                 formula="v² = v₀² + 2a(x - x₀)",
                 variables={
-                    "x": "Final position",
-                    "x₀": "Initial position",
-                    "v₀": "Intiial velocity",
-                    "a": "Acceleration",
-                    "v": "Final velocity",
+                    "x": "Final position (m)",
+                    "x₀": "Initial position (m)",
+                    "v₀": "Intiial velocity (m/s)",
+                    "a": "Acceleration (m/s²)",
+                    "v": "Final velocity (m/s)",
                 },
                 calculation=self.Calculate.velocityFromDistance,
             ),
@@ -107,20 +107,18 @@ class Chapter3(PhysicsChapter):
                 name="Velocity of free fall",
                 formula="v = v₀ - gt",
                 variables={
-                    "v₀": "Initial velocity",
-                    "g": "Accelration due to gravity: 9.82 m/s",
-                    "t": "Time",
+                    "v₀": "Initial velocity (m/s)",
+                    "t": "Time (s)",
                 },
             ),
             Equation(
                 name="Height of free fall",
                 formula="y(t) = y₀ + v₀t - (1/2)gt²",
                 variables={
-                    "y₀": "Initial height",
-                    "v₀": "Initial velocity",
-                    "g": "Acceleration due to gravity: 9.82 m/s [constant]",
-                    "t": "Time",
-                    "y": "Final Position",
+                    "y₀": "Initial height (m)",
+                    "v₀": "Initial velocity (m/s)",
+                    "t": "Time (s)",
+                    "y": "Final Position (s)",
                 },
                 calculation=self.Calculate.heightOfFreeFall,
             ),
@@ -128,11 +126,10 @@ class Chapter3(PhysicsChapter):
                 name="Velocity of free fall from height",
                 formula="v² = v₀² - 2g(y - y₀)",
                 variables={
-                    "y": "Final height",
-                    "y₀": "Initial height",
-                    "v₀": "Initial velocity",
-                    "g": "Acceleration due to gravity: 9.82 m/s [constant]",
-                    "v": "Final velocity",
+                    "y": "Final height (m)",
+                    "y₀": "Initial height (m)",
+                    "v₀": "Initial velocity (m/s)",
+                    "v": "Final velocity (m/s)",
                 },
                 calculation=self.Calculate.velFreeFallFromHeight,
             ),
@@ -224,7 +221,7 @@ class Chapter3(PhysicsChapter):
             Returns a tuple containing the two roots.
             """
 
-            discriminant: float = b**2 - 4 * a * c
+            discriminant: float = (b * b) - 4 * a * c
 
             if discriminant < 0:
                 return None
@@ -267,14 +264,14 @@ class Chapter3(PhysicsChapter):
 
             if x_0 is None:
                 # Solves for x_0 (initial position)
-                return round(x_f - (v_0 * t) - (0.5 * accel * (t**2)), 4)
+                return round(x_f - (v_0 * t) - (0.5 * accel * (t*t)), 4)
 
             if v_0 is None:
                 if t == 0:
                     raise ValueError("Division by zero is undefined")
                     
                 # Solves for v_0 (initial velocity)
-                return round((x_f - x_0 - (0.5 * accel * (t**2))) / t, 4)
+                return round((x_f - x_0 - (0.5 * accel * (t * t))) / t, 4)
 
             if t is None:
                 # Solves for t (elapsed time)
@@ -305,7 +302,7 @@ class Chapter3(PhysicsChapter):
 
             # Solves for x_f (final position)
 
-            return round((x_0 + (v_0 * t) + (0.5 * accel * (t**2))), 4)
+            return round((x_0 + (v_0 * t) + (0.5 * accel * (t * t))), 4)
 
         @staticmethod
         def velocityFromDistance(
@@ -337,11 +334,11 @@ class Chapter3(PhysicsChapter):
                 if accel == 0:
                     raise ValueError("acceleration cannot be equal to zero")
 
-                return round(-((((v_f**2) - (v_0**2)) / (2 * accel)) - x_f), 4)
+                return round(-((((v_f * v_f) - (v_0 * v_0)) / (2 * accel)) - x_f), 4)
 
             if v_0 is None:
                 # Solves for v_0 (initial velocity)
-                discriminant: float = (v_f**2) - (2 * accel * (x_f - x_0))
+                discriminant: float = (v_f * v_f) - (2 * accel * (x_f - x_0))
 
                 if discriminant < 0:
                     raise ValueError("The discriminant cannot be negative")
@@ -354,7 +351,7 @@ class Chapter3(PhysicsChapter):
                 if x_f == 0 and x_0 == 0:
                     raise ValueError("x_f and x_0 cannot both be equal to zero")
 
-                return round(((v_f**2) - (v_0**2)) / (2 * (x_f - x_0)), 4)
+                return round(((v_f * v_f) - (v_0 * v_0)) / (2 * (x_f - x_0)), 4)
 
             if x_f is None:
                 # Solves for x_f (final position)
@@ -362,9 +359,9 @@ class Chapter3(PhysicsChapter):
                 if accel == 0:
                     raise ValueError("acceleration cannot be equal to zero")
 
-                return round((((v_f**2) - (v_0**2)) / (2 * accel)) - x_0, 4)
+                return round((((v_f*v_f) - (v_0*v_0)) / (2 * accel)) - x_0, 4)
 
-            discriminant: float = (v_0**2) + 2 * accel * (x_f - x_0)
+            discriminant: float = (v_0*v_0) + 2 * accel * (x_f - x_0)
 
             if discriminant < 0:
                 raise ValueError("The discriminant cannot be negative")
@@ -388,13 +385,13 @@ class Chapter3(PhysicsChapter):
 
             if y_0 is None:
                 # Solves for y_0 (initial position)
-                return round(y_f - (v_0 * t) - (0.5 * g * (t**2)), 4)
+                return round(y_f - (v_0 * t) - (0.5 * g * (t*t)), 4)
 
             elif v_0 is None:
                 # Solves for v_0 (initial velocity)
                 if t == 0:
                     raise ValueError("Cannot solve for v_0 when t=0")
-                return round((y_f - y_0 - (0.5 * g * (t**2))) / t, 4)
+                return round((y_f - y_0 - (0.5 * g * (t*tuple))) / t, 4)
 
             elif t is None:
                 # Solves for t (elapsed time)
@@ -416,7 +413,7 @@ class Chapter3(PhysicsChapter):
 
             else:  # y_f is None
                 # Solves for y_f (final position)
-                return round(y_0 + (v_0 * t) + (0.5 * g * (t**2)), 4)
+                return round(y_0 + (v_0 * t) + (0.5 * g * (t*t)), 4)
 
         @staticmethod
         def velFreeFallFromHeight(
@@ -442,11 +439,11 @@ class Chapter3(PhysicsChapter):
             if y_0 is None:
                 # Solves for y_0 (initial height)
 
-                return round(-((((v_f**2) - (v_0**2)) / (2 * g)) - y_f), 4)
+                return round(-((((v_f*v_f) - (v_0*v_0)) / (2 * g)) - y_f), 4)
 
             if v_0 is None:
                 # Solves for v_0 (initial velocity)
-                discriminant: float = (v_f**2) - (2 * g * (y_f - y_0))
+                discriminant: float = (v_f*v_f) - (2 * g * (y_f - y_0))
 
                 if discriminant < 0:
                     raise ValueError("The discriminant cannot be negative")
@@ -455,9 +452,9 @@ class Chapter3(PhysicsChapter):
 
             if y_f is None:
                 # Solves for y_f (final position)
-                return round((((v_f**2) - (v_0**2)) / (2 * g)) - y_0, 4)
+                return round((((v_f*v_f) - (v_0*v_0)) / (2 * g)) - y_0, 4)
 
-            discriminant: float = (v_0**2) + 2 * g * (y_f - y_0)
+            discriminant: float = (v_0*v_0) + 2 * g * (y_f - y_0)
 
             if discriminant < 0:
                 raise ValueError("The discriminant cannot be negative")
