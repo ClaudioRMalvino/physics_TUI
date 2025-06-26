@@ -177,22 +177,36 @@ class Chapter6(PhysicsChapter):
                 float: the result of whichever variable was left equal to None
             """
             
-            if mass <= 0:
+            if mass is not None and mass <= 0:
                 raise ValueError("We are operating with massive objects. \
                     Mass must be greater than zero.")
 
-            if mass == None:
-
-                if radius <= 0:
+            if radius is not None and radius <= 0:
                     raise ValueError("Radius must be greater than zero.")
+
+            if mass == None:
                 
-                # Solves for the mass
-                return (radius * centripetal_F) / (velocity * velocity)
+                if velocity == 0:
+                    raise ValueError("Divison by zero is undefined.")
+
+                # Calculates for the mass
+                mass_result: float = (radius * centripetal_F) / (velocity * velocity)
+                
+                if mass_result <= 0:
+                    raise ValueError("We are operating with massive objects. \
+                    Mass must be greater than zero. Check your signs.")
+                else:
+                    return mass_result
 
             if velocity == None:
 
-                # Solves for the tangential velocity 
+                # Calculates for the tangential velocity 
                 radicand: float = (centripetal_F * radius) / mass
+                
+                if radicand < 0:
+                    raise ValueError("Negative radicand produces an imaginary number. \
+                        Check your signs.")
+
                 return sqrt(radicand)
 
             if radius == None:
@@ -200,8 +214,13 @@ class Chapter6(PhysicsChapter):
                 if centripetal_F == 0:
                     raise ValueError("Divison by zero is undefined.")
                 
-                # Solves for the radius
-                return (mass * (velocity * velocity)) / centripetal_F
+                # Calculates for the radius
+                radius_result: float = (mass * (velocity * velocity)) / centripetal_F
+
+                if radius_result < 0:
+                    raise ValueError("Radius cannot be negative. Check your signs.")
+                else:
+                    return radius_result
             
             if radius < 0: 
                 raise ValueError("Radius cannot be a negative value.")
@@ -237,20 +256,27 @@ class Chapter6(PhysicsChapter):
                 raise ValueError("We are operating with massive objects. \
                     Mass must be greater than zero.")
 
+            if radius is not None and radius <= 0:
+                    raise ValueError("Radius must be greater than zero.")
+
             if mass == None:
 
-                if radius <= 0:
-                    raise ValueError("Radius must be greater than zero.")
                 if angular_vel == 0:
                     raise ValueError("Division by zero is undefined.")
+                
+                if centripetal_F < 0 or angular_vel < 0:
+                    raise ValueError("Mass cannot be negative. Check your signs.")
 
-                # Solves for the mass
+                # Calculates for the mass
                 return centripetal_F / (radius * (angular_vel * angular_vel))
 
             if angular_vel == None:
 
-                # Solves for the angular velocity 
+                # Calculates for the angular velocity 
                 radicand: float = centripetal_F / (mass * radius)
+
+                if radicand < 0:
+                    raise ValueError("Negative radicand produces an imaginary number.")
                 return sqrt(radicand)
 
             if radius == None:
@@ -258,18 +284,19 @@ class Chapter6(PhysicsChapter):
                 if angular_vel == 0:
                     raise ValueError("Divison by zero is undefined.")
                 
-                # Solves for the radius
+                if centripetal_F < 0 or angular_vel < 0:
+                    raise ValueError("Radius cannot be negative. Check your signs.")
+
+                # Calculates for the radius
                 return  centripetal_F / (mass * (angular_vel * angular_vel)) 
             
-            if radius < 0: 
-                raise ValueError("Radius cannot be a negative value.")
             
             return mass * (angular_vel * angular_vel) * radius
 
         @staticmethod
         def idealAngBankedCurve(
             theta: Optional[float]=None,
-            velocity: Optiona[float]=None,
+            velocity: Optional[float]=None,
             radius: Optional[float]=None
         ) -> float:
             """
@@ -288,19 +315,23 @@ class Chapter6(PhysicsChapter):
             """
             
             if theta is not None:
+
+                if theta < 0:
+                    raise ValueError("Reconsider if theta can physically be a negative value.")
+
                 # Converts degrees into radians
                 theta_radians: float = theta * (pi/180)
 
-            if radius is not None and radius < 0:
-                raise ValueError("Radius cannot be a negative value.")
+            if radius is not None and radius <= 0:
+                raise ValueError("Radius cannot be less than or equal to zero.")
            
             if velocity == None:
 
                 if theta == 90.0 or theta == 270.0:
-                    raise ValueError("tangent function is undefined at 90.0 and 270.0 degrees.")
+                    raise ValueError("Tangent function is undefined at 90.0 and 270.0 degrees.")
 
-                # Solves for velocity
-                radicand: float = radius * g * tan(theta_radians)    
+                # Calculates for velocity
+                radicand: float = radius * g * tan(theta_radians)
 
                 return sqrt(radicand)
 
@@ -309,12 +340,10 @@ class Chapter6(PhysicsChapter):
                 if velocity == 0:
                     raise ValueError("Division by zero is undefined.")
 
-                # Solves for radius
+                # Calculates for radius
                 return ((velocity * velocity) / g) * tan(theta_radians)
 
-            if radius == 0:
-                raise ValueError("Division by zero is undefined.")
-            
+            # Calculates the ideal angle theta
             argument: float = (velocity * velocity) / (radius * g)
 
             return atan(argument) * (180/pi)
@@ -325,7 +354,7 @@ class Chapter6(PhysicsChapter):
             drag_coeff: Optional[float]=None,
             fluid_dens: Optional[float]=None,
             area: Optional[float]=None,
-            velocity: Optiona[float]=None
+            velocity: Optional[float]=None
         ) -> float:
             """
             Function calculates the drag force on an object as a function of 

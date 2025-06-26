@@ -262,7 +262,7 @@ class Chapter5(PhysicsChapter):
             Function calculates the restorative force of a spring system 
             as a fuction of displacement and the spring constant.
             Can also calculate for desired variable when arg == None and all 
-            other args have values
+            other args have values.
 
             Args:
                 force (Optional[float], optional): restorative force [N]. Defaults to None.
