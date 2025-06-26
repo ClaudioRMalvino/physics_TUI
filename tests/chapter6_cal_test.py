@@ -393,3 +393,82 @@ class TestIdealAngBankedCurve(unittest.TestCase):
                         velocity=velocity[i]
                     )
                 self.assertAlmostEqual(result, expected[i], places=2)
+
+class TestDragForce(unittest.TestCase):
+    """
+    Tests the main use cases of calculations for  ideal angle of a banked curve. 
+    """
+
+    def test_solving_for_drag_F(self) -> None:
+        """
+        Function tests solving for the drag force (drag_F)
+        """
+
+        # Initial conditions
+        drag_coeff: List[float] = [-0.5, 0.5, 0.5, 0.5]
+        fluid_dens: List[float] = [1.225, 1.225, -1.225, 1.225]
+        area: List[float] = [0.5, -0.5, 0.5, 0.5]
+        velocity: List[Float] = [16.0, 16.0, 16.0, 16.0]
+
+        expected: List[Any] = [
+            ValueError("The drag coefficient cannot be negative."),
+            ValueError("Area cannot be less than zero or equal to zero."),
+            ValueError("Fluid density cannot be less than or equal to zero."),
+            39.2
+        ]
+
+        for i in range(len(expected)):
+            if isinstance(expected[i], ValueError):
+                with self.assertRaises(ValueError) as context:
+                    Chapter6.Calculate.dragForce(
+                        drag_coeff=drag_coeff[i],
+                        fluid_dens=fluid_dens[i],
+                        area=area[i],
+                        velocity=velocity[i]
+                    )
+                self.assertEqual(str(context.exception), str(expected[i]))
+            else:
+                result = Chapter6.Calculate.dragForce(
+                        drag_coeff=drag_coeff[i],
+                        fluid_dens=fluid_dens[i],
+                        area=area[i],
+                        velocity=velocity[i]
+                    )
+                self.assertAlmostEqual(result, expected[i], places=2)            
+    
+    def test_solving_for_drag_coeff(self) -> None:
+        """
+        Function tests solving for the drag force (drag_F)
+        """
+
+        # Initial conditions
+        drag_F: List[float] = [39.2, 39.2, 39.2]
+        fluid_dens: List[float] = [1.225, 1.225, 1.225]
+        area: List[float] = [0.5, 0.5, 0.5]
+        velocity: List[Float] = [0.0, -16.0, 16.0]
+
+        expected: List[Any] = [
+            ValueError("Divison by zero is undefined."),
+            ValueError("Drag coefficient is a positive value. \
+                        Check your signs."),
+            0.5
+        ]
+
+        for i in range(len(expected)):
+            if isinstance(expected[i], ValueError):
+                with self.assertRaises(ValueError) as context:
+                    Chapter6.Calculate.dragForce(
+                        drag_F=drag_F[i],
+                        fluid_dens=fluid_dens[i],
+                        area=area[i],
+                        velocity=velocity[i]
+                    )
+                self.assertEqual(str(context.exception), str(expected[i]))
+            else:
+                result = Chapter6.Calculate.dragForce(
+                        drag_F=drag_F[i],
+                        fluid_dens=fluid_dens[i],
+                        area=area[i],
+                        velocity=velocity[i]
+                    )
+                self.assertAlmostEqual(result, expected[i], places=2)            

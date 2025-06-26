@@ -387,7 +387,9 @@ class Chapter6(PhysicsChapter):
 
                 if velocity == 0.0: 
                     raise ValueError("Divison by zero is undefined.")
-                
+                if velocity < 0:
+                    raise ValueError("Drag coefficient is a positive value. \
+                        Check your signs.")
                 # Calculates for drag coefficient
                 return drag_F / (0.5 * fluid_dens * area * (velocity * velocity))
 
