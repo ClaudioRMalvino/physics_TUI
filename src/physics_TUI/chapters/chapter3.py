@@ -44,7 +44,9 @@ class Chapter3(PhysicsChapter):
             Equation(
                 name="Average velocity (constant acceleration)",
                 formula="v = Δx/Δt = (x - xᵢ)/(t - tᵢ)",
-                variables={"Δx": "Displacement in direction (m)", "Δt": "Elapsed time (s)"},
+                variables={"Δx": "Displacement in direction (m)", 
+                "Δt": "Elapsed time (s)"
+                },
             ),
             Equation(
                 name="Instantaneous velocity", formula="v(t) = dx(t)/dt", variables={}

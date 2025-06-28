@@ -13,7 +13,21 @@ class Chapter6(PhysicsChapter):
     def __init__(self) -> None:
         super().__init__("Applications of Newton's Laws")
         
-        self.var_mapping: Dict[str, str] = {}
+        self.var_mapping: Dict[str, str] = {
+            "m": "mass",
+            "r": "radius",
+            "F(c)": "centripetal_F",
+            "v": "velocity",
+            "ω": "angular_vel",
+            "θ": "theta",
+            "F(D)": "drag_F",
+            "C": "drag_coeff",
+            "ρ": "fluid_dens",
+            "A": "area",
+            "Fₛ": "drag_Fs",
+            "η": "viscosity",
+            "vₜ": "terminal_vel",
+        }
 
         self.equations: List[Equation] = [
             Equation(
@@ -84,7 +98,7 @@ class Chapter6(PhysicsChapter):
                 variables={
                     "Fₛ": "Drag force (Stokes force) (N)",
                     "r": "Radius of the object (m)",
-                    "η": "Dynamic viscocity of the fluid (N⋅s/m²)",
+                    "η": "Dynamic viscosity of the fluid (N⋅s/m²)",
                     "v": "Velocity of the object (m/s)"
                 },
                 calculation=self.Calculate.stokesLaw
@@ -374,8 +388,8 @@ class Chapter6(PhysicsChapter):
                 float: the result of whichever variable was left equal to None
             """
 
-            if drag_coeff is not None and drag_coeff < 0.0:
-                raise ValueError("The drag coefficient cannot be negative.")
+            if drag_coeff is not None and drag_coeff <= 0.0:
+                raise ValueError("The drag coefficient cannot be less than or equalt to zero.")
             
             if area is not None and area <= 0:
                 raise ValueError("Area cannot be less than zero or equal to zero.")
@@ -390,6 +404,7 @@ class Chapter6(PhysicsChapter):
                 if velocity < 0:
                     raise ValueError("Drag coefficient is a positive value. \
                         Check your signs.")
+
                 # Calculates for drag coefficient
                 return drag_F / (0.5 * fluid_dens * area * (velocity * velocity))
 
@@ -397,6 +412,9 @@ class Chapter6(PhysicsChapter):
 
                 if velocity == 0.0: 
                     raise ValueError("Divison by zero is undefined.")
+                if velocity < 0:
+                    raise ValueError("Fluid density is a positive value. \
+                        Check your signs.")
                 
                 # Calculates fluid density
                 return drag_F / (0.5 * drag_coeff * area * (velocity * velocity))
@@ -405,27 +423,27 @@ class Chapter6(PhysicsChapter):
 
                 if velocity == 0.0: 
                     raise ValueError("Divison by zero is undefined.")
+                if velocity < 0:
+                    raise ValueError("Area cannot be negative. \
+                        Check your signs.")
                 
                 # Calculates the area
                 return drag_F / (0.5 * drag_coeff * fluid_dens * (velocity * velocity))
             
             if velocity == None:
 
-                if drag_coeff == 0.0:
-                    raise ValueError("Divison by zero is undefined.")
-
                 # Calculates the velocity
                 radicand = drag_F / (0.5 * drag_coeff * fluid_dens * area)
                 return sqrt(radicand)
             
             # Calculate drag force
-            return 0.5 * drag_coeff * fluid_dens * area * (velocity * velocity)
+            return -0.5 * drag_coeff * fluid_dens * area * (velocity * velocity)
                 
         @staticmethod
         def stokesLaw(
             drag_Fs: Optional[float]=None,
             radius: Optional[float]=None,
-            viscocity: Optional[float]=None,
+            viscosity: Optional[float]=None,
             velocity: Optional[float]=None,
         ) -> float:
             """
@@ -438,7 +456,7 @@ class Chapter6(PhysicsChapter):
             Args:
                 drag_Fs (Optional[float], optional): drag force [N]. Defaults to None.
                 radius (Optional[float], optional): radius of object [m]. Defaults to None.
-                viscocity (Optional[float], optional): viscocity of the fluid [N⋅s/m²]. Defaults to None.
+                viscosity (Optional[float], optional): viscosity of the fluid [N⋅s/m²]. Defaults to None.
                 velocity (Optional[float], optional): velocity of the object [m/s]. Defaults to None.
 
             Returns:
@@ -450,30 +468,33 @@ class Chapter6(PhysicsChapter):
             if radius is not None and radius <= 0:
                 raise ValueError("Radius cannot be less than zero or equal to zero.")
 
-            if viscocity is not None and viscocity < 0:
+            if viscosity is not None and viscosity < 0:
                 raise ValueError("Viscocity cannot be a negative value.")
             
             if radius == None:
 
-                if velocity == 0 or viscocity == 0:
+                if velocity == 0 or viscosity == 0:
                     raise ValueError("Divison by zero is undefined.")
-                
+                if velocity < 0:
+                    raise ValueError("The radius cannot be negative. \
+                        Check your signs.")
                 # Calculates the radius
-                return drag_Fs / (const * viscocity * velocity )
+                return drag_Fs / (const * viscosity * velocity )
                 
-            if viscocity == None:
+            if viscosity == None:
 
-                if velocity == 0 or viscocity == 0:
-                    raise ValueError("Divison by zero is undefined.")
+                if velocity <= 0:
+                    raise ValueError("Velocity cannot be less than or euqal to 0. \
+                        This makes viscosity a negative value.")
                 
-                # Calculates the viscocity
+                # Calculates the viscosity
                 return drag_Fs / (const * radius * velocity)
             
             if velocity == None:
 
-                return drag_Fs / (const * radius * viscocity)
+                return drag_Fs / (const * radius * viscosity)
             
-            return const * radius * viscocity * velocity
+            return -const * radius * viscosity * velocity
         
         @staticmethod
         def terminalVelocity(
@@ -502,7 +523,7 @@ class Chapter6(PhysicsChapter):
             """
 
             if drag_coeff is not None and drag_coeff < 0.0:
-                raise ValueError("The drag coefficient cannot be negative.")
+                raise ValueError("The drag coefficient cannot be a negative value.")
 
             if area is not None and area <= 0:
                 raise ValueError("Area cannot be less than zero or equal to zero.")

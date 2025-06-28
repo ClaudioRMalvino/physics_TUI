@@ -10,6 +10,7 @@ from textual.screen import Screen
 from physics_TUI.chapters.chapter3 import Chapter3
 from physics_TUI.chapters.chapter4 import Chapter4
 from physics_TUI.chapters.chapter5 import Chapter5
+from physics_TUI.chapters.chapter6 import Chapter6
 from physics_TUI.base_chapter import PhysicsChapter, Equation, Definition
 
 class CalculatorScreen(Screen):
@@ -162,7 +163,8 @@ class physicsTUIApp(App):
         self.chapters: List[PhysicsChapter] = [
             Chapter3(),
             Chapter4(),
-            Chapter5()
+            Chapter5(),
+            Chapter6()
         ]
         self.current_chapter: Optional[PhysicsChapter] = None
         self.showing_equation_list = False
