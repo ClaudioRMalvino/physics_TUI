@@ -112,8 +112,4 @@ class Chapter8(PhysicsChapter):
             ),
         ]
 
-    class Calculate:
-        """
-        Class holds methods to calculate equations in Chapter 8 
-        """
 

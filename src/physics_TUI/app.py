@@ -11,6 +11,8 @@ from physics_TUI.chapters.chapter3 import Chapter3
 from physics_TUI.chapters.chapter4 import Chapter4
 from physics_TUI.chapters.chapter5 import Chapter5
 from physics_TUI.chapters.chapter6 import Chapter6
+from physics_TUI.chapters.chapter7 import Chapter7
+from physics_TUI.chapters.chapter8 import Chapter8
 from physics_TUI.base_chapter import PhysicsChapter, Equation, Definition
 
 class CalculatorScreen(Screen):
@@ -164,7 +166,9 @@ class physicsTUIApp(App):
             Chapter3(),
             Chapter4(),
             Chapter5(),
-            Chapter6()
+            Chapter6(),
+            Chapter7(),
+            Chapter8()
         ]
         self.current_chapter: Optional[PhysicsChapter] = None
         self.showing_equation_list = False
