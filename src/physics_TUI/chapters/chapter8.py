@@ -11,7 +11,7 @@ class Chapter8(PhysicsChapter):
 
         self.var_mapping: Dict[str, str] = {}
 
-        self.equations: List[Equation] =[
+        self.equations: List[Equation] = [
             Equation(
                 name="Difference in gravitational potential energy",
                 formula="ΔUαβ = Uβ − Uα = −Wαβ",

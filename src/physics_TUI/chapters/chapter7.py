@@ -82,7 +82,7 @@ class Chapter7(PhysicsChapter):
                 variables={
                     "K": "Kinetic energy (J)",
                     "m": "Mass (kg)",
-                    "p": "Momentum"
+                    "p": "Momentum (N*s)"
                 },
                 calculation=self.Calculate.kineticEnergyMomentum
             ),
