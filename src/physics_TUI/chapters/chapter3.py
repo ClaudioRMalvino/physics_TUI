@@ -91,7 +91,7 @@ class Chapter3(PhysicsChapter):
                     "a": "Acceleration (m/s²)",
                     "x": "Final Position (m)",
                 },
-                calculation=self.Calculate.positionFromVelAndAcc,
+                calculation=self.Calculate.position_from_vel_and_accel,
             ),
             Equation(
                 name="Velocity from distance",
@@ -103,7 +103,7 @@ class Chapter3(PhysicsChapter):
                     "a": "Acceleration (m/s²)",
                     "v": "Final velocity (m/s)",
                 },
-                calculation=self.Calculate.velocityFromDistance,
+                calculation=self.Calculate.velocity_from_distance,
             ),
             Equation(
                 name="Velocity of free fall",
@@ -122,7 +122,7 @@ class Chapter3(PhysicsChapter):
                     "t": "Time (s)",
                     "y": "Final Position (s)",
                 },
-                calculation=self.Calculate.heightOfFreeFall,
+                calculation=self.Calculate.height_of_free_fall,
             ),
             Equation(
                 name="Velocity of free fall from height",
@@ -133,7 +133,7 @@ class Chapter3(PhysicsChapter):
                     "v₀": "Initial velocity (m/s)",
                     "v": "Final velocity (m/s)",
                 },
-                calculation=self.Calculate.velFreeFallFromHeight,
+                calculation=self.Calculate.vel_free_fall_from_height,
             ),
             Equation(
                 name="Velocity from acceleration",
@@ -242,7 +242,7 @@ class Chapter3(PhysicsChapter):
             return (x1, x2)
 
         @staticmethod
-        def positionFromVelAndAcc(
+        def position_from_vel_and_accel(
             x_0: Optional[float] = None,
             v_0: Optional[float] = None,
             t: Optional[float] = None,
@@ -307,7 +307,7 @@ class Chapter3(PhysicsChapter):
             return round((x_0 + (v_0 * t) + (0.5 * accel * (t * t))), 4)
 
         @staticmethod
-        def velocityFromDistance(
+        def velocity_from_distance(
             x_0: Optional[float] = None,
             v_0: Optional[float] = None,
             accel: Optional[float] = None,
@@ -372,7 +372,7 @@ class Chapter3(PhysicsChapter):
             return round(sqrt(discriminant), 4)
 
         @staticmethod
-        def heightOfFreeFall(
+        def height_of_free_fall(
             y_0: Optional[float] = None,
             v_0: Optional[float] = None,
             t: Optional[float] = None,
@@ -418,7 +418,7 @@ class Chapter3(PhysicsChapter):
                 return round(y_0 + (v_0 * t) + (0.5 * g * (t*t)), 4)
 
         @staticmethod
-        def velFreeFallFromHeight(
+        def vel_free_fall_from_height(
             y_0: Optional[float] = None,
             v_0: Optional[float] = None,
             y_f: Optional[float] = None,

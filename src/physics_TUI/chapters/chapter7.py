@@ -1,6 +1,7 @@
 from typing import List, Optional, Dict
 from physics_TUI.base_chapter import PhysicsChapter, Equation, Definition
 from math import pi, cos, acos, sqrt
+
 # Global constants
 g: float = 9.82 # Acceleration due to gravity on Earth
 
@@ -42,7 +43,7 @@ class Chapter7(PhysicsChapter):
                     "θ": "Angle between the direction of \
                         motion and force vector (degrees)"
                 },
-                calculation=self.Calculate.workConstantForce
+                calculation=self.Calculate.work_constant_force
             ),
             Equation(
                 name="Work done by gravity",
@@ -53,7 +54,7 @@ class Chapter7(PhysicsChapter):
                     "y₁": "Initial height (m)",
                     "y₂": "Final height (m)"
                 },
-                calculation=self.Calculate.workByGravity
+                calculation=self.Calculate.work_by_gravity
             ),
             Equation(
                 name="Work done by a spring",
@@ -64,7 +65,7 @@ class Chapter7(PhysicsChapter):
                     "x₁": "Initial position (m)",
                     "x₂": "Final position"
                 },
-                calculation=self.Calculate.workBySpring
+                calculation=self.Calculate.work_by_spring
             ),
             Equation(
                 name="Kinetic energy",
@@ -74,7 +75,7 @@ class Chapter7(PhysicsChapter):
                     "m": "Mass (kg)",
                     "v": "Velocity (m/s)"
                 },
-                calculation=self.Calculate.kineticEnergy
+                calculation=self.Calculate.kinetic_energy
             ),
             Equation(
                 name="Kinetic energy (momentum representation)",
@@ -84,7 +85,7 @@ class Chapter7(PhysicsChapter):
                     "m": "Mass (kg)",
                     "p": "Momentum (N*s)"
                 },
-                calculation=self.Calculate.kineticEnergyMomentum
+                calculation=self.Calculate.kinetic_energy_momentum
             ),
             Equation(
                 name="Work-Energy theorem",
@@ -95,7 +96,7 @@ class Chapter7(PhysicsChapter):
                     "v₂": "Final velocity (m/s)",
                     "v₁": "Initial velocity (m/s)"
                 },
-                calculation=self.Calculate.workEnergyTheorem
+                calculation=self.Calculate.work_energy_theorem
             ),
             Equation(
                 name="Average power",
@@ -141,7 +142,7 @@ class Chapter7(PhysicsChapter):
         """
 
         @staticmethod
-        def workConstantForce(
+        def work_constant_force(
             work: Optional[float]=None,
             const_F: Optional[float]=None,
             distance: Optional[float]=None,
@@ -183,7 +184,7 @@ class Chapter7(PhysicsChapter):
             return const_F * distance * cos(theta_radians)
 
         @staticmethod
-        def workByGravity(
+        def work_by_gravity(
             work: Optional[float]=None,
             mass: Optional[float]=None,
             initial_height: Optional[float]=None,
@@ -228,7 +229,7 @@ class Chapter7(PhysicsChapter):
             return -mass * g * (final_height - initial_height)
         
         @staticmethod
-        def workBySpring(
+        def work_by_spring(
             work: Optional[float]=None,
             spring_const: Optional[float]=None,
             initial_xpos: Optional[float]=None,
@@ -266,7 +267,7 @@ class Chapter7(PhysicsChapter):
 
 
         @staticmethod
-        def kineticEnergy(
+        def kinetic_energy(
             kinetic_E: Optional[float]=None,
             mass: Optional[float]=None,
             velocity: Optional[float]=None
@@ -304,7 +305,7 @@ class Chapter7(PhysicsChapter):
             return 0.5 * mass * (velocity * velocity)
 
         @staticmethod
-        def kineticEnergyMomentum(
+        def kinetic_energy_momentum(
             kinetic_E: Optional[float]=None,
             mass: Optional[float]=None,
             momentum: Optional[float]=None,
@@ -341,7 +342,7 @@ class Chapter7(PhysicsChapter):
             return (momentum * momentum) / (2.0 * mass)
         
         @staticmethod
-        def workEnergyTheorem(
+        def work_energy_theorem(
             net_work: Optional[float]=None,
             mass: Optional[float]=None,
             final_vel: Optional[float]=None,

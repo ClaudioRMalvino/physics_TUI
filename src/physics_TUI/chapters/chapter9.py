@@ -10,14 +10,29 @@ class Chapter9(PhysicsChapter):
     def __init__(self) -> None:
         super().__init__("Linear Momentum and Collisions")
 
-        self.var_mapping: Dict[str, str] = {}
+        self.var_mapping: Dict[str, str] = {
+            "m₁": "mass_1",
+            "m₂": "mass_2",
+            "v₁": "velocity_1",
+            "v₂": "velocity_2",
+            "v":  "velocity_f",
+            "M": "mass_f",
+            "v(i)₁": "velocity_i1",
+            "v(i)₂": "velocity_i2",
+            "v(f)₁": "velocity_f1",
+            "v(f)₂": "velocity_f2",
+            "Δv": "delta_v",
+            "u": "vel_exhaust",
+            "m(i)": "initial_mass",
+            "m": "final_mass"
+        }
 
         self.equations: List[Equation] = [
             Equation(
                 name="Definiiton of momentum",
                 formula="p = mv",
                 variables={
-                    "p": "Momentum (N*s)",
+                    "p": "Momentum (N⋅s)",
                     "m": "Mass of the object (kg)",
                     "velocity": "m/s)"
                 }
@@ -26,7 +41,7 @@ class Chapter9(PhysicsChapter):
                 name="Impulse",
                 formula="J = ∫(t₁ to t₂) F(t)dt  or  J = F(ave) Δt",
                 variables={
-                    "J": "Impulse (N*s)",
+                    "J": "Impulse (N⋅s)",
                     "F(t)": "Force as a function of time (N)",
                     "F(ave)": "Average velocity",
                     "Δt": "Elapsed time"
@@ -36,8 +51,8 @@ class Chapter9(PhysicsChapter):
                 name="Impulse-momentum theorem",
                 formula="J = Δp",
                 variables={
-                    "J": "Impulse (N*s)",
-                    "Δp": "Change in momentum (N*s)",
+                    "J": "Impulse (N⋅s)",
+                    "Δp": "Change in momentum (N⋅s)",
                 }
             ),
             Equation(
@@ -45,7 +60,7 @@ class Chapter9(PhysicsChapter):
                 formula="F = Δp/Δt",
                 variables={
                     "F": "Average force (N)",
-                    "Δp": "Change in momentum (N*s)",
+                    "Δp": "Change in momentum (N⋅s)",
                     "Δt": "Elapsed time (s)"
                 }
             ),
@@ -62,8 +77,8 @@ class Chapter9(PhysicsChapter):
                 name="Conservation of momentum",
                 formula="dp₁/dt + dp₂/dt = 0  or  m₁v₁ + m₂v₂ = constant",
                 variables={
-                    "p₁": "Momentum from the first object (N*s)",
-                    "p₂": "Momentum from the second object (N*s)",
+                    "p₁": "Momentum from the first object (N⋅s)",
+                    "p₂": "Momentum from the second object (N⋅s)",
                     "m₁": "Mass of the first object (kg)",
                     "v₁": "Velocity of the first object (m/s)",
                     "m₂": "Mass of the second object (m)",
@@ -92,7 +107,7 @@ class Chapter9(PhysicsChapter):
                     "M": "Total mass of the object after collision (m₁ + m₂) (kg)",
                     "v": "Velocity after the collision (m/s)"
                 },
-                calculation=self.Calculate.inelasticCollisionMomentum
+                calculation=self.Calculate.inelastic_collision_momentum
             ),
             Equation(
                 name="Elastic collision of two objects (momentum)",
@@ -105,14 +120,14 @@ class Chapter9(PhysicsChapter):
                     "v(f)₁": "Final velocity of the first object (m/s)",
                     "v(f)₂": "Final velocity of the second object (m/s)"
                 },
-                calculation=self.Calculate.elasticCollisionMomentum
+                calculation=self.Calculate.elastic_collision_momentum
             ),
             Equation(
                 name="External forces",
-                formula="F(ext) = ∑(j=1 to N) dp(j)/dt",
+                formula="F(ext) = ∑(j=1 to N) dpⱼ/dt",
                 variables={
                     "F(ext)": "External force (N)",
-                    "∑(j=1 to N) dp(j)/dt": "The sum of all the rate of \
+                    "∑(j=1 to N) dpⱼ/dt": "The sum of all the rate of \
                         change of momenta with respect to time in the system"
                 }
             ),
@@ -127,32 +142,32 @@ class Chapter9(PhysicsChapter):
             ),
             Equation(
                 name="Acceleration of the center of mass",
-                formula="a(CM) = d²/dt² (1/M ∑(j=1 to N) m(j) r(j)) = 1/M ∑(j=1 to N) m(j) a(j)",
+                formula="a(CM) = d²/dt² (1/M ∑(j=1 to N) mⱼrⱼ) = 1/M ∑(j=1 to N) mⱼaⱼ",
                 variables={
                     "a(CM)": "Acceleration of the center of mass (m/s²)",
                     "M": "Total mass of the system (kg)",
-                    "∑(j=1 to N) m(j) a(j)": "Sum of the product of mass and \
+                    "∑(j=1 to N) mⱼaⱼ": "Sum of the product of mass and \
                         acceleration of each individual object in the system"
                 }
             ),
             Equation(
                 name="Position of the center of mass for a system of particles",
-                formula="r(CM) = 1/M ∑(j=1 to N) m(j) r(j)",
+                formula="r(CM) = 1/M ∑(j=1 to N) mⱼrⱼ",
                 variables={
                     "r(CM)": "Position of the center of mass of the system (m)",
                     "M": "Total mass of the system",
-                    "∑(j=1 to N) m(j) r(j)": "Sum of the product of mass and \
+                    "∑(j=1 to N) mⱼrⱼ": "Sum of the product of mass and \
                         position of each object in the system"
                 }
             ),
             Equation(
                 name="Velocity of the center of mass",
-                formula="v(CM) = d/dt (1/M ∑(j=1 to N) m(j) r(j)) \
-                    = 1/M ∑(j=1 to N) m(j) v(j)",
+                formula="v(CM) = d/dt (1/M ∑(j=1 to N) mⱼrⱼ) \
+                    = 1/M ∑(j=1 to N) mⱼvⱼ",
                 variables={
                     "v(CM)": "Velocity of the center of mass (m/s)",
                     "M": "Total mass of the system (m)",
-                    "∑(j=1 to N) m(j) v(j)": "The sum of the product of mass \
+                    "∑(j=1 to N) mⱼvⱼ": "The sum of the product of mass \
                         and velocity of each object in the system"
                 }
             ),
@@ -169,7 +184,7 @@ class Chapter9(PhysicsChapter):
                     "m(i)": "Initial mass of the rocket (with fuel)",
                     "m": "Mass of the rocket after the fuel has been exhausted"
                 },
-                calculation=self.Calculate.rocketEquation
+                calculation=self.Calculate.rocket_equation
             )
         ]
 
@@ -242,7 +257,7 @@ class Chapter9(PhysicsChapter):
             """
 
             @staticmethod
-            def inelasticCollisionMomentum(
+            def inelastic_collision_momentum(
                 mass_1: Optional[float]=None,
                 mass_2: Optional[float]=None,
                 velocity_1: Optional[float]=None,
@@ -269,7 +284,8 @@ class Chapter9(PhysicsChapter):
                     float: the result of whichever variable was left equal to None
                 """
 
-                if mass_1 <= 0.0 or mass_2 <= 0.0 or mass_f <= 0:
+                if mass_1 is not None and mass_1 <= 0.0 or mass_2 is not None \
+                and mass_2 <= 0.0 or mass_f is not None and mass_f <= 0:
                     raise ValueError("We are operating with massive objects. \
                         Make sure all objects have a mass greater than zero.")
                 
@@ -324,7 +340,7 @@ class Chapter9(PhysicsChapter):
                 return 0.0
             
             @staticmethod
-            def elasticCollisionMomentum(
+            def elastic_collision_momentum(
                 mass_1: Optional[float]=None,
                 mass_2: Optional[float]=None,
                 velocity_i1: Optional[float]=None,
@@ -351,7 +367,8 @@ class Chapter9(PhysicsChapter):
                     float: the result of whichever variable was left equal to None
                 """
 
-                if mass_1 <= 0.0 or mass_2 <= 0.0:
+                if mass_1 is not None and mass_1 <= 0.0 or \
+                    mass_2 is not None and mass_2 <= 0.0:
                     raise ValueError("We are operating with massive objects. \
                         Make sure all objects have a mass greater than zero.")
                 
@@ -470,7 +487,7 @@ class Chapter9(PhysicsChapter):
                 return 0.0 
 
             @staticmethod
-            def rocketEquation(
+            def rocket_equation(
                 delta_v: Optional[float]=None,
                 vel_exhaust: Optional[float]=None,
                 initial_mass: Optional[float]=None,
@@ -493,7 +510,7 @@ class Chapter9(PhysicsChapter):
                     float: the result of whichever variable was left equal to None
                 """
 
-                if initial_mass <= 0 or final_mass <= 0:
+                if initial_mass is not None and initial_mass <= 0 or final_mass <= 0:
                     raise ValueError("We are operating with massive objects. \
                         Mass must be greater than zero.")
                 

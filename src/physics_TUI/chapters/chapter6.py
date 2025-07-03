@@ -57,7 +57,7 @@ class Chapter6(PhysicsChapter):
                     "v": "Tangential velocity (m/s)",
                     "r": "Radius (m)"
                 },
-                calculation=self.Calculate.centripetalForceTangVel
+                calculation=self.Calculate.centripetal_force_ang_vel
             ),
             Equation(
                 name="Centripetal force with angular velocity",
@@ -68,7 +68,7 @@ class Chapter6(PhysicsChapter):
                     "ω": "Tangential velocity (rads/s)",
                     "r": "Radius (m)"
                 },
-                calculation=self.Calculate.centripetalForceAngVel
+                calculation=self.Calculate.centripetal_force_tang_vel
             ),
             Equation(
                 name="Ideal angle of a banked curve",
@@ -78,7 +78,7 @@ class Chapter6(PhysicsChapter):
                     "v": "Velocity (m/s)",
                     "r": "Radius of curvature (m)",
                 },
-                calculation=self.Calculate.idealAngBankedCurve
+                calculation=self.Calculate.ideal_ang_banked_curve
             ),
             Equation(
                 name="Drag force",
@@ -90,7 +90,7 @@ class Chapter6(PhysicsChapter):
                     "A": "Area of the object (m²)",
                     "v": "Velocity of the object (m/s)"
                 },
-                calculation=self.Calculate.dragForce
+                calculation=self.Calculate.drag_force
             ),
             Equation(
                 name="Stoke's law",
@@ -101,7 +101,7 @@ class Chapter6(PhysicsChapter):
                     "η": "Dynamic viscosity of the fluid (N⋅s/m²)",
                     "v": "Velocity of the object (m/s)"
                 },
-                calculation=self.Calculate.stokesLaw
+                calculation=self.Calculate.stokes_law
             ),
             Equation(
                 name="Terminal velocity",
@@ -113,7 +113,7 @@ class Chapter6(PhysicsChapter):
                     "A": "Area of the object (m²)",
                     "ρ": "Fluid density (kg/m³)",
                 },
-                calculation=self.Calculate.terminalVelocity
+                calculation=self.Calculate.terminal_velocity
             )
         ]
 
@@ -169,7 +169,7 @@ class Chapter6(PhysicsChapter):
         """
 
         @staticmethod
-        def centripetalForceTangVel(
+        def centripetal_force_tang_vel(
             centripetal_F: Optional[float]=None,
             mass: Optional[float]=None,
             velocity: Optional[float]=None,
@@ -244,7 +244,7 @@ class Chapter6(PhysicsChapter):
             return (mass * (velocity * velocity)) / radius
 
         @staticmethod
-        def centripetalForceAngVel(
+        def centripetal_force_ang_vel(
             centripetal_F: Optional[float]=None,
             mass: Optional[float]=None,
             angular_vel: Optional[float]=None,
@@ -308,7 +308,7 @@ class Chapter6(PhysicsChapter):
             return mass * (angular_vel * angular_vel) * radius
 
         @staticmethod
-        def idealAngBankedCurve(
+        def ideal_ang_banked_curve(
             theta: Optional[float]=None,
             velocity: Optional[float]=None,
             radius: Optional[float]=None
@@ -363,7 +363,7 @@ class Chapter6(PhysicsChapter):
             return atan(argument) * (180/pi)
         
         @staticmethod
-        def dragForce(
+        def drag_force(
             drag_F: Optional[float]=None,
             drag_coeff: Optional[float]=None,
             fluid_dens: Optional[float]=None,
@@ -440,7 +440,7 @@ class Chapter6(PhysicsChapter):
             return -0.5 * drag_coeff * fluid_dens * area * (velocity * velocity)
                 
         @staticmethod
-        def stokesLaw(
+        def stokes_law(
             drag_Fs: Optional[float]=None,
             radius: Optional[float]=None,
             viscosity: Optional[float]=None,
@@ -497,7 +497,7 @@ class Chapter6(PhysicsChapter):
             return -const * radius * viscosity * velocity
         
         @staticmethod
-        def terminalVelocity(
+        def terminal_velocity(
             terminal_vel: Optional[float]=None,
             mass: Optional[float]=None,
             drag_coeff: Optional[float]=None,

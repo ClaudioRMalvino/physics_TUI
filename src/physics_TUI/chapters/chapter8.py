@@ -16,34 +16,35 @@ class Chapter8(PhysicsChapter):
                 name="Difference in gravitational potential energy",
                 formula="ΔUαβ = Uβ − Uα = −Wαβ",
                 variables={
-                    "ΔUαβ": "Change in gravitational potential energy",
-                    "Uβ": "Gravitational potential energy at final position",
-                    "Uα": "Gravitational potential energy at final position",
-                    "Wαβ": "Work done from point α to point β"
+                    "ΔUαβ": "Change in gravitational potential energy (J)",
+                    "Uβ": "Gravitational potential energy at final position (J)",
+                    "Uα": "Gravitational potential energy at final position (J)",
+                    "Wαβ": "Work done from point α to point β (J)"
                 }
             ),
             Equation(
                 name="Conservation of Energy",
                 formula="Wₙc,αβ = Δ(K + U)αβ = ΔEαβ",
                 variables={
-                    "0 = Wₙc,αβ": "Non-conservative work",
+                    "0 = Wₙc,αβ": "Non-conservative work (J)",
                     "Δ(K + U)αβ": "The sum of the changes in kinetic energy and potential energy \
-                        from α to β.",
-                    "ΔEαβ": "The change in energy of the system"
+                        from α to β (J)",
+                    "ΔEαβ": "The change in energy of the system (J)"
                 }
             ),
             Equation(
                 name="Work done by a conservative force along a closed path",
                 formula="W(closed path) = ∫ F(cons) · dr = 0",
                 variables={
-                    "F(cons)": "Conservative force"
+                    "F(cons)": "Conservative force (N)",
+                    "dr": "Infinitesmal distance (m)"
                 }
             ),
             Equation(
                 name="Condition for conservative forces in two dimensions",
                 formula="(∂F(y)/∂x) = (∂F(x)/∂y)",
                 variables={
-                    "∂F_y/∂x": "Partial derivative of F(y) with respect to x",
+                    "∂F(y)/∂x": "Partial derivative of F(y) with respect to x",
                     "∂F(x)/∂y": "Partial derivative of F(x) with respect to y"
                 }
             ),
@@ -51,7 +52,7 @@ class Chapter8(PhysicsChapter):
                 name="Conservative force is the negative derivative of the potential energy",
                 formula="F(l) = -∂U/∂x(l)",
                 variables={
-                    "F(l)": "Conservative force",
+                    "F(l)": "Conservative force (N)",
                     "dU/dx(l)": "Derivative of F(l) with respect to x"
                 }
             )

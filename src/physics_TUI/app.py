@@ -111,21 +111,19 @@ class CalculatorScreen(Screen):
                         empty_calc_var = self.current_chapter.var_mapping[empty_field]
                     else:
                         empty_calc_var = empty_field
-                    
-                    # Set the empty field to None in the parameters
+                
                     mapped_values[empty_calc_var] = None
                     
                     # Call the calculation function
                     if self.equation.calculation:
                         result = self.equation.calculation(**mapped_values)
-                        
-                        # Display the result
+                          
                         result_text = f"[green]✓ {empty_field} = {result}[/]"
                         
                         # Add units if available in variable description
                         if empty_field in self.equation.variables:
                             var_desc = self.equation.variables[empty_field]
-                            # Try to extract units from description (simple pattern matching)
+                            # Try to extract units from description 
                             if '(' in var_desc and ')' in var_desc:
                                 units = var_desc[var_desc.find('(')+1:var_desc.find(')')]
                                 result_text = f"[green]✓ {empty_field} = {result} {units} [/]"
@@ -168,7 +166,8 @@ class physicsTUIApp(App):
             Chapter5(),
             Chapter6(),
             Chapter7(),
-            Chapter8()
+            Chapter8(),
+            Chapter9()
         ]
         self.current_chapter: Optional[PhysicsChapter] = None
         self.showing_equation_list = False

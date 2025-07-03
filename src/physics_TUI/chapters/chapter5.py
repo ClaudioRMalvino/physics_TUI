@@ -92,7 +92,7 @@ class Chapter5(PhysicsChapter):
                     "m": "Mass of the object (kg)",
                     "θ": "Angle between the normal vector and gravitational vector [radians]",
                 },
-                calculation=self.Calculate.normalForce
+                calculation=self.Calculate.normal_force
             ),
             Equation(
                 name="Hooke's Law",
@@ -102,7 +102,7 @@ class Chapter5(PhysicsChapter):
                     "k": "Spring constant (kg/s²)",
                     "x": "Distance from point of equilibrium",
                 },
-                calculation=self.Calculate.hookesLaw
+                calculation=self.Calculate.hookes_law
             ),
         ]
 
@@ -207,7 +207,7 @@ class Chapter5(PhysicsChapter):
         # the typical problem which they are used to solve.
 
         @staticmethod
-        def normalForce(
+        def normal_force(
             normal_F: Optional[float]=None,
             mass: Optional[float]=None,
             theta: Optional[float]=None,
@@ -253,7 +253,7 @@ class Chapter5(PhysicsChapter):
             return mass * g * cos(theta_radians)
 
         @staticmethod
-        def hookesLaw(
+        def hookes_law(
             force: Optional[float]=None,
             spring_const: Optional[float]=None,
             displacement: Optional[float]=None

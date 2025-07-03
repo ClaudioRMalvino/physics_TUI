@@ -75,7 +75,7 @@ class Chapter4(PhysicsChapter):
                     "v₀": "Initial velocity (m/s)",
                     "θ": "Launch angle (degrees)",
                 },
-                calculation=self.Calculate.timeOfFlight
+                calculation=self.Calculate.time_of_flight
             ),
             Equation(
                 name="Trajectory",
@@ -94,7 +94,7 @@ class Chapter4(PhysicsChapter):
                     "θ": "Launch angle (degrees)",
                     "v₀": "Initial velocity (m/2)",
                 },
-                calculation=self.Calculate.projectileRange
+                calculation=self.Calculate.projectile_range
             ),
             Equation(
                 name="Centripetal acceleration",
@@ -103,7 +103,7 @@ class Chapter4(PhysicsChapter):
                     "v": "Velocity (m/s)",
                     "r": "Radius (m)"
                 },
-                calculation=self.Calculate.centripetalAccel
+                calculation=self.Calculate.centripetal_accel
             ),
             Equation(
                 name="Position vector (uniform cirular motion)",
@@ -282,7 +282,7 @@ class Chapter4(PhysicsChapter):
                 return (x1, x2)
 
         @staticmethod
-        def timeOfFlight(
+        def time_of_flight(
             v_0: Optional[float]=None,
             theta: Optional[float]=None,
             t: Optional[float]=None,
@@ -369,7 +369,7 @@ class Chapter4(PhysicsChapter):
 
 
         @staticmethod
-        def projectileRange(
+        def projectile_range(
             r_total: Optional[float]=None,
             v_0: Optional[float]=None,
             theta: Optional[float]=None
@@ -425,7 +425,7 @@ class Chapter4(PhysicsChapter):
             return ((v_0**2) * sin(2 * theta_radian) ) / g
 
         @staticmethod
-        def centripetalAccel(
+        def centripetal_accel(
             accel: Optional[float]=None,
             velocity: Optional[float]=None,
             radius: Optional[float]=None
