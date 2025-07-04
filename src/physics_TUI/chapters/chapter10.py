@@ -26,11 +26,10 @@ class Chapter10(PhysicsChapter):
             "t": "time",
             "α": "const_angular_accel",
             "Δθ": "delta_theta",
-            "K":  "kinetic_energy",
+            "K": "kinetic_energy",
             "I": "moment_inertia",
             "τ": "torque",
-            "F": "force"
-
+            "F": "force",
         }
 
         self.equations: List[Equation] = [
@@ -79,7 +78,7 @@ class Chapter10(PhysicsChapter):
                     "a(t)": "Tangential acceleration (m/s²)",
                     "r": "Radius (m)",
                     "α": "Angular acceleration (rads/s²)",
-                }
+                },
             ),
             Equation(
                 name="Average angular velocity",
@@ -264,6 +263,7 @@ class Chapter10(PhysicsChapter):
             Equation(
                 name="Rotational work done by a net force",
                 formula="W(AB) = ∫[θ(A) to θ(B)] (∑ᵢ τᵢ) dθ",
+                variables={},
             ),
             Equation(
                 name="Rotational power",
@@ -709,9 +709,10 @@ class Chapter10(PhysicsChapter):
                     raise ValueError("Divison by zero is undefined.")
 
                 # Calculates the constant angular acceleration
-                return ((final_angular_vel * final_angular_vel) - (init_angular_vel * init_angular_vel)) / (
-                    2 * delta_theta
-                )
+                return (
+                    (final_angular_vel * final_angular_vel)
+                    - (init_angular_vel * init_angular_vel)
+                ) / (2 * delta_theta)
 
             if delta_theta == None:
 
@@ -719,9 +720,10 @@ class Chapter10(PhysicsChapter):
                     raise ValueError("Division by zero is undefined.")
 
                 # Calculates the change in angular position
-                return ((final_angular_vel * final_angular_vel) - (init_angular_vel * init_angular_vel)) / (
-                    2 * delta_theta
-                )
+                return (
+                    (final_angular_vel * final_angular_vel)
+                    - (init_angular_vel * init_angular_vel)
+                ) / (2 * delta_theta)
 
             radicand: float = (
                 init_angular_vel * init_angular_vel

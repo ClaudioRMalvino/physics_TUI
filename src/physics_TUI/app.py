@@ -167,7 +167,9 @@ class physicsTUIApp(App):
             Chapter6(),
             Chapter7(),
             Chapter8(),
-            Chapter9()
+            Chapter9(),
+            Chapter10(),
+            Chapter11()
         ]
         self.current_chapter: Optional[PhysicsChapter] = None
         self.showing_equation_list = False
