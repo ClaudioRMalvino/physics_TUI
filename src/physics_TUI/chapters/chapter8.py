@@ -1,6 +1,7 @@
 from typing import List, Optional, Dict
 from physics_TUI.base_chapter import PhysicsChapter, Equation, Definition
 
+
 class Chapter8(PhysicsChapter):
     """
     Chapter on Potential Energy and Conservation of Energy
@@ -19,8 +20,8 @@ class Chapter8(PhysicsChapter):
                     "ΔUαβ": "Change in gravitational potential energy (J)",
                     "Uβ": "Gravitational potential energy at final position (J)",
                     "Uα": "Gravitational potential energy at final position (J)",
-                    "Wαβ": "Work done from point α to point β (J)"
-                }
+                    "Wαβ": "Work done from point α to point β (J)",
+                },
             ),
             Equation(
                 name="Conservation of Energy",
@@ -29,88 +30,86 @@ class Chapter8(PhysicsChapter):
                     "0 = Wₙc,αβ": "Non-conservative work (J)",
                     "Δ(K + U)αβ": "The sum of the changes in kinetic energy and potential energy \
                         from α to β (J)",
-                    "ΔEαβ": "The change in energy of the system (J)"
-                }
+                    "ΔEαβ": "The change in energy of the system (J)",
+                },
             ),
             Equation(
                 name="Work done by a conservative force along a closed path",
                 formula="W(closed path) = ∫ F(cons) · dr = 0",
                 variables={
                     "F(cons)": "Conservative force (N)",
-                    "dr": "Infinitesmal distance (m)"
-                }
+                    "dr": "Infinitesmal distance (m)",
+                },
             ),
             Equation(
                 name="Condition for conservative forces in two dimensions",
                 formula="(∂F(y)/∂x) = (∂F(x)/∂y)",
                 variables={
                     "∂F(y)/∂x": "Partial derivative of F(y) with respect to x",
-                    "∂F(x)/∂y": "Partial derivative of F(x) with respect to y"
-                }
+                    "∂F(x)/∂y": "Partial derivative of F(x) with respect to y",
+                },
             ),
             Equation(
                 name="Conservative force is the negative derivative of the potential energy",
                 formula="F(l) = -∂U/∂x(l)",
                 variables={
                     "F(l)": "Conservative force (N)",
-                    "dU/dx(l)": "Derivative of F(l) with respect to x"
-                }
-            )
+                    "dU/dx(l)": "Derivative of F(l) with respect to x",
+                },
+            ),
         ]
 
         self.definitions: List[Definition] = [
             Definition(
                 term="conservative force",
-                meaning="force that does work independent of path"
+                meaning="force that does work independent of path",
             ),
             Definition(
                 term="conserved quantity",
-                meaning="one that cannot be created or destroyed, but may be transformed between different forms of itself"
+                meaning="one that cannot be created or destroyed, but may be transformed between different forms of itself",
             ),
             Definition(
                 term="energy conservation",
-                meaning="total energy of an isolated system is constant"
+                meaning="total energy of an isolated system is constant",
             ),
             Definition(
                 term="equilibrium point",
-                meaning="position where the assumed conservative, net force on a particle, given by the slope of its potential energy curve, is zero"
+                meaning="position where the assumed conservative, net force on a particle, given by the slope of its potential energy curve, is zero",
             ),
             Definition(
                 term="exact differential",
-                meaning="is the total differential of a function and requires the use of partial derivatives if the function involves more than one dimension"
+                meaning="is the total differential of a function and requires the use of partial derivatives if the function involves more than one dimension",
             ),
             Definition(
                 term="mechanical energy",
-                meaning="sum of the kinetic and potential energies"
+                meaning="sum of the kinetic and potential energies",
             ),
             Definition(
                 term="non-conservative force",
-                meaning="force that does work that depends on path"
+                meaning="force that does work that depends on path",
             ),
             Definition(
                 term="non-renewable",
-                meaning="energy source that is not renewable, but is depleted by human consumption"
+                meaning="energy source that is not renewable, but is depleted by human consumption",
             ),
             Definition(
                 term="potential energy",
-                meaning="function of position, energy possessed by an object relative to the system considered"
+                meaning="function of position, energy possessed by an object relative to the system considered",
             ),
             Definition(
                 term="potential energy diagram",
-                meaning="graph of a particle's potential energy as a function of position" 
+                meaning="graph of a particle's potential energy as a function of position",
             ),
             Definition(
                 term="potential energy difference",
-                meaning="negative of the work done acting between two points in space"
+                meaning="negative of the work done acting between two points in space",
             ),
             Definition(
                 term="renewable",
-                meaning="energy source that is replenished by natural processes, over human time scales"
+                meaning="energy source that is replenished by natural processes, over human time scales",
             ),
             Definition(
                 term="turning point",
-                meaning="position where the velocity of a particle, in one-dimensional motion, changes sign"
+                meaning="position where the velocity of a particle, in one-dimensional motion, changes sign",
             ),
         ]
-
-

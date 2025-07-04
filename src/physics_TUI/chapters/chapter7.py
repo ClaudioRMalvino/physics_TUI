@@ -3,11 +3,12 @@ from physics_TUI.base_chapter import PhysicsChapter, Equation, Definition
 from math import pi, cos, acos, sqrt
 
 # Global constants
-g: float = 9.82 # Acceleration due to gravity on Earth
+g: float = 9.82  # Acceleration due to gravity on Earth
+
 
 class Chapter7(PhysicsChapter):
     """
-    Chapter on Work and Kinetic Energy 
+    Chapter on Work and Kinetic Energy
     """
 
     def __init__(self) -> None:
@@ -41,9 +42,9 @@ class Chapter7(PhysicsChapter):
                     "F": "Constant force (N)",
                     "d": "Distance travelled (m)",
                     "θ": "Angle between the direction of \
-                        motion and force vector (degrees)"
+                        motion and force vector (degrees)",
                 },
-                calculation=self.Calculate.work_constant_force
+                calculation=self.Calculate.work_constant_force,
             ),
             Equation(
                 name="Work done by gravity",
@@ -52,9 +53,9 @@ class Chapter7(PhysicsChapter):
                     "W": "Work (J)",
                     "m": "Mass (kg)",
                     "y₁": "Initial height (m)",
-                    "y₂": "Final height (m)"
+                    "y₂": "Final height (m)",
                 },
-                calculation=self.Calculate.work_by_gravity
+                calculation=self.Calculate.work_by_gravity,
             ),
             Equation(
                 name="Work done by a spring",
@@ -63,9 +64,9 @@ class Chapter7(PhysicsChapter):
                     "W": "Work (J)",
                     "k": "Spring constant (kg/s²)",
                     "x₁": "Initial position (m)",
-                    "x₂": "Final position"
+                    "x₂": "Final position",
                 },
-                calculation=self.Calculate.work_by_spring
+                calculation=self.Calculate.work_by_spring,
             ),
             Equation(
                 name="Kinetic energy",
@@ -73,9 +74,9 @@ class Chapter7(PhysicsChapter):
                 variables={
                     "K": "Kinetic energy (J)",
                     "m": "Mass (kg)",
-                    "v": "Velocity (m/s)"
+                    "v": "Velocity (m/s)",
                 },
-                calculation=self.Calculate.kinetic_energy
+                calculation=self.Calculate.kinetic_energy,
             ),
             Equation(
                 name="Kinetic energy (momentum representation)",
@@ -83,9 +84,9 @@ class Chapter7(PhysicsChapter):
                 variables={
                     "K": "Kinetic energy (J)",
                     "m": "Mass (kg)",
-                    "p": "Momentum (N*s)"
+                    "p": "Momentum (N*s)",
                 },
-                calculation=self.Calculate.kinetic_energy_momentum
+                calculation=self.Calculate.kinetic_energy_momentum,
             ),
             Equation(
                 name="Work-Energy theorem",
@@ -94,9 +95,9 @@ class Chapter7(PhysicsChapter):
                     "W(net)": "Net work (J)",
                     "m": "Mass (kg)",
                     "v₂": "Final velocity (m/s)",
-                    "v₁": "Initial velocity (m/s)"
+                    "v₁": "Initial velocity (m/s)",
                 },
-                calculation=self.Calculate.work_energy_theorem
+                calculation=self.Calculate.work_energy_theorem,
             ),
             Equation(
                 name="Average power",
@@ -104,35 +105,34 @@ class Chapter7(PhysicsChapter):
                 variables={
                     "P(ave)": "Average power (J/s)",
                     "ΔW": "Elapsed work done (W)",
-                    "Δt": "Elapsed time (s)"
-                }
-            ),    
+                    "Δt": "Elapsed time (s)",
+                },
+            ),
         ]
 
         self.definitions: List[Definition] = [
             Definition(
                 term="average power",
-                meaning="work done in a time interval divided by the time interval"
+                meaning="work done in a time interval divided by the time interval",
             ),
             Definition(
                 term="kinetic energy",
-                meaning="energy of motion, one-half an object's mass times the square of its speed"
+                meaning="energy of motion, one-half an object's mass times the square of its speed",
             ),
             Definition(
                 term="net work",
-                meaning="work done by all the forces acting on an object"
+                meaning="work done by all the forces acting on an object",
             ),
             Definition(
-                term="power",
-                meaning="(or instantaneous power) rate of doing work"
+                term="power", meaning="(or instantaneous power) rate of doing work"
             ),
             Definition(
                 term="work",
-                meaning="done when a force acts on something that undergoes a displacement from one position to another"
+                meaning="done when a force acts on something that undergoes a displacement from one position to another",
             ),
             Definition(
                 term="work-energy theorem",
-                meaning="net work done on a particle is equal to the change in its kinetic energy"
+                meaning="net work done on a particle is equal to the change in its kinetic energy",
             ),
         ]
 
@@ -143,57 +143,57 @@ class Chapter7(PhysicsChapter):
 
         @staticmethod
         def work_constant_force(
-            work: Optional[float]=None,
-            const_F: Optional[float]=None,
-            distance: Optional[float]=None,
-            theta: Optional[float]=None
+            work: Optional[float] = None,
+            const_F: Optional[float] = None,
+            distance: Optional[float] = None,
+            theta: Optional[float] = None,
         ) -> float:
             """
             Function calculates the work done as a function of
             constant applied force and the distance travelled.
-            Can also calculate for desired variable when arg == None and all 
+            Can also calculate for desired variable when arg == None and all
             other args have values.
 
             Args:
                 work (Optional[float], optional): total work done [J]. Defaults to None.
                 const_F (Optional[float], optional): constant applied force [N]. Defaults to None.
                 distance (Optional[float], optional): distance travelled [m]. Defaults to None.
-                theta (Optional[float], optional): angle between direction of motion 
+                theta (Optional[float], optional): angle between direction of motion
                                                         and the force vectors [degrees]. Defaults to None.
             Returns:
                 float: the result of whichever variable was left equal to None
             """
-            
+
             # Converts user input of degrees into SI units of radians
             if theta is not None:
-                theta_radians: float = theta * (pi/180.0)
+                theta_radians: float = theta * (pi / 180.0)
 
             if cont_F == None:
                 # Calculates for constant force
-                return work/(cos(theta_radians) * distance)
-            
+                return work / (cos(theta_radians) * distance)
+
             if distance == None:
                 # Calculates for distance
                 return work / (const_F * cos(theta_radians))
-            
+
             if theta == None:
                 # Calculates for theta and then converts into degrees
-                argument: float = work/(const_F * distance)
-                return acos(argument) * (180/pi)
+                argument: float = work / (const_F * distance)
+                return acos(argument) * (180 / pi)
 
             return const_F * distance * cos(theta_radians)
 
         @staticmethod
         def work_by_gravity(
-            work: Optional[float]=None,
-            mass: Optional[float]=None,
-            initial_height: Optional[float]=None,
-            final_height: Optional[float]=None,
-        ) -> float: 
+            work: Optional[float] = None,
+            mass: Optional[float] = None,
+            initial_height: Optional[float] = None,
+            final_height: Optional[float] = None,
+        ) -> float:
             """
             Function calculates the work done as a function of
             gravity, mass and the distance travelled.
-            Can also calculate for desired variable when arg == None and all 
+            Can also calculate for desired variable when arg == None and all
             other args have values.
 
             Args:
@@ -207,38 +207,42 @@ class Chapter7(PhysicsChapter):
             """
 
             if mass is not None and mass < 0:
-                raise ValueError("We are operating with massive objects. \
-                Mass must be greater than zero.")
-            
+                raise ValueError(
+                    "We are operating with massive objects. \
+                Mass must be greater than zero."
+                )
+
             if mass == None:
 
                 result: float = -work / (g * (final_height - initial_height))
 
                 if result < 0:
-                    raise ValueError("Mass cannot be negative. \
-                        Check your signs or initial and final heights.")
+                    raise ValueError(
+                        "Mass cannot be negative. \
+                        Check your signs or initial and final heights."
+                    )
                 else:
                     return result
-            
+
             if initial_height == None:
-                return (work/(mass * g)) + final_height
-            
+                return (work / (mass * g)) + final_height
+
             if final_height == None:
-                return (-work/(mass * g)) + initial_height
-            
+                return (-work / (mass * g)) + initial_height
+
             return -mass * g * (final_height - initial_height)
-        
+
         @staticmethod
         def work_by_spring(
-            work: Optional[float]=None,
-            spring_const: Optional[float]=None,
-            initial_xpos: Optional[float]=None,
-            final_xpos: Optional[float]=None,
+            work: Optional[float] = None,
+            spring_const: Optional[float] = None,
+            initial_xpos: Optional[float] = None,
+            final_xpos: Optional[float] = None,
         ) -> float:
             """
             Function calculates the work done as a function of
             spring constant, and the displacement along the x-axis.
-            Can also calculate for desired variable when arg == None and all 
+            Can also calculate for desired variable when arg == None and all
             other args have values.
 
             Args:
@@ -255,27 +259,32 @@ class Chapter7(PhysicsChapter):
                 raise ValueError("Spring constant cannot be a negative value.")
 
             if spring_const == None:
-                return (-2.0 * work) / ( (final_xpos * final_xpos) - (initial_xpos * initial_xpos) )
-            
+                return (-2.0 * work) / (
+                    (final_xpos * final_xpos) - (initial_xpos * initial_xpos)
+                )
+
             if initial_xpos == None:
-                return ( (2.0 * work) / spring_const) + (final_xpos * final_xpos)
+                return ((2.0 * work) / spring_const) + (final_xpos * final_xpos)
 
             if final_xpos == None:
-                return ( (-2.0 * work) / spring_const) + (final_xpos * final_xpos)
-            
-            return -0.5 * spring_const * ( (final_xpos * final_xpos) - (initial_xpos * initial_xpos))
+                return ((-2.0 * work) / spring_const) + (final_xpos * final_xpos)
 
+            return (
+                -0.5
+                * spring_const
+                * ((final_xpos * final_xpos) - (initial_xpos * initial_xpos))
+            )
 
         @staticmethod
         def kinetic_energy(
-            kinetic_E: Optional[float]=None,
-            mass: Optional[float]=None,
-            velocity: Optional[float]=None
+            kinetic_E: Optional[float] = None,
+            mass: Optional[float] = None,
+            velocity: Optional[float] = None,
         ) -> float:
             """
             Function calculates the kinetic energy of a system as a function of
             mass, and velocity.
-            Can also calculate for desired variable when arg == None and all 
+            Can also calculate for desired variable when arg == None and all
             other args have values.
 
             Args:
@@ -288,32 +297,36 @@ class Chapter7(PhysicsChapter):
             """
 
             if mass is not None and mass < 0:
-                raise ValueError("We are operating with massive objects. \
-                Mass must be greater than zero.")
-            
+                raise ValueError(
+                    "We are operating with massive objects. \
+                Mass must be greater than zero."
+                )
+
             if velocity is not None and velocity < 0:
-                raise ValueError("This is a scalar product. Velocity cannot be negative")
-            
+                raise ValueError(
+                    "This is a scalar product. Velocity cannot be negative"
+                )
+
             if mass == None:
-                return kinetic_E * (2.0/(velocity*velocity))
+                return kinetic_E * (2.0 / (velocity * velocity))
 
             if velocity == None:
 
                 radicand: float = kinetic_E * (2.0 / mass)
                 return sqrt(radicand)
-            
+
             return 0.5 * mass * (velocity * velocity)
 
         @staticmethod
         def kinetic_energy_momentum(
-            kinetic_E: Optional[float]=None,
-            mass: Optional[float]=None,
-            momentum: Optional[float]=None,
+            kinetic_E: Optional[float] = None,
+            mass: Optional[float] = None,
+            momentum: Optional[float] = None,
         ) -> float:
             """
             Function calculates the kinetic energy of a system as a function of
             mass, and momentum.
-            Can also calculate for desired variable when arg == None and all 
+            Can also calculate for desired variable when arg == None and all
             other args have values.
 
             Args:
@@ -326,32 +339,36 @@ class Chapter7(PhysicsChapter):
             """
 
             if mass is not None and mass < 0:
-                raise ValueError("We are operating with massive objects. \
-                Mass must be greater than zero.")
-            
+                raise ValueError(
+                    "We are operating with massive objects. \
+                Mass must be greater than zero."
+                )
+
             if velocity is not None and velocity < 0:
-                raise ValueError("This is a scalar product. Velocity cannot be negative")
-            
+                raise ValueError(
+                    "This is a scalar product. Velocity cannot be negative"
+                )
+
             if mass == None:
 
-                return (momentum*momentum) / (kinetic_E * 2.0)
-            
+                return (momentum * momentum) / (kinetic_E * 2.0)
+
             if momentum == None:
                 return kinetic_E * 2.0 * mass
-            
+
             return (momentum * momentum) / (2.0 * mass)
-        
+
         @staticmethod
         def work_energy_theorem(
-            net_work: Optional[float]=None,
-            mass: Optional[float]=None,
-            final_vel: Optional[float]=None,
-            initial_vel: Optional[float]=None
+            net_work: Optional[float] = None,
+            mass: Optional[float] = None,
+            final_vel: Optional[float] = None,
+            initial_vel: Optional[float] = None,
         ) -> float:
             """
             Function calculates the net work done in a system as a function of
             initial kinetic energy and final kinetic energy.
-            Can also calculate for desired variable when arg == None and all 
+            Can also calculate for desired variable when arg == None and all
             other args have values.
 
 
@@ -366,19 +383,27 @@ class Chapter7(PhysicsChapter):
             """
 
             if mass is not None and mass < 0:
-                raise ValueError("We are operating with massive objects. \
-                Mass must be greater than zero.")
+                raise ValueError(
+                    "We are operating with massive objects. \
+                Mass must be greater than zero."
+                )
 
             if mass == None:
 
-                return (2.0 * net_work) / ( (final_vel * final_vel) - (initial_vel * initial_vel) )
-            
+                return (2.0 * net_work) / (
+                    (final_vel * final_vel) - (initial_vel * initial_vel)
+                )
+
             if final_vel == None:
 
-                radicand: float = ((2.0 * net_work) / mass) + (initial_vel * initial_vel)
+                radicand: float = ((2.0 * net_work) / mass) + (
+                    initial_vel * initial_vel
+                )
                 if radicand < 0:
-                    raise ValueError("Negative radicand produces a complex number. \
-                        Check your signs.")
+                    raise ValueError(
+                        "Negative radicand produces a complex number. \
+                        Check your signs."
+                    )
                 else:
                     return sqrt(radicand)
 
@@ -386,15 +411,13 @@ class Chapter7(PhysicsChapter):
 
                 radicand: float = ((-2.0 * net_work) / mass) + (final_vel * final_vel)
                 if radicand < 0:
-                    raise ValueError("Negative radicand produces a complex number. \
-                        Check your signs.")
+                    raise ValueError(
+                        "Negative radicand produces a complex number. \
+                        Check your signs."
+                    )
                 else:
                     return sqrt(radicand)
-            
-            return (0.5 * mass) * ( (final_vel*final_vel) - (initial_vel*initial_vel))
 
-
-
-                
-
-
+            return (0.5 * mass) * (
+                (final_vel * final_vel) - (initial_vel * initial_vel)
+            )

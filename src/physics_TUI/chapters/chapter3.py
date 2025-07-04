@@ -44,8 +44,9 @@ class Chapter3(PhysicsChapter):
             Equation(
                 name="Average velocity (constant acceleration)",
                 formula="v = Δx/Δt = (x - xᵢ)/(t - tᵢ)",
-                variables={"Δx": "Displacement in direction (m)", 
-                "Δt": "Elapsed time (s)"
+                variables={
+                    "Δx": "Displacement in direction (m)",
+                    "Δt": "Elapsed time (s)",
                 },
             ),
             Equation(
@@ -266,12 +267,12 @@ class Chapter3(PhysicsChapter):
 
             if x_0 is None:
                 # Solves for x_0 (initial position)
-                return round(x_f - (v_0 * t) - (0.5 * accel * (t*t)), 4)
+                return round(x_f - (v_0 * t) - (0.5 * accel * (t * t)), 4)
 
             if v_0 is None:
                 if t == 0:
                     raise ValueError("Division by zero is undefined")
-                    
+
                 # Solves for v_0 (initial velocity)
                 return round((x_f - x_0 - (0.5 * accel * (t * t))) / t, 4)
 
@@ -300,7 +301,7 @@ class Chapter3(PhysicsChapter):
                 if t == 0:
                     raise ValueError("Divison by zero is undefined.")
 
-                return round( (x_f - x_0 - (v_0 * t) ) * (2 / (t * t)), 4)
+                return round((x_f - x_0 - (v_0 * t)) * (2 / (t * t)), 4)
 
             # Solves for x_f (final position)
 
@@ -361,9 +362,9 @@ class Chapter3(PhysicsChapter):
                 if accel == 0:
                     raise ValueError("acceleration cannot be equal to zero")
 
-                return round((((v_f*v_f) - (v_0*v_0)) / (2 * accel)) - x_0, 4)
+                return round((((v_f * v_f) - (v_0 * v_0)) / (2 * accel)) - x_0, 4)
 
-            discriminant: float = (v_0*v_0) + 2 * accel * (x_f - x_0)
+            discriminant: float = (v_0 * v_0) + 2 * accel * (x_f - x_0)
 
             if discriminant < 0:
                 raise ValueError("The discriminant cannot be negative")
@@ -387,13 +388,13 @@ class Chapter3(PhysicsChapter):
 
             if y_0 is None:
                 # Solves for y_0 (initial position)
-                return round(y_f - (v_0 * t) - (0.5 * g * (t*t)), 4)
+                return round(y_f - (v_0 * t) - (0.5 * g * (t * t)), 4)
 
             elif v_0 is None:
                 # Solves for v_0 (initial velocity)
                 if t == 0:
                     raise ValueError("Cannot solve for v_0 when t=0")
-                return round((y_f - y_0 - (0.5 * g * (t*tuple))) / t, 4)
+                return round((y_f - y_0 - (0.5 * g * (t * tuple))) / t, 4)
 
             elif t is None:
                 # Solves for t (elapsed time)
@@ -415,7 +416,7 @@ class Chapter3(PhysicsChapter):
 
             else:  # y_f is None
                 # Solves for y_f (final position)
-                return round(y_0 + (v_0 * t) + (0.5 * g * (t*t)), 4)
+                return round(y_0 + (v_0 * t) + (0.5 * g * (t * t)), 4)
 
         @staticmethod
         def vel_free_fall_from_height(
@@ -441,11 +442,11 @@ class Chapter3(PhysicsChapter):
             if y_0 is None:
                 # Solves for y_0 (initial height)
 
-                return round(-((((v_f*v_f) - (v_0*v_0)) / (2 * g)) - y_f), 4)
+                return round(-((((v_f * v_f) - (v_0 * v_0)) / (2 * g)) - y_f), 4)
 
             if v_0 is None:
                 # Solves for v_0 (initial velocity)
-                discriminant: float = (v_f*v_f) - (2 * g * (y_f - y_0))
+                discriminant: float = (v_f * v_f) - (2 * g * (y_f - y_0))
 
                 if discriminant < 0:
                     raise ValueError("The discriminant cannot be negative")
@@ -454,9 +455,9 @@ class Chapter3(PhysicsChapter):
 
             if y_f is None:
                 # Solves for y_f (final position)
-                return round((((v_f*v_f) - (v_0*v_0)) / (2 * g)) - y_0, 4)
+                return round((((v_f * v_f) - (v_0 * v_0)) / (2 * g)) - y_0, 4)
 
-            discriminant: float = (v_0*v_0) + 2 * g * (y_f - y_0)
+            discriminant: float = (v_0 * v_0) + 2 * g * (y_f - y_0)
 
             if discriminant < 0:
                 raise ValueError("The discriminant cannot be negative")

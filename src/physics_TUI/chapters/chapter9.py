@@ -2,6 +2,7 @@ from typing import List, Optional, Dict
 from physics_TUI.base_chapter import PhysicsChapter, Equation, Definition
 from math import log, exp
 
+
 class Chapter9(PhysicsChapter):
     """
     Chapter on Linear Momentum and Collisions
@@ -15,7 +16,7 @@ class Chapter9(PhysicsChapter):
             "m₂": "mass_2",
             "v₁": "velocity_1",
             "v₂": "velocity_2",
-            "v":  "velocity_f",
+            "v": "velocity_f",
             "M": "mass_f",
             "v(i)₁": "velocity_i1",
             "v(i)₂": "velocity_i2",
@@ -24,7 +25,7 @@ class Chapter9(PhysicsChapter):
             "Δv": "delta_v",
             "u": "vel_exhaust",
             "m(i)": "initial_mass",
-            "m": "final_mass"
+            "m": "final_mass",
         }
 
         self.equations: List[Equation] = [
@@ -34,8 +35,8 @@ class Chapter9(PhysicsChapter):
                 variables={
                     "p": "Momentum (N⋅s)",
                     "m": "Mass of the object (kg)",
-                    "velocity": "m/s)"
-                }
+                    "velocity": "m/s)",
+                },
             ),
             Equation(
                 name="Impulse",
@@ -44,8 +45,8 @@ class Chapter9(PhysicsChapter):
                     "J": "Impulse (N⋅s)",
                     "F(t)": "Force as a function of time (N)",
                     "F(ave)": "Average velocity",
-                    "Δt": "Elapsed time"
-                }
+                    "Δt": "Elapsed time",
+                },
             ),
             Equation(
                 name="Impulse-momentum theorem",
@@ -53,7 +54,7 @@ class Chapter9(PhysicsChapter):
                 variables={
                     "J": "Impulse (N⋅s)",
                     "Δp": "Change in momentum (N⋅s)",
-                }
+                },
             ),
             Equation(
                 name="Average force from momentum",
@@ -61,8 +62,8 @@ class Chapter9(PhysicsChapter):
                 variables={
                     "F": "Average force (N)",
                     "Δp": "Change in momentum (N⋅s)",
-                    "Δt": "Elapsed time (s)"
-                }
+                    "Δt": "Elapsed time (s)",
+                },
             ),
             Equation(
                 name="Instantaneous force from momentum",
@@ -70,8 +71,8 @@ class Chapter9(PhysicsChapter):
                 variables={
                     "F(t)": "Instantaneous force (N)",
                     "dp/dt": "The rate of change of momentum with respect \
-                        to time (N)"
-                }
+                        to time (N)",
+                },
             ),
             Equation(
                 name="Conservation of momentum",
@@ -82,15 +83,13 @@ class Chapter9(PhysicsChapter):
                     "m₁": "Mass of the first object (kg)",
                     "v₁": "Velocity of the first object (m/s)",
                     "m₂": "Mass of the second object (m)",
-                    "v₂": "Velocity of the second object (m/s)"
-                }
+                    "v₂": "Velocity of the second object (m/s)",
+                },
             ),
             Equation(
                 name="Generalized conservation of momentum",
                 formula="∑(j=1 to N) pⱼ = constant",
-                variables={
-                    "∑(j=1 to N) pⱼ": "The sum of all momenta in the system"
-                }
+                variables={"∑(j=1 to N) pⱼ": "The sum of all momenta in the system"},
             ),
             Equation(
                 name="Conservation of momentum in two dimensions",
@@ -105,9 +104,9 @@ class Chapter9(PhysicsChapter):
                     "m₂": "Mass of the second object (m)",
                     "v₂": "Velocity of the second object (m/s)",
                     "M": "Total mass of the object after collision (m₁ + m₂) (kg)",
-                    "v": "Velocity after the collision (m/s)"
+                    "v": "Velocity after the collision (m/s)",
                 },
-                calculation=self.Calculate.inelastic_collision_momentum
+                calculation=self.Calculate.inelastic_collision_momentum,
             ),
             Equation(
                 name="Elastic collision of two objects (momentum)",
@@ -118,9 +117,9 @@ class Chapter9(PhysicsChapter):
                     "v(i)₁": "Initial velocity of the first object (m/s)",
                     "v(i)₂": "Initial velocity of the second object (m/s)",
                     "v(f)₁": "Final velocity of the first object (m/s)",
-                    "v(f)₂": "Final velocity of the second object (m/s)"
+                    "v(f)₂": "Final velocity of the second object (m/s)",
                 },
-                calculation=self.Calculate.elastic_collision_momentum
+                calculation=self.Calculate.elastic_collision_momentum,
             ),
             Equation(
                 name="External forces",
@@ -128,8 +127,8 @@ class Chapter9(PhysicsChapter):
                 variables={
                     "F(ext)": "External force (N)",
                     "∑(j=1 to N) dpⱼ/dt": "The sum of all the rate of \
-                        change of momenta with respect to time in the system"
-                }
+                        change of momenta with respect to time in the system",
+                },
             ),
             Equation(
                 name="Newton's second law for an extended object",
@@ -137,8 +136,8 @@ class Chapter9(PhysicsChapter):
                 variables={
                     "F": "Force (N)",
                     "dp(CM)/dt": "Rate of change of momentum from the center \
-                        of mass with respect to time"
-                }
+                        of mass with respect to time",
+                },
             ),
             Equation(
                 name="Acceleration of the center of mass",
@@ -147,8 +146,8 @@ class Chapter9(PhysicsChapter):
                     "a(CM)": "Acceleration of the center of mass (m/s²)",
                     "M": "Total mass of the system (kg)",
                     "∑(j=1 to N) mⱼaⱼ": "Sum of the product of mass and \
-                        acceleration of each individual object in the system"
-                }
+                        acceleration of each individual object in the system",
+                },
             ),
             Equation(
                 name="Position of the center of mass for a system of particles",
@@ -157,8 +156,8 @@ class Chapter9(PhysicsChapter):
                     "r(CM)": "Position of the center of mass of the system (m)",
                     "M": "Total mass of the system",
                     "∑(j=1 to N) mⱼrⱼ": "Sum of the product of mass and \
-                        position of each object in the system"
-                }
+                        position of each object in the system",
+                },
             ),
             Equation(
                 name="Velocity of the center of mass",
@@ -168,8 +167,8 @@ class Chapter9(PhysicsChapter):
                     "v(CM)": "Velocity of the center of mass (m/s)",
                     "M": "Total mass of the system (m)",
                     "∑(j=1 to N) mⱼvⱼ": "The sum of the product of mass \
-                        and velocity of each object in the system"
-                }
+                        and velocity of each object in the system",
+                },
             ),
             Equation(
                 name="Position of the center of mass of a continuous object",
@@ -182,75 +181,73 @@ class Chapter9(PhysicsChapter):
                     "Δv": "Change of velocity obtained from loss of mass",
                     "u": "Velocity of the gas being exhausted from the rocket",
                     "m(i)": "Initial mass of the rocket (with fuel)",
-                    "m": "Mass of the rocket after the fuel has been exhausted"
+                    "m": "Mass of the rocket after the fuel has been exhausted",
                 },
-                calculation=self.Calculate.rocket_equation
-            )
+                calculation=self.Calculate.rocket_equation,
+            ),
         ]
 
         self.definitions: List[Definition] = [
             Definition(
-                term="center of mass",
-                meaning="weighted average position of the mass"
-                ),
+                term="center of mass", meaning="weighted average position of the mass"
+            ),
             Definition(
                 term="closed system",
-                meaning="system for which the mass is constant and the net external force on the system is zero"
-                ),
+                meaning="system for which the mass is constant and the net external force on the system is zero",
+            ),
             Definition(
-                term="elastic",
-                meaning="collision that conserves kinetic energy"
-                ),
+                term="elastic", meaning="collision that conserves kinetic energy"
+            ),
             Definition(
                 term="explosion",
-                meaning="single object breaks up into multiple objects; kinetic energy is not conserved in explosions"
-                ),
+                meaning="single object breaks up into multiple objects; kinetic energy is not conserved in explosions",
+            ),
             Definition(
                 term="external force",
-                meaning="force applied to an extended object that changes the momentum of the extended object as a whole"
-                ),
+                meaning="force applied to an extended object that changes the momentum of the extended object as a whole",
+            ),
             Definition(
                 term="impulse",
-                meaning="effect of applying a force on a system for a time interval; this time interval is usually small, but does not have to be"
-                ),
+                meaning="effect of applying a force on a system for a time interval; this time interval is usually small, but does not have to be",
+            ),
             Definition(
                 term="impulse-momentum theorem",
-                meaning="change of momentum of a system is equal to the impulse applied to the system"
-                ),
+                meaning="change of momentum of a system is equal to the impulse applied to the system",
+            ),
             Definition(
                 term="inelastic",
-                meaning="collision that does not conserve kinetic energy"
-                ),
+                meaning="collision that does not conserve kinetic energy",
+            ),
             Definition(
                 term="internal force",
-                meaning="force that the simple particles that make up an extended object exert on each other. Internal forces can be attractive or repulsive"
-                ),
+                meaning="force that the simple particles that make up an extended object exert on each other. Internal forces can be attractive or repulsive",
+            ),
             Definition(
                 term="Law of Conservation of Momentum",
-                meaning="total momentum of a closed system cannot change"
-                ),
+                meaning="total momentum of a closed system cannot change",
+            ),
             Definition(
                 term="linear mass density",
-                meaning="λ, expressed as the number of kilograms of material per meter"
-                ),
+                meaning="λ, expressed as the number of kilograms of material per meter",
+            ),
             Definition(
                 term="momentum",
-                meaning="measure of the quantity of motion that an object has; it takes into account both how fast the object is moving, and its mass; specifically, it is the product of mass and velocity; it is a vector quantity"
-                ),
+                meaning="measure of the quantity of motion that an object has; it takes into account both how fast the object is moving, and its mass; specifically, it is the product of mass and velocity; it is a vector quantity",
+            ),
             Definition(
                 term="perfectly inelastic",
-                meaning="collision after which all objects are motionless, the final kinetic energy is zero, and the loss of kinetic energy is a maximum"
-                ),
+                meaning="collision after which all objects are motionless, the final kinetic energy is zero, and the loss of kinetic energy is a maximum",
+            ),
             Definition(
                 term="rocket equation",
-                meaning="derived by the Soviet physicist Konstantin Tsiolkovsky in 1897, it gives us the change of velocity that the rocket obtains from burning a mass of fuel that decreases the total rocket mass from m_i down to m"
-                ),
+                meaning="derived by the Soviet physicist Konstantin Tsiolkovsky in 1897, it gives us the change of velocity that the rocket obtains from burning a mass of fuel that decreases the total rocket mass from m_i down to m",
+            ),
             Definition(
                 term="system",
-                meaning="object or collection of objects whose motion is currently under investigation; however, your system is defined at the start of the problem, you must keep that definition for the entire problem"
-                ),
+                meaning="object or collection of objects whose motion is currently under investigation; however, your system is defined at the start of the problem, you must keep that definition for the entire problem",
+            ),
         ]
-        
+
         class Calculate:
             """
             Class holds methods to calculate equations in Chapter 9
@@ -258,18 +255,18 @@ class Chapter9(PhysicsChapter):
 
             @staticmethod
             def inelastic_collision_momentum(
-                mass_1: Optional[float]=None,
-                mass_2: Optional[float]=None,
-                velocity_1: Optional[float]=None,
-                velocity_2: Optional[float]=None,
-                velocity_f: Optional[float]=None,
-                mass_f: Optional[float]=None
+                mass_1: Optional[float] = None,
+                mass_2: Optional[float] = None,
+                velocity_1: Optional[float] = None,
+                velocity_2: Optional[float] = None,
+                velocity_f: Optional[float] = None,
+                mass_f: Optional[float] = None,
             ) -> float:
                 """
-                Function calculates the final momentum of a system with 
+                Function calculates the final momentum of a system with
                 inelastic collision as a function of the masses and velocities
                 pre and post collision.
-                Can also calculate for desired variable when arg == None and all 
+                Can also calculate for desired variable when arg == None and all
                 other args have values.
 
                 Args:
@@ -284,21 +281,29 @@ class Chapter9(PhysicsChapter):
                     float: the result of whichever variable was left equal to None
                 """
 
-                if mass_1 is not None and mass_1 <= 0.0 or mass_2 is not None \
-                and mass_2 <= 0.0 or mass_f is not None and mass_f <= 0:
-                    raise ValueError("We are operating with massive objects. \
-                        Make sure all objects have a mass greater than zero.")
-                
+                if (
+                    mass_1 is not None
+                    and mass_1 <= 0.0
+                    or mass_2 is not None
+                    and mass_2 <= 0.0
+                    or mass_f is not None
+                    and mass_f <= 0
+                ):
+                    raise ValueError(
+                        "We are operating with massive objects. \
+                        Make sure all objects have a mass greater than zero."
+                    )
+
                 if mass_1 == None:
-                    
+
                     if velocity_1 == 0:
                         raise ValueError("Division by zero is undefined.")
-                    
+
                     # Calculates mass of object 1
                     return ((mass_f * velocity_f) - (mass_2 * velocity_2)) / velocity_1
-                
+
                 if mass_2 == None:
-                    
+
                     if velocity_2 == 0.0:
                         raise ValueError("Division by zero is undefined.")
 
@@ -308,7 +313,7 @@ class Chapter9(PhysicsChapter):
                 if velocity_1 == None:
                     # Calculates velocity of object 1
                     return ((mass_f * velocity_f) - (mass_2 * velocity_2)) / mass_1
-                
+
                 if velocity_2 == None:
                     # Calculates velocity of object 1
                     return ((mass_f * velocity_f) - (mass_1 * velocity_1)) / mass_2
@@ -317,42 +322,42 @@ class Chapter9(PhysicsChapter):
 
                     if velocity_f == 0.0:
                         raise ValueError("Division by zero is undefined.")
-                    
+
                     # Calculates the mass after collision
                     return ((mass_1 * velocity_1) + (mass_2 * velocity_2)) / velocity_f
-                
+
                 if velocity_f == None:
                     # Calculates the velocity after collision
                     return ((mass_1 * velocity_1) + (mass_2 * velocity_2)) / mass_f
-                
+
                 if mass_1 == None and velocity_1 == None:
                     # Calculates the initial momentum of the first object
-                    return ( (mass_f * velocity_f) - (mass_2 * velocity_2))
-                
+                    return (mass_f * velocity_f) - (mass_2 * velocity_2)
+
                 if mass_2 == None and velocity_2 == None:
                     # Calculates the initial momentum of the second object
-                    return ( (mass_f * velocity_f) - (mass_1 * velocity_1))
+                    return (mass_f * velocity_f) - (mass_1 * velocity_1)
 
                 if mass_f == None and velocity_f == None:
-                    #Calculates final momentum
+                    # Calculates final momentum
                     return (mass_1 * velocity_1) + (mass_2 * velocity_2)
 
                 return 0.0
-            
+
             @staticmethod
             def elastic_collision_momentum(
-                mass_1: Optional[float]=None,
-                mass_2: Optional[float]=None,
-                velocity_i1: Optional[float]=None,
-                velocity_i2: Optional[float]=None,
-                velocity_f1: Optional[float]=None,
-                velocity_f2: Optional[float]=None
+                mass_1: Optional[float] = None,
+                mass_2: Optional[float] = None,
+                velocity_i1: Optional[float] = None,
+                velocity_i2: Optional[float] = None,
+                velocity_f1: Optional[float] = None,
+                velocity_f2: Optional[float] = None,
             ) -> float:
                 """
-                Function calculates the final momenta of a system with 
+                Function calculates the final momenta of a system with
                 eelastic collision as a function of the masses and velocities
                 pre and post collision.
-                Can also calculate for desired variable when arg == None and all 
+                Can also calculate for desired variable when arg == None and all
                 other args have values.
 
                 Args:
@@ -367,51 +372,71 @@ class Chapter9(PhysicsChapter):
                     float: the result of whichever variable was left equal to None
                 """
 
-                if mass_1 is not None and mass_1 <= 0.0 or \
-                    mass_2 is not None and mass_2 <= 0.0:
-                    raise ValueError("We are operating with massive objects. \
-                        Make sure all objects have a mass greater than zero.")
-                
+                if (
+                    mass_1 is not None
+                    and mass_1 <= 0.0
+                    or mass_2 is not None
+                    and mass_2 <= 0.0
+                ):
+                    raise ValueError(
+                        "We are operating with massive objects. \
+                        Make sure all objects have a mass greater than zero."
+                    )
+
                 if mass_1 == None:
 
                     if velocity_f1 == velocity_i1:
                         raise ValueError("Divison by zero is undefined.")
-                    
+
                     # Calculates the mass of object 1
-                    return ( (mass_2 * velocity_i2) - (mass_2 * velocity_f2) ) \
-                        / (velocity_f1 - velocity_i1) 
-                
+                    return ((mass_2 * velocity_i2) - (mass_2 * velocity_f2)) / (
+                        velocity_f1 - velocity_i1
+                    )
+
                 if mass_2 == None:
 
                     if velocity_i2 == velocity_f2:
                         raise ValueError("Divison by zero is undefined.")
-                    
+
                     # Calculates the mass of object 2
-                    return ( (mass_1 * velocity_i1) - (mass_1 * velocity_f1) ) \
-                            / (velocity_i2 - velocity_f2)
-                
+                    return ((mass_1 * velocity_i1) - (mass_1 * velocity_f1)) / (
+                        velocity_i2 - velocity_f2
+                    )
+
                 if velocity_i1 == None:
                     # Calculates the initial velocity of object 1
-                    return  ( (mass_1 * velocity_f1) + (mass_2 * velocity_f2) \
-                            - (mass_2 * velocity_i2) ) / mass_1
-                
+                    return (
+                        (mass_1 * velocity_f1)
+                        + (mass_2 * velocity_f2)
+                        - (mass_2 * velocity_i2)
+                    ) / mass_1
+
                 if velocity_i2 == None:
                     # Calculates the initial velocity of object 2
-                    return ( (mass_1 * velocity_f1) + (mass_2 * velocity_f2) \
-                            - (mass_1 * velocity_i1) ) / mass_2
+                    return (
+                        (mass_1 * velocity_f1)
+                        + (mass_2 * velocity_f2)
+                        - (mass_1 * velocity_i1)
+                    ) / mass_2
 
                 if velocity_f1 == None:
                     # Calculates the final velocity of object 1
-                    return ( (mass_1*velocity_i1) + (mass_2*velocity_i2) \
-                        - (mass_2*velocity_f2) ) / mass_1
-                
+                    return (
+                        (mass_1 * velocity_i1)
+                        + (mass_2 * velocity_i2)
+                        - (mass_2 * velocity_f2)
+                    ) / mass_1
+
                 if velocity_f2 == None:
                     # Calculates the final velocity of object 2
-                    return ( (mass_1*velocity_i1) + (mass_2*velocity_i2) \
-                        - (mass_1*velocity_f1) ) / mass_2
+                    return (
+                        (mass_1 * velocity_i1)
+                        + (mass_2 * velocity_i2)
+                        - (mass_1 * velocity_f1)
+                    ) / mass_2
 
                 if mass_1 == None and velocity_i1 == None:
-                    
+
                     # Through the coefficient of restitution (COR) epsilon = 1 for
                     # perfectly elastic collisions we have v(i)₁ = v(f)₂ - v(f)₁ + v(i)₂
                     velocity_i1: float = velocity_f2 - velocity_f1 + velocity_i2
@@ -419,85 +444,97 @@ class Chapter9(PhysicsChapter):
                     if velocity_i1 == velocity_f1:
                         raise ValueError("Division by zero is undefined.")
 
-                    mass_1: float = ( (mass_2 * velocity_i2) - (mass_2 * velocity_f2) ) \
-                        / (velocity_f1 - velocity_i1) 
-                    
-                    if mass_1 <= 0: 
-                        raise ValueError("Mass cannot be less than or equal to zero.\
-                            Check your signs.")
+                    mass_1: float = (
+                        (mass_2 * velocity_i2) - (mass_2 * velocity_f2)
+                    ) / (velocity_f1 - velocity_i1)
 
-                    return mass_1*velocity_i1
-                
+                    if mass_1 <= 0:
+                        raise ValueError(
+                            "Mass cannot be less than or equal to zero.\
+                            Check your signs."
+                        )
+
+                    return mass_1 * velocity_i1
+
                 if mass_2 == None and velocity_i2 == None:
-                    
+
                     # Through the coefficient of restitution (COR) epsilon = 1 for
-                    # perfectly elastic collisions we have v(i)₁ - v(i)₂ = v(f)₂ - v(f)₁ 
+                    # perfectly elastic collisions we have v(i)₁ - v(i)₂ = v(f)₂ - v(f)₁
                     velocity_i2: float = velocity_f2 - velocity_f1 - velocity_i1
 
                     if velocity_i2 == velocity_f2:
                         raise ValueError("Divison by zero is undefined.")
-                    
-                    # Calculates the mass of object 2
-                    mass_2: float= ( (mass_1 * velocity_i1) - (mass_1 * velocity_f1) ) \
-                            / (velocity_i2 - velocity_f2)
-                    
-                    if mass_2 <= 0: 
-                        raise ValueError("Mass cannot be less than or equal to zero.\
-                            Check your signs.")
 
-                    return mass_2*velocity_i2
-                
+                    # Calculates the mass of object 2
+                    mass_2: float = (
+                        (mass_1 * velocity_i1) - (mass_1 * velocity_f1)
+                    ) / (velocity_i2 - velocity_f2)
+
+                    if mass_2 <= 0:
+                        raise ValueError(
+                            "Mass cannot be less than or equal to zero.\
+                            Check your signs."
+                        )
+
+                    return mass_2 * velocity_i2
+
                 if mass_1 == None and velocity_f1 == None:
-                    
+
                     # Through the coefficient of restitution (COR) epsilon = 1 for
-                    # perfectly elastic collisions we have v(i)₁ - v(i)₂ = v(f)₂ - v(f)₁ 
+                    # perfectly elastic collisions we have v(i)₁ - v(i)₂ = v(f)₂ - v(f)₁
                     velocity_f1: float = velocity_f2 - velocity_i1 + velocity_i2
 
                     if velocity_i1 == velocity_f1:
                         raise ValueError("Division by zero is undefined.")
 
-                    mass_1: float = ( (mass_2 * velocity_i2) - (mass_2 * velocity_f2) ) \
-                        / (velocity_f1 - velocity_i1) 
-                    
-                    if mass_1 <= 0: 
-                        raise ValueError("Mass cannot be less than or equal to zero.\
-                            Check your signs.")
+                    mass_1: float = (
+                        (mass_2 * velocity_i2) - (mass_2 * velocity_f2)
+                    ) / (velocity_f1 - velocity_i1)
 
-                    return mass_1*velocity_f1
-                
+                    if mass_1 <= 0:
+                        raise ValueError(
+                            "Mass cannot be less than or equal to zero.\
+                            Check your signs."
+                        )
+
+                    return mass_1 * velocity_f1
+
                 if mass_2 == None and velocity_f2 == None:
-                    
+
                     # Through the coefficient of restitution (COR) epsilon = 1 for
-                    # perfectly elastic collisions we have v(i)₁ - v(i)₂ = v(f)₂ - v(f)₁ 
+                    # perfectly elastic collisions we have v(i)₁ - v(i)₂ = v(f)₂ - v(f)₁
                     velocity_f2: float = velocity_f1 + velocity_i1 - velocity_i2
 
                     if velocity_i2 == velocity_f2:
                         raise ValueError("Divison by zero is undefined.")
-                    
+
                     # Calculates the mass of object 2
-                    mass_2: float= ( (mass_1 * velocity_i1) - (mass_1 * velocity_f1) ) \
-                            / (velocity_i2 - velocity_f2)
-                    
-                    if mass_2 <= 0: 
-                        raise ValueError("Mass cannot be less than or equal to zero.\
-                            Check your signs.")
+                    mass_2: float = (
+                        (mass_1 * velocity_i1) - (mass_1 * velocity_f1)
+                    ) / (velocity_i2 - velocity_f2)
 
-                    return mass_2*velocity_f2
+                    if mass_2 <= 0:
+                        raise ValueError(
+                            "Mass cannot be less than or equal to zero.\
+                            Check your signs."
+                        )
 
-                return 0.0 
+                    return mass_2 * velocity_f2
+
+                return 0.0
 
             @staticmethod
             def rocket_equation(
-                delta_v: Optional[float]=None,
-                vel_exhaust: Optional[float]=None,
-                initial_mass: Optional[float]=None,
-                final_mass: Optiona[float]=None
+                delta_v: Optional[float] = None,
+                vel_exhaust: Optional[float] = None,
+                initial_mass: Optional[float] = None,
+                final_mass: Optiona[float] = None,
             ) -> float:
                 """
                 Function calculates the change in velocity of a rocket as a
                 function of the exhaust velocity, velocity towards direction of
                 motion, initial mass, and the mass after fuel has been exhausted.
-                Can also calculate for desired variable when arg == None and all 
+                Can also calculate for desired variable when arg == None and all
                 other args have values.
 
                 Args:
@@ -511,20 +548,22 @@ class Chapter9(PhysicsChapter):
                 """
 
                 if initial_mass is not None and initial_mass <= 0 or final_mass <= 0:
-                    raise ValueError("We are operating with massive objects. \
-                        Mass must be greater than zero.")
-                
+                    raise ValueError(
+                        "We are operating with massive objects. \
+                        Mass must be greater than zero."
+                    )
+
                 if vel_exhaust == None:
                     # Calculates velocity of the exhaust
-                    return delta_v / log(initial_mass/final_mass)
-                
+                    return delta_v / log(initial_mass / final_mass)
+
                 if initial_mass == None:
                     # Calculates the initial mass of the rocket
-                    return exp(delta_v/vel_exhaust) * final_mass
-                
+                    return exp(delta_v / vel_exhaust) * final_mass
+
                 if final_mass == None:
                     # Calculates the final mass of the rocket
-                    return initial_mass / exp(delta_v/vel_exhaust)
-                
+                    return initial_mass / exp(delta_v / vel_exhaust)
+
                 # Calculates delta v of the rocket
-                return vel_exhaust * log(initial_mass/final_mass)
+                return vel_exhaust * log(initial_mass / final_mass)

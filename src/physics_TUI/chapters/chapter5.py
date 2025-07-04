@@ -4,7 +4,8 @@ from math import pi, cos, acos
 
 # Constants
 
-g: float = 9.82 # gravitational acceleration on Earth [m/s^2]
+g: float = 9.82  # gravitational acceleration on Earth [m/s^2]
+
 
 class Chapter5(PhysicsChapter):
     """
@@ -20,7 +21,7 @@ class Chapter5(PhysicsChapter):
             "θ": "theta",
             "F": "force",
             "k": "spring_const",
-            "x": "displacement"
+            "x": "displacement",
         }
 
         self.equations: List[Equation] = [
@@ -71,10 +72,7 @@ class Chapter5(PhysicsChapter):
             Equation(
                 name="Weight",
                 formula="w = mg",
-                variables={
-                    "w": "Weight (N)",
-                    "m": "Mass (kg)"
-                },
+                variables={"w": "Weight (N)", "m": "Mass (kg)"},
             ),
             Equation(
                 name="Newton's third law",
@@ -92,7 +90,7 @@ class Chapter5(PhysicsChapter):
                     "m": "Mass of the object (kg)",
                     "θ": "Angle between the normal vector and gravitational vector [radians]",
                 },
-                calculation=self.Calculate.normal_force
+                calculation=self.Calculate.normal_force,
             ),
             Equation(
                 name="Hooke's Law",
@@ -102,7 +100,7 @@ class Chapter5(PhysicsChapter):
                     "k": "Spring constant (kg/s²)",
                     "x": "Distance from point of equilibrium",
                 },
-                calculation=self.Calculate.hookes_law
+                calculation=self.Calculate.hookes_law,
             ),
         ]
 
@@ -203,14 +201,14 @@ class Chapter5(PhysicsChapter):
         Class holds methods to calculate equations in chapter 5.
         """
 
-        # TO-DO: Decide which equations are needed and how best to calculate knowing 
+        # TO-DO: Decide which equations are needed and how best to calculate knowing
         # the typical problem which they are used to solve.
 
         @staticmethod
         def normal_force(
-            normal_F: Optional[float]=None,
-            mass: Optional[float]=None,
-            theta: Optional[float]=None,
+            normal_F: Optional[float] = None,
+            mass: Optional[float] = None,
+            theta: Optional[float] = None,
         ) -> float:
             """
             Function calculates the normal force of an object resting on a surface.
@@ -231,37 +229,37 @@ class Chapter5(PhysicsChapter):
 
             if theta is not None:
                 # Converts degrees to radians
-                theta_radians: float = theta * (pi/180)
+                theta_radians: float = theta * (pi / 180)
             else:
                 # Calculates for theta
-                arg: float = normal_F/(mass * g)
-                return acos(arg) * (180/pi)
-            
+                arg: float = normal_F / (mass * g)
+                return acos(arg) * (180 / pi)
+
             if mass == None:
 
                 if theta == 90.0 or theta == 270.0:
                     raise ValueError("Division by zero is undefined.")
 
                 # Calculates for the mass
-                result = normal_F / (g*cos(theta_radians))
+                result = normal_F / (g * cos(theta_radians))
 
                 if result < 0:
                     raise ValueError("Mass cannot be negative.")
                 else:
                     return result
-            
+
             return mass * g * cos(theta_radians)
 
         @staticmethod
         def hookes_law(
-            force: Optional[float]=None,
-            spring_const: Optional[float]=None,
-            displacement: Optional[float]=None
+            force: Optional[float] = None,
+            spring_const: Optional[float] = None,
+            displacement: Optional[float] = None,
         ) -> float:
             """
-            Function calculates the restorative force of a spring system 
+            Function calculates the restorative force of a spring system
             as a fuction of displacement and the spring constant.
-            Can also calculate for desired variable when arg == None and all 
+            Can also calculate for desired variable when arg == None and all
             other args have values.
 
             Args:
@@ -285,18 +283,20 @@ class Chapter5(PhysicsChapter):
                 result = -force / displacement
 
                 if result < 0:
-                    raise ValueError("Spring constant cannot be negative. \
+                    raise ValueError(
+                        "Spring constant cannot be negative. \
                         Consider the relation between the direction \
-                        of displacment and the restorative force.")
-                
+                        of displacment and the restorative force."
+                    )
+
                 return result
-            
+
             if displacement == None:
-                
+
                 if spring_const == 0:
                     raise ValueError("Divison by zero is undefined.")
 
                 # Calculates the displacement
                 return -force / spring_const
-            
+
             return -spring_const * displacement
