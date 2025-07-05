@@ -9,7 +9,19 @@ class Chapter12(PhysicsChapter):
     def __init__(self) -> None:
         super.__init__("Static Equilibrium and Elasticity")
 
-        self.var_mapping: Dict[str, str] = {}
+        self.var_mapping: Dict[str, str] = {
+            "Y": "young_mod",
+            "F": "force",
+            "A": "cross_section",
+            "L₀": "init_length",
+            "ΔL": "delta_length",
+            "B": "bulk_mod",
+            "Δp": "delta_pressure",
+            "V₀": "init_volume",
+            "ΔV": "delta_volume",
+            "S": "shear_mod",
+            "Δx": "delta_layers"
+        }
 
         self.equations: List[Equation] = [
             Equation(
