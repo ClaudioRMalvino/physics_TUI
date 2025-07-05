@@ -12,16 +12,16 @@ class Chapter9(PhysicsChapter):
         super().__init__("Linear Momentum and Collisions")
 
         self.var_mapping: Dict[str, str] = {
-            "m₁": "mass_1",
-            "m₂": "mass_2",
-            "v₁": "velocity_1",
-            "v₂": "velocity_2",
+            "m(1)": "mass_1",
+            "m(2)": "mass_2",
+            "v(1)": "velocity_1",
+            "v(2)": "velocity_2",
             "v": "velocity_f",
             "M": "mass_f",
-            "v(i)₁": "velocity_i1",
-            "v(i)₂": "velocity_i2",
-            "v(f)₁": "velocity_f1",
-            "v(f)₂": "velocity_f2",
+            "v(i1)": "velocity_i1",
+            "v(i2)": "velocity_i2",
+            "v(f1)": "velocity_f1",
+            "v(f1)": "velocity_f2",
             "Δv": "delta_v",
             "u": "vel_exhaust",
             "m(i)": "initial_mass",
@@ -76,14 +76,14 @@ class Chapter9(PhysicsChapter):
             ),
             Equation(
                 name="Conservation of momentum",
-                formula="dp₁/dt + dp₂/dt = 0  or  m₁v₁ + m₂v₂ = constant",
+                formula="dp₁/dt + dp₂/dt = 0  or  m(1)v(1) + m(2)v(2) = constant",
                 variables={
                     "p₁": "Momentum from the first object (N⋅s)",
                     "p₂": "Momentum from the second object (N⋅s)",
-                    "m₁": "Mass of the first object (kg)",
-                    "v₁": "Velocity of the first object (m/s)",
-                    "m₂": "Mass of the second object (m)",
-                    "v₂": "Velocity of the second object (m/s)",
+                    "m(1)": "Mass of the first object (kg)",
+                    "v(1)": "Velocity of the first object (m/s)",
+                    "m(2)": "Mass of the second object (m)",
+                    "v(2)": "Velocity of the second object (m/s)",
                 },
             ),
             Equation(
@@ -98,27 +98,27 @@ class Chapter9(PhysicsChapter):
             ),
             Equation(
                 name="Inelastic collision of two objects (momentum)",
-                formula="m₁v₁ + m₂v₂ = Mv",
+                formula="m(1)v(1) + m(2)v(2) = Mv",
                 variables={
-                    "m₁": "Mass of the first object",
-                    "v₁": "Velocity of the first object (m/s)",
-                    "m₂": "Mass of the second object (m)",
-                    "v₂": "Velocity of the second object (m/s)",
-                    "M": "Total mass of the object after collision (m₁ + m₂) (kg)",
+                    "m(1)": "Mass of the first object",
+                    "v(1)": "Velocity of the first object (m/s)",
+                    "m(2)": "Mass of the second object (m)",
+                    "v(2)": "Velocity of the second object (m/s)",
+                    "M": "Total mass of the object after collision (m(1) + m(2)) (kg)",
                     "v": "Velocity after the collision (m/s)",
                 },
                 calculation=self.Calculate.inelastic_collision_momentum,
             ),
             Equation(
                 name="Elastic collision of two objects (momentum)",
-                formula="m₁v(i)₁ + m₂v(i)₂ = m₁v(f)₁ + m₂v(f)₂",
+                formula="m(1)v(i1) + m(2)v(i2) = m(1)v(f1) + m(2)v(f1)",
                 variables={
-                    "m₁": "Mass of the first object (kg)",
-                    "m₂": "Mass of the second object (kg)",
-                    "v(i)₁": "Initial velocity of the first object (m/s)",
-                    "v(i)₂": "Initial velocity of the second object (m/s)",
-                    "v(f)₁": "Final velocity of the first object (m/s)",
-                    "v(f)₂": "Final velocity of the second object (m/s)",
+                    "m(1)": "Mass of the first object (kg)",
+                    "m(2)": "Mass of the second object (kg)",
+                    "v(i1)": "Initial velocity of the first object (m/s)",
+                    "v(i2)": "Initial velocity of the second object (m/s)",
+                    "v(f1)": "Final velocity of the first object (m/s)",
+                    "v(f1)": "Final velocity of the second object (m/s)",
                 },
                 calculation=self.Calculate.elastic_collision_momentum,
             ),
@@ -440,7 +440,7 @@ class Chapter9(PhysicsChapter):
             if mass_1 == None and velocity_i1 == None:
 
                 # Through the coefficient of restitution (COR) epsilon = 1 for
-                # perfectly elastic collisions we have v(i)₁ = v(f)₂ - v(f)₁ + v(i)₂
+                # perfectly elastic collisions we have v(i1) = v(f1) - v(f1) + v(i2)
                 velocity_i1: float = velocity_f2 - velocity_f1 + velocity_i2
 
                 if velocity_i1 == velocity_f1:
@@ -461,7 +461,7 @@ class Chapter9(PhysicsChapter):
             if mass_2 == None and velocity_i2 == None:
 
                 # Through the coefficient of restitution (COR) epsilon = 1 for
-                # perfectly elastic collisions we have v(i)₁ - v(i)₂ = v(f)₂ - v(f)₁
+                # perfectly elastic collisions we have v(i1) - v(i2) = v(f1) - v(f1)
                 velocity_i2: float = velocity_f2 - velocity_f1 - velocity_i1
 
                 if velocity_i2 == velocity_f2:
@@ -483,7 +483,7 @@ class Chapter9(PhysicsChapter):
             if mass_1 == None and velocity_f1 == None:
 
                 # Through the coefficient of restitution (COR) epsilon = 1 for
-                # perfectly elastic collisions we have v(i)₁ - v(i)₂ = v(f)₂ - v(f)₁
+                # perfectly elastic collisions we have v(i1) - v(i2) = v(f1) - v(f1)
                 velocity_f1: float = velocity_f2 - velocity_i1 + velocity_i2
 
                 if velocity_i1 == velocity_f1:
@@ -504,7 +504,7 @@ class Chapter9(PhysicsChapter):
             if mass_2 == None and velocity_f2 == None:
 
                 # Through the coefficient of restitution (COR) epsilon = 1 for
-                # perfectly elastic collisions we have v(i)₁ - v(i)₂ = v(f)₂ - v(f)₁
+                # perfectly elastic collisions we have v(i1) - v(i2) = v(f1) - v(f1)
                 velocity_f2: float = velocity_f1 + velocity_i1 - velocity_i2
 
                 if velocity_i2 == velocity_f2:
