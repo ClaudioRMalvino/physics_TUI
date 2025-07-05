@@ -1,4 +1,4 @@
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, Tuple
 from physics_TUI.base_chapter import PhysicsChapter, Equation, Definition
 from math import sqrt, sin, asin, pi
 

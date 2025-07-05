@@ -7,7 +7,7 @@ class Chapter13(PhysicsChapter):
     """
 
     def __init__(self) -> None:
-        super.__init__("Gravitation")
+        super().__init__("Gravitation")
 
         self.var_mapping: Dict[str, str] = {}
 
@@ -15,7 +15,7 @@ class Chapter13(PhysicsChapter):
 
         self.definitions: List[Definition] = []
 
-        class Calculate:
-            """
-            Class holds methods to calculate equations in Chapter 13
-            """
+    class Calculate:
+        """
+        Class holds methods to calculate equations in Chapter 13
+        """

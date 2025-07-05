@@ -12,7 +12,7 @@ class Chapter11(PhysicsChapter):
     """
 
     def __init__(self) -> None:
-        super.__init__("Angular Momentum")
+        super().__init__("Angular Momentum")
 
         self.var_mapping: Dict[str, str] = {
             "a(CM)": "accel",
@@ -139,238 +139,238 @@ class Chapter11(PhysicsChapter):
             ),
         ]
 
-        class Calculate:
+    class Calculate:
+        """
+        Class holds methods to calculate equations in Chapter 11
+        """
+
+        @staticmethod
+        def accel_without_slipping(
+            accel: Optional[float] = None,
+            mass: Optional[float] = None,
+            moment_inertia: Optional[float] = None,
+            radius: Optional[float] = None,
+            theta: Optional[float] = None,
+        ) -> float:
             """
-            Class holds methods to calculate equations in Chapter 11
+            Function calculates the acceleration of a rolling body
+            without slipping as a function of its mass, moment of
+            inertia, radius, and the normal force.
+            Can also calculate for desired variable when arg == None and all
+            other args have values.
+
+            Args:
+                accel (Optional[float], optional): acceleration of the body [m/s²]. Defaults to None.
+                mass (Optional[float], optional): mass of the object [kg]. Defaults to None.
+                moment_inertia (Optional[float], optional): moment of inertia [kg⋅m²]. Defaults to None.
+                radius (Optional[float], optional): radius of the rolling body [m]. Defaults to None.
+                theta (Optional[float], optional): angle between normal force and gravity [rads]. Defaults to None.
+
+            Returns:
+                float: the result of whichever variable was left equal to None
             """
+            if theta is not None:
+                theta_radians: float = theta * (pi / 180.0)
 
-            @staticmethod
-            def accel_without_slipping(
-                accel: Optional[float] = None,
-                mass: Optional[float] = None,
-                moment_inertia: Optional[float] = None,
-                radius: Optional[float] = None,
-                theta: Optional[float] = None,
-            ) -> float:
-                """
-                Function calculates the acceleration of a rolling body
-                without slipping as a function of its mass, moment of
-                inertia, radius, and the normal force.
-                Can also calculate for desired variable when arg == None and all
-                other args have values.
+            if mass is not None and mass <= 0.0:
+                raise ValueError(
+                    "We are operating with massive objects. \
+                    Make sure all objects have a mass greater than zero."
+                )
 
-                Args:
-                    accel (Optional[float], optional): acceleration of the body [m/s²]. Defaults to None.
-                    mass (Optional[float], optional): mass of the object [kg]. Defaults to None.
-                    moment_inertia (Optional[float], optional): moment of inertia [kg⋅m²]. Defaults to None.
-                    radius (Optional[float], optional): radius of the rolling body [m]. Defaults to None.
-                    theta (Optional[float], optional): angle between normal force and gravity [rads]. Defaults to None.
+            if moment_inertia is not None and moment_inertia < 0.0:
+                raise ValueError(
+                    "The moment of inertia cannot be a negative value."
+                )
 
-                Returns:
-                    float: the result of whichever variable was left equal to None
-                """
-                if theta is not None:
-                    theta_radians: float = theta * (pi / 180.0)
+            if radius is not None and radius <= 0.0:
+                raise ValueError("Radius cannot be less than or equal to zero.")
 
-                if mass is not None and mass <= 0.0:
-                    raise ValueError(
-                        "We are operating with massive objects. \
-                        Make sure all objects have a mass greater than zero."
-                    )
+            if mass == None:
+                # Calculates the mass
+                numerator: float = (
+                    (accel / (g * sin(theta_radians))) - 1.0
+                ) * moment_inertia
 
-                if moment_inertia is not None and moment_inertia < 0.0:
-                    raise ValueError(
-                        "The moment of inertia cannot be a negative value."
-                    )
-
-                if radius is not None and radius <= 0.0:
-                    raise ValueError("Radius cannot be less than or equal to zero.")
-
-                if mass == None:
-                    # Calculates the mass
-                    numerator: float = (
-                        (accel / (g * sin(theta_radians))) - 1.0
-                    ) * moment_inertia
-
-                    denominator: float = radius * radius
-
-                    return numerator / denominator
-
-                if moment_inertia == None:
-
-                    if accel == 0.0:
-                        raise ValueError("Division by zero is undefined.")
-
-                    # Calculates the moment of inertia
-                    terms: float = ((g * sin(theta_radians)) / accel) - 1.0
-                    coefficient: float = mass * (radius * radius)
-
-                    return terms * coefficient
-
-                if radius == None:
-
-                    if accel == 0.0:
-                        raise ValueError("Division by zero is undefined.")
-
-                    # Calculates the radius
-                    denominator: float = (
-                        ((g * sin(theta_radians)) / accel) - 1.0
-                    ) * mass
-
-                    radicand: float = moment_inertia / denominator
-
-                    if radicand < 0:
-                        raise ValueError(
-                            "Negative radicand yields a complex number. \
-                            Check your values."
-                        )
-
-                    return sqrt(radicand)
-
-                if theta == None:
-
-                    numerator: float = accel * (
-                        mass + (moment_inertia / (radius * radius))
-                    )
-
-                    denominator: float = mass * g
-
-                    argument: float = numerator / denominator
-
-                    return asin(argument) * (180.0 / pi)
-
-                numerator: float = mass * g * sin(theta_radians)
-                denominator: float = mass + (moment_inertia / (radius * radius))
+                denominator: float = radius * radius
 
                 return numerator / denominator
 
-            @staticmethod
-            def ang_momentum_rigid_body(
-                angular_momentum: Optional[float] = None,
-                moment_interia: Optional[float] = None,
-                angular_vel: Optional[float] = None,
-            ) -> float:
-                """
-                Function calculates the angular momentum of a rigid body
-                as a function of the moment of inertia and the angular velocity.
-                Can also calculate for desired variable when arg == None and all
-                other args have values.
+            if moment_inertia == None:
 
-                Args:
-                    angular_momentum (Optional[float], optional): angular momentum [J⋅s]. Defaults to None.
-                    moment_interia (Optional[float], optional): moment of inertia [kg⋅m²]. Defaults to None.
-                    angular_vel (Optional[float], optional): angular velocity [m/s]. Defaults to None.
-
-                Returns:
-                    float: the result of whichever variable was left equal to None
-                """
-
-                if moment_interia is not None and moment_interia < 0.0:
-                    raise ValueError(
-                        "The moment of inertia cannot be a negative value."
-                    )
-
-                if moment_interia == None:
-
-                    if angular_vel == 0.0:
-                        raise ValueError("Division by zero is undefined.")
-
-                    # Calculates moment of inertia
-                    return angular_momentum / angular_vel
-
-                if angular_vel == 0.0:
-
-                    if moment_interia == 0.0:
-                        raise ValueError("Divison by zero is undefined.")
-
-                    # Calculates angular velocity
-                    return angular_momentum / moment_interia
-
-                return moment_interia * angular_vel
-
-            @staticmethod
-            def processional_ang_vel(
-                proccesional_ang_vel: Optional[float] = None,
-                radius: Optional[float] = None,
-                mass: Optional[float] = None,
-                moment_inertia: Optional[float] = None,
-                angular_vel: Optional[float] = None,
-            ) -> float:
-                """
-                Function calculates the processional angular velocity
-                of a rigid body as a function of the moment of inertia,
-                mass of the object, distance from center of mass and the pivot
-                point, and the angular velocity.
-                Can also calculate for desired variable when arg == None and all
-                other args have values.
-
-                Args:
-                    proccesional_ang_vel (Optional[float], optional): precessional angular velocity [rads/s]. Defaults to None.
-                    radius (Optional[float], optional): distance from pivot point and center of mass [m]. Defaults to None.
-                    mass (Optional[float], optional): mass of the body [m]. Defaults to None.
-                    moment_inertia (Optional[float], optional): moment of inertia [kg⋅m²]. Defaults to None.
-                    angular_vel (Optional[float], optional): angular velocity [rads/s]. Defaults to None.
-
-                Returns:
-                    float: the result of whichever variable was left equal to None
-                """
-
-                if mass is not None and mass <= 0.0:
-                    raise ValueError(
-                        "We are operating with massive objects. \
-                        Make sure all objects have a mass greater than zero."
-                    )
-
-                if moment_inertia is not None and moment_inertia < 0.0:
-                    raise ValueError(
-                        "The moment of inertia cannot be a negative value."
-                    )
-
-                if radius is not None and radius <= 0.0:
-                    raise ValueError("Radius cannot be less than or equal to zero.")
-
-                if radius == None:
-
-                    # Calculates the radius
-                    numerator: float = moment_inertia * angular_vel
-                    denominator: float = mass * g
-
-                    return proccesional_ang_vel * (numerator / denominator)
-
-                if mass == None:
-
-                    # Calculates the mass
-                    numerator: float = moment_inertia * angular_vel
-                    denominator: float = radius * g
-
-                    return proccesional_ang_vel * (numerator / denominator)
-
-                if moment_inertia == None:
-
-                    if angular_vel == 0.0 or proccesional_ang_vel == 0.0:
-                        raise ValueError("Division by zero is undefined.")
-
-                    # Calculates the moment of inertia
-                    numerator: float = radius * mass * g
-                    denominator: float = proccesional_ang_vel * angular_vel
-
-                    return numerator / denominator
-
-                if angular_vel == None:
-
-                    if angular_vel == 0.0:
-                        raise ValueError("Division by zero is undefined.")
-
-                    # Calculates the angular velocity
-                    numerator: float = radius * mass * g
-                    denominator: float = proccesional_ang_vel * moment_inertia
-
-                    return numerator / denominator
-
-                if angular_vel == 0.0 or moment_inertia == 0.0:
+                if accel == 0.0:
                     raise ValueError("Division by zero is undefined.")
 
+                # Calculates the moment of inertia
+                terms: float = ((g * sin(theta_radians)) / accel) - 1.0
+                coefficient: float = mass * (radius * radius)
+
+                return terms * coefficient
+
+            if radius == None:
+
+                if accel == 0.0:
+                    raise ValueError("Division by zero is undefined.")
+
+                # Calculates the radius
+                denominator: float = (
+                    ((g * sin(theta_radians)) / accel) - 1.0
+                ) * mass
+
+                radicand: float = moment_inertia / denominator
+
+                if radicand < 0:
+                    raise ValueError(
+                        "Negative radicand yields a complex number. \
+                        Check your values."
+                    )
+
+                return sqrt(radicand)
+
+            if theta == None:
+
+                numerator: float = accel * (
+                    mass + (moment_inertia / (radius * radius))
+                )
+
+                denominator: float = mass * g
+
+                argument: float = numerator / denominator
+
+                return asin(argument) * (180.0 / pi)
+
+            numerator: float = mass * g * sin(theta_radians)
+            denominator: float = mass + (moment_inertia / (radius * radius))
+
+            return numerator / denominator
+
+        @staticmethod
+        def ang_momentum_rigid_body(
+            angular_momentum: Optional[float] = None,
+            moment_interia: Optional[float] = None,
+            angular_vel: Optional[float] = None,
+        ) -> float:
+            """
+            Function calculates the angular momentum of a rigid body
+            as a function of the moment of inertia and the angular velocity.
+            Can also calculate for desired variable when arg == None and all
+            other args have values.
+
+            Args:
+                angular_momentum (Optional[float], optional): angular momentum [J⋅s]. Defaults to None.
+                moment_interia (Optional[float], optional): moment of inertia [kg⋅m²]. Defaults to None.
+                angular_vel (Optional[float], optional): angular velocity [m/s]. Defaults to None.
+
+            Returns:
+                float: the result of whichever variable was left equal to None
+            """
+
+            if moment_interia is not None and moment_interia < 0.0:
+                raise ValueError(
+                    "The moment of inertia cannot be a negative value."
+                )
+
+            if moment_interia == None:
+
+                if angular_vel == 0.0:
+                    raise ValueError("Division by zero is undefined.")
+
+                # Calculates moment of inertia
+                return angular_momentum / angular_vel
+
+            if angular_vel == 0.0:
+
+                if moment_interia == 0.0:
+                    raise ValueError("Divison by zero is undefined.")
+
+                # Calculates angular velocity
+                return angular_momentum / moment_interia
+
+            return moment_interia * angular_vel
+
+        @staticmethod
+        def processional_ang_vel(
+            proccesional_ang_vel: Optional[float] = None,
+            radius: Optional[float] = None,
+            mass: Optional[float] = None,
+            moment_inertia: Optional[float] = None,
+            angular_vel: Optional[float] = None,
+        ) -> float:
+            """
+            Function calculates the processional angular velocity
+            of a rigid body as a function of the moment of inertia,
+            mass of the object, distance from center of mass and the pivot
+            point, and the angular velocity.
+            Can also calculate for desired variable when arg == None and all
+            other args have values.
+
+            Args:
+                proccesional_ang_vel (Optional[float], optional): precessional angular velocity [rads/s]. Defaults to None.
+                radius (Optional[float], optional): distance from pivot point and center of mass [m]. Defaults to None.
+                mass (Optional[float], optional): mass of the body [m]. Defaults to None.
+                moment_inertia (Optional[float], optional): moment of inertia [kg⋅m²]. Defaults to None.
+                angular_vel (Optional[float], optional): angular velocity [rads/s]. Defaults to None.
+
+            Returns:
+                float: the result of whichever variable was left equal to None
+            """
+
+            if mass is not None and mass <= 0.0:
+                raise ValueError(
+                    "We are operating with massive objects. \
+                    Make sure all objects have a mass greater than zero."
+                )
+
+            if moment_inertia is not None and moment_inertia < 0.0:
+                raise ValueError(
+                    "The moment of inertia cannot be a negative value."
+                )
+
+            if radius is not None and radius <= 0.0:
+                raise ValueError("Radius cannot be less than or equal to zero.")
+
+            if radius == None:
+
+                # Calculates the radius
+                numerator: float = moment_inertia * angular_vel
+                denominator: float = mass * g
+
+                return proccesional_ang_vel * (numerator / denominator)
+
+            if mass == None:
+
+                # Calculates the mass
+                numerator: float = moment_inertia * angular_vel
+                denominator: float = radius * g
+
+                return proccesional_ang_vel * (numerator / denominator)
+
+            if moment_inertia == None:
+
+                if angular_vel == 0.0 or proccesional_ang_vel == 0.0:
+                    raise ValueError("Division by zero is undefined.")
+
+                # Calculates the moment of inertia
                 numerator: float = radius * mass * g
-                denominator: float = moment_inertia * angular_vel
+                denominator: float = proccesional_ang_vel * angular_vel
 
                 return numerator / denominator
+
+            if angular_vel == None:
+
+                if angular_vel == 0.0:
+                    raise ValueError("Division by zero is undefined.")
+
+                # Calculates the angular velocity
+                numerator: float = radius * mass * g
+                denominator: float = proccesional_ang_vel * moment_inertia
+
+                return numerator / denominator
+
+            if angular_vel == 0.0 or moment_inertia == 0.0:
+                raise ValueError("Division by zero is undefined.")
+
+            numerator: float = radius * mass * g
+            denominator: float = moment_inertia * angular_vel
+
+            return numerator / denominator

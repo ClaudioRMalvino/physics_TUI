@@ -220,7 +220,8 @@ class physicsTUIApp(App):
 ╚══════════════════════════════════════════════════╝[/]
 
 [bold #9ece6a]▸[/] [#c0caf5]Select a chapter from the left panel[/]
-[bold #9ece6a]▸[/] [#c0caf5]Navigate with arrow keys[/]
+[bold #9ece6a]▸[/] [#c0caf5]Navigate with arrow keys or mouse[/]
+[bold #9ece6a]▸[/] [#c0caf5]Navigate between window panels with [bold #e0af68]Tab[/]
 [bold #9ece6a]▸[/] [#c0caf5]Press [bold #e0af68]Enter[/] to select[/]
 [bold #9ece6a]▸[/] [#c0caf5]Press [bold #e0af68]Q[/] to quit[/]
 
