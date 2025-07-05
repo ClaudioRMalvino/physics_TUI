@@ -14,7 +14,18 @@ class Chapter11(PhysicsChapter):
     def __init__(self) -> None:
         super.__init__("Angular Momentum")
 
-        self.var_mapping: Dict[str, str] = {}
+        self.var_mapping: Dict[str, str] = {
+            "a(CM)": "accel",
+            "m": "mass",
+            "M": "mass",
+            "I(CM)": "moment_inertia",
+            "I": "moment_inertia",
+            "r": "radius",
+            "θ": "theta",
+            "L": "angular_momentum",
+            "ω": "angular_vel",
+            "ωₚ": "processional_ang_vel",
+        }
 
         self.equations: List[Equation] = [
             Equation(
@@ -130,7 +141,7 @@ class Chapter11(PhysicsChapter):
 
         class Calculate:
             """
-            Class holds methods to calculate _summary_equations in Chapter 11
+            Class holds methods to calculate equations in Chapter 11
             """
 
             @staticmethod
