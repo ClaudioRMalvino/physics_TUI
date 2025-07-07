@@ -177,7 +177,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🙏 Acknowledgments
 
 - Built with [Textual](https://textual.textualize.io/) - Modern TUI framework
-- Physics content based on standard university-level mechanics curricula
+- Physics content referenced directly from [OpenStax](https://openstax.org/details/books/university-physics-volume-1) University Physics Volume 1 open source textbook for first year undergraduate students.
 - Inspired by the need for accessible, interactive physics reference tools
 
 ## 📧 Contact
