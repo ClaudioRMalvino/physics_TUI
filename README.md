@@ -47,12 +47,12 @@ This project is **complete and ready for use** as a comprehensive physics refere
 
 ### Quick Install (Recommended)
 ```bash
-pip install git+https://github.com/yourusername/physics_tui.git
+pip install git+https://github.com/ClaudioRMalvino/physics_tui.git
 ```
 
 ### Development Install
 ```bash
-git clone https://github.com/yourusername/physics_tui.git
+git clone https://github.com/ClaudioRMalvino/physics_tui.git
 cd physics_tui
 pip install -e .
 ```
@@ -65,7 +65,7 @@ source physics_env/bin/activate  # Linux/macOS
 # physics_env\Scripts\activate   # Windows
 
 # Install physics-tui
-pip install git+https://github.com/yourusername/physics_tui.git
+pip install git+https://github.com/ClaudioRMalvino/physics_tui.git
 ```
 
 ## 🎮 Usage
