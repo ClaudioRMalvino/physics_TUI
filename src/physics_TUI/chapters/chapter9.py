@@ -9,7 +9,7 @@ class Chapter9(PhysicsChapter):
     """
 
     def __init__(self) -> None:
-        super().__init__("Linear Momentum and Collisions")
+        super().__init__("Ch.9 - Linear Momentum and Collisions")
 
         self.var_mapping: Dict[str, str] = {
             "m(1)": "mass_1",
@@ -70,8 +70,7 @@ class Chapter9(PhysicsChapter):
                 formula="F(t) = dp/dt",
                 variables={
                     "F(t)": "Instantaneous force (N)",
-                    "dp/dt": "The rate of change of momentum with respect \
-                        to time (N)",
+                    "dp/dt": "The rate of change of momentum with respect to time (N)",
                 },
             ),
             Equation(
@@ -127,8 +126,7 @@ class Chapter9(PhysicsChapter):
                 formula="F(ext) = ∑(j=1 to N) dpⱼ/dt",
                 variables={
                     "F(ext)": "External force (N)",
-                    "∑(j=1 to N) dpⱼ/dt": "The sum of all the rate of \
-                        change of momenta with respect to time in the system",
+                    "∑(j=1 to N) dpⱼ/dt": "The sum of all the rate of change of momenta with respect to time in the system",
                 },
             ),
             Equation(
@@ -136,8 +134,7 @@ class Chapter9(PhysicsChapter):
                 formula="F = dp(CM)/dt",
                 variables={
                     "F": "Force (N)",
-                    "dp(CM)/dt": "Rate of change of momentum from the center \
-                        of mass with respect to time",
+                    "dp(CM)/dt": "Rate of change of momentum from the center of mass with respect to time",
                 },
             ),
             Equation(
@@ -146,8 +143,7 @@ class Chapter9(PhysicsChapter):
                 variables={
                     "a(CM)": "Acceleration of the center of mass (m/s²)",
                     "M": "Total mass of the system (kg)",
-                    "∑(j=1 to N) mⱼaⱼ": "Sum of the product of mass and \
-                        acceleration of each individual object in the system",
+                    "∑(j=1 to N) mⱼaⱼ": "Sum of the product of mass and acceleration of each individual object in the system",
                 },
             ),
             Equation(
@@ -156,19 +152,16 @@ class Chapter9(PhysicsChapter):
                 variables={
                     "r(CM)": "Position of the center of mass of the system (m)",
                     "M": "Total mass of the system",
-                    "∑(j=1 to N) mⱼrⱼ": "Sum of the product of mass and \
-                        position of each object in the system",
+                    "∑(j=1 to N) mⱼrⱼ": "Sum of the product of mass and position of each object in the system",
                 },
             ),
             Equation(
                 name="Velocity of the center of mass",
-                formula="v(CM) = d/dt (1/M ∑(j=1 to N) mⱼrⱼ) \
-                    = 1/M ∑(j=1 to N) mⱼvⱼ",
+                formula="v(CM) = d/dt (1/M ∑(j=1 to N) mⱼrⱼ) = 1/M ∑(j=1 to N) mⱼvⱼ",
                 variables={
                     "v(CM)": "Velocity of the center of mass (m/s)",
                     "M": "Total mass of the system (m)",
-                    "∑(j=1 to N) mⱼvⱼ": "The sum of the product of mass \
-                        and velocity of each object in the system",
+                    "∑(j=1 to N) mⱼvⱼ": "The sum of the product of mass and velocity of each object in the system",
                 },
             ),
             Equation(

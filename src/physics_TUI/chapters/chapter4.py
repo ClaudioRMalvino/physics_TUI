@@ -14,7 +14,7 @@ class Chapter4(PhysicsChapter):
 
     def __init__(self) -> None:
         super().__init__(
-            "Motion in Two and Three Dimensions",
+            "Ch.4 - Motion in Two and Three Dimensions",
             "Study of motion in two and three dimensions.",
         )
 

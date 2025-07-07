@@ -8,7 +8,7 @@ class Chapter8(PhysicsChapter):
     """
 
     def __init__(self) -> None:
-        super().__init__("Potential Energy and Conservation of Energy")
+        super().__init__("Ch.8 - Potential Energy & Conservation of Energy")
 
         self.var_mapping: Dict[str, str] = {}
 
@@ -28,8 +28,7 @@ class Chapter8(PhysicsChapter):
                 formula="Wₙc,αβ = Δ(K + U)αβ = ΔEαβ",
                 variables={
                     "0 = Wₙc,αβ": "Non-conservative work (J)",
-                    "Δ(K + U)αβ": "The sum of the changes in kinetic energy and potential energy \
-                        from α to β (J)",
+                    "Δ(K + U)αβ": "The sum of the changes in kinetic energy and potential energy from α to β (J)",
                     "ΔEαβ": "The change in energy of the system (J)",
                 },
             ),

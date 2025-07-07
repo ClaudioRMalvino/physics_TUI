@@ -13,7 +13,7 @@ class Chapter5(PhysicsChapter):
     """
 
     def __init__(self) -> None:
-        super().__init__("Newton's Laws of Motion")
+        super().__init__("Ch.5 - Newton's Laws of Motion")
 
         self.var_mapping: Dict[str, str] = {
             "N": "normal_F",

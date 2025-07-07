@@ -12,7 +12,7 @@ class Chapter7(PhysicsChapter):
     """
 
     def __init__(self) -> None:
-        super().__init__("Work and Kinetic Energy")
+        super().__init__("Ch.7 - Work and Kinetic Energy")
 
         self.var_mapping: Dict[str, str] = {
             "W": "work",
@@ -41,8 +41,7 @@ class Chapter7(PhysicsChapter):
                     "W": "Work (J)",
                     "F": "Constant force (N)",
                     "d": "Distance travelled (m)",
-                    "θ": "Angle between the direction of \
-                        motion and force vector (degrees)",
+                    "θ": "Angle between the direction of motion and force vector (degrees)",
                 },
                 calculation=self.Calculate.work_constant_force,
             ),

@@ -9,7 +9,7 @@ class Chapter10(PhysicsChapter):
     """
 
     def __init__(self) -> None:
-        super().__init__("Fixed-Axis Rotation")
+        super().__init__("Ch.10 - Fixed-Axis Rotation")
 
         self.var_mapping: Dict[str, str] = {
             "θ": "theta",
@@ -48,8 +48,7 @@ class Chapter10(PhysicsChapter):
                 formula="ω = lim(Δt→0) Δθ/Δt = dθ/dt",
                 variables={
                     "ω": "Angular velocity (rads/s)",
-                    "dθ/dt": "The change in angular position with respect to \
-                        time.",
+                    "dθ/dt": "The change in angular position with respect to time.",
                 },
             ),
             Equation(
@@ -67,8 +66,7 @@ class Chapter10(PhysicsChapter):
                 formula="α = lim(Δt→0) Δω/Δt = dω/dt = d²θ/dt²",
                 variables={
                     "α": "Angular acceleration (m/s²)",
-                    "d²θ/dt²": "Second derivative of the angular position \
-                        with respect to time.",
+                    "d²θ/dt²": "Second derivative of the angular position with respect to time.",
                 },
             ),
             Equation(
@@ -113,8 +111,7 @@ class Chapter10(PhysicsChapter):
                 calculation=self.Calculate.angular_vel_const_accel,
             ),
             Equation(
-                name="Angular displacement from angular velocity and \
-                    constant angular acceleration",
+                name="Angular displacement from angular velocity and constant angular acceleration",
                 formula="θ(f) = θ₀ + ω₀t + ½αt²",
                 variables={
                     "θ(f)": "Final angular position (rads)",
@@ -164,8 +161,7 @@ class Chapter10(PhysicsChapter):
                 },
             ),
             Equation(
-                name="Rotational kinetic energy in terms of the moment of \
-                    inertia of a rigid body",
+                name="Rotational kinetic energy in terms of the moment of inertia of a rigid body",
                 formula="K = ½Iω²",
                 variables={
                     "K": "Kinetic energy (J)",
@@ -187,13 +183,10 @@ class Chapter10(PhysicsChapter):
                 name="Parallel-axis theorem",
                 formula="I(parallel-axis) = I(center of mass) + md²",
                 variables={
-                    "I(parallel-axis)": "Moment of interia of an object \
-                        about any axis parallel to the axis through the \
-                        center of mass (kg⋅m²)",
+                    "I(parallel-axis)": "Moment of interia of an object about any axis parallel to the axis through the center of mass (kg⋅m²)",
                     "I(center of mass)": "Moment of inertia through the center of mass (kg⋅m²)",
                     "m": "Mass of the object (kg)",
-                    "d": "Distance from an axis through the object's center of mass \
-                        to a new axis (m)",
+                    "d": "Distance from an axis through the object's center of mass to a new axis (m)",
                 },
             ),
             Equation(
@@ -218,8 +211,7 @@ class Chapter10(PhysicsChapter):
                 formula="|τ| = r⊥F = rFsinθ",
                 variables={
                     "|τ|": "Magnitude of the applied torque (N⋅m)",
-                    "r": "The distance from where the force is being applied \
-                        and the axis of rotation (m)",
+                    "r": "The distance from where the force is being applied and the axis of rotation (m)",
                     "F": "The applied force (N)",
                     "θ": "The angle of the applied force relative to r (rads)",
                 },

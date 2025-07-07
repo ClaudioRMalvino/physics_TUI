@@ -11,7 +11,7 @@ class Chapter14(PhysicsChapter):
     """
 
     def __init__(self) -> None:
-        super().__init__("Fluid Dynamics")
+        super().__init__("Ch.14 - Fluid Dynamics")
 
         self.var_mapping: Dict[str, str] = {}
 

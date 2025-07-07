@@ -19,6 +19,7 @@ This project is **complete and ready for use** as a comprehensive physics refere
 - **Interactive TUI Interface** - Clean, keyboard-driven navigation
 - **12 Physics Chapters** - From basic motion to advanced fluid dynamics
 - **190+ Physics Equations** - Comprehensive formula reference
+- **Calculator for 58 equations** - Ability to solve for various problems
 - **Interactive Calculators** - Solve for any variable in supported equations
 - **Extensive Documentation** - Clear explanations and variable definitions
 - **Cross-platform Support** - Works on Linux, macOS, and Windows

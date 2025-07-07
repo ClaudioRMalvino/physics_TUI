@@ -8,7 +8,7 @@ class Chapter12(PhysicsChapter):
     """
 
     def __init__(self) -> None:
-        super().__init__("Static Equilibrium and Elasticity")
+        super().__init__("Ch.12 - Static Equilibrium and Elasticity")
 
         self.var_mapping: Dict[str, str] = {
             "Y": "young_mod",
@@ -80,8 +80,7 @@ class Chapter12(PhysicsChapter):
             ),
             Definition(
                 term="law of conservation of angular momentum",
-                meaning="angular momentum is conserved, that is, the initial angular momentum is equal to the final angular \
-                    momentum when no external torque is applied to the system precession",
+                meaning="angular momentum is conserved, that is, the initial angular momentum is equal to the final angular momentum when no external torque is applied to the system precession",
             ),
             Definition(
                 term="precession",

@@ -12,7 +12,7 @@ class Chapter11(PhysicsChapter):
     """
 
     def __init__(self) -> None:
-        super().__init__("Angular Momentum")
+        super().__init__("Ch.11 - Angular Momentum")
 
         self.var_mapping: Dict[str, str] = {
             "a(CM)": "accel",

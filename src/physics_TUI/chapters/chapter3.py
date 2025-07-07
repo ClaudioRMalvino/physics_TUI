@@ -12,7 +12,7 @@ class Chapter3(PhysicsChapter):
 
     def __init__(self) -> None:
         super().__init__(
-            "Motion Along a Straight Line", "Study of motion along one dimension."
+            "Ch.3 - Motion Along a Straight Line", "Study of motion along one dimension."
         )
 
         self.var_mapping: Dict[str, str] = {
