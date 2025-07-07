@@ -108,7 +108,7 @@ physics_tui/
 │       ├── ...             # Additional chapters
 │       └── chapter14.py    # Fluid Dynamics (525 lines)
 ├── tests/                  # Comprehensive test suite (1,450 lines)
-└── docs/                   # Documentation and configuration
+
 ```
 
 **Total:** 6,882 lines of code with extensive documentation and testing
