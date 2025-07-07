@@ -6,7 +6,7 @@ A comprehensive Terminal User Interface (TUI) for physics reference and calculat
 ![Python Version](https://img.shields.io/badge/python-3.8+-blue)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
-## 🎓 Project Status
+##  Project Status
 
 This project is **complete and ready for use** as a comprehensive physics reference tool. It covers 12 major physics topics with over 6,800 lines of well-documented code, including extensive calculations and interactive features.
 
@@ -14,7 +14,7 @@ This project is **complete and ready for use** as a comprehensive physics refere
 
 **Development Note:** Active development is paused as I focus on preparing for University of Cambridge (MPhil in Scientific Computing), but the project remains stable and fully usable. I may occasionally tinker with improvements during free time.
 
-## ✨ Features
+## Features
 
 - **Interactive TUI Interface** - Clean, keyboard-driven navigation
 - **12 Physics Chapters** - From basic motion to advanced fluid dynamics
@@ -25,7 +25,7 @@ This project is **complete and ready for use** as a comprehensive physics refere
 - **Cross-platform Support** - Works on Linux, macOS, and Windows
 - **Professional Code Quality** - Type hints, error handling, and comprehensive tests
 
-## 📚 Covered Physics Topics
+## Covered Physics Topics
 
 1. **Motion Along a Straight Line** - Kinematics, acceleration, free fall
 2. **Motion in Two and Three Dimensions** - Projectile motion, circular motion
@@ -40,7 +40,7 @@ This project is **complete and ready for use** as a comprehensive physics refere
 11. **Gravitation** - Universal gravitation, orbital mechanics, Kepler's laws
 12. **Fluid Dynamics** - Pressure, flow, Bernoulli's equation, viscosity
 
-## 🚀 Installation
+## Installation
 
 ### Prerequisites
 - Python 3.8 or higher
@@ -69,7 +69,7 @@ source physics_env/bin/activate  # Linux/macOS
 pip install git+https://github.com/ClaudioRMalvino/physics_tui.git
 ```
 
-## 🎮 Usage
+## Usage
 
 After installation, launch the application:
 ```bash
@@ -94,7 +94,7 @@ python -m physics_TUI.app
 - Automatic error checking and validation
 - Clear variable descriptions and units
 
-## 🏗️ Project Architecture
+## Project Architecture
 
 ```
 physics_tui/
@@ -113,7 +113,7 @@ physics_tui/
 
 **Total:** 6,882 lines of code with extensive documentation and testing
 
-## 🧪 Testing
+## Testing
 
 The project includes comprehensive unit tests for all calculation methods:
 
@@ -128,7 +128,7 @@ python -m pytest tests/
 mypy src/physics_TUI/
 ```
 
-## 🌟 Code Quality Features
+## Code Quality Features
 
 - **Type Hints** - Full type annotation throughout codebase
 - **Error Handling** - Comprehensive validation and user-friendly errors
@@ -136,7 +136,7 @@ mypy src/physics_TUI/
 - **Testing** - Unit tests for all calculation methods
 - **Professional Structure** - Modular design with clean separation of concerns
 
-## 🔮 Future Possibilities
+## Future Possibilities
 
 While the current version is complete and fully functional, potential future enhancements could include:
 
@@ -146,7 +146,7 @@ While the current version is complete and fully functional, potential future enh
 
 *Note: These are possibilities for future development, not commitments or current plans.*
 
-## 🎯 Educational Context
+## Educational Context
 
 This project was developed as both a learning exercise in Python software development and a practical tool for physics education. It demonstrates:
 
@@ -157,7 +157,7 @@ This project was developed as both a learning exercise in Python software develo
 
 The project serves as both a useful physics reference tool and an example of well-structured scientific software.
 
-## 🛠️ Platform Support
+## Platform Support
 
 **Tested and working on:**
 - ✅ Linux (Arch)
@@ -167,7 +167,7 @@ The project serves as both a useful physics reference tool and an example of wel
 **Best terminal experience:**
 - Any modern terminal
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
@@ -177,7 +177,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Physics content referenced directly from [OpenStax](https://openstax.org/details/books/university-physics-volume-1) University Physics Volume 1 open source textbook for first year undergraduate students.
 - Inspired by the need for accessible, interactive physics reference tools
 
-## 📧 Contact
+## Contact
 
 While active development is paused for academic commitments, feel free to:
 - Open issues for bugs or suggestions
