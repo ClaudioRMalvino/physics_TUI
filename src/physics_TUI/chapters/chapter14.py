@@ -105,7 +105,7 @@ class Chapter14(PhysicsChapter):
             Equation(
                 name="Bernoulli's equation",
                 formula="p(1) + ½ρv(1)² + ρgy(1) = p(2) + ½ρv(2)² + ρgy(2)",
-                vaiables={
+                variables={
                     "ρ": "Density of the fluid (kg/m³)",
                     "p(1)": "Pressure of the fluid in moment 1 (Pa)",
                     "v(1)": "Velocity of the fluid in moment 1 (m/s)",
@@ -573,7 +573,7 @@ class Chapter14(PhysicsChapter):
 
                 return (pressure_2 - pressure_1 + term3 + term4 - term1) / g
             
-             if pressure_2 == None:
+            if pressure_2 == None:
 
                 term1: float = 0.5 * (velocity_1 * velocity_1)
                 term2: float = g * height_1

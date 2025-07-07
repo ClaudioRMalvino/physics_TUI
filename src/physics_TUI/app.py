@@ -17,6 +17,9 @@ from physics_TUI.chapters.chapter9 import Chapter9
 from physics_TUI.chapters.chapter10 import Chapter10
 from physics_TUI.chapters.chapter11 import Chapter11
 from physics_TUI.chapters.chapter12 import Chapter12
+from physics_TUI.chapters.chapter13 import Chapter13
+from physics_TUI.chapters.chapter14 import Chapter14
+
 from physics_TUI.base_chapter import PhysicsChapter, Equation, Definition
 
 class CalculatorScreen(Screen):
@@ -45,7 +48,7 @@ class CalculatorScreen(Screen):
             # Input fields in the same scrollable container
             for var, desc in self.equation.variables.items():
                 # Skip variables marked as constants in their description
-                if '[constant]' in desc:
+                if '(constant)' in desc:
                     continue
 
                 yield Static(f"{var}: {desc}", classes="input-label")
@@ -174,7 +177,9 @@ class physicsTUIApp(App):
             Chapter9(),
             Chapter10(),
             Chapter11(),
-            Chapter12()
+            Chapter12(),
+            Chapter13(),
+            Chapter14()
         ]
         self.current_chapter: Optional[PhysicsChapter] = None
         self.showing_equation_list = False
@@ -223,6 +228,7 @@ class physicsTUIApp(App):
 [bold #9ece6a]▸[/] [#c0caf5]Navigate with arrow keys or mouse[/]
 [bold #9ece6a]▸[/] [#c0caf5]Navigate between window panels with [bold #e0af68]Tab[/]
 [bold #9ece6a]▸[/] [#c0caf5]Press [bold #e0af68]Enter[/] to select[/]
+[bold #9ece6a]▸[/] [#c0caf5]Press [bold #e0af68]Ctrl + p[/] to open the palette[/]
 [bold #9ece6a]▸[/] [#c0caf5]Press [bold #e0af68]Q[/] to quit[/]
 
 [bold #2ac3de]━━━ Features ━━━[/]
@@ -427,6 +433,10 @@ class physicsTUIApp(App):
             "textual-dark" if self.theme == "textual-light" else "textual-light"
         )
 
-if __name__ == "__main__":
+def main() -> None:
+    """Main entry point for the physics TUI application."""
     app = physicsTUIApp()
     app.run()
+
+if __name__ == "__main__":
+    main()

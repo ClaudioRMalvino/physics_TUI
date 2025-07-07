@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "physics-tui"
+version = "0.1.0"
+description = "A Terminal User Interface (TUI) for physics reference and calculations based off of OpenStax open source Physics University 1 textbook"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Claudio Malvino", email = "claudiormal@gmail.com"},
+]
+keywords = ["physics", "tui", "education", "calculator", "terminal"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Topic :: Education",
+    "Topic :: Scientific/Engineering :: Physics",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "textual>=0.38.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "mypy>=1.0",
+    "black>=23.0",
+]
+
+[project.scripts]
+physics-tui = "physics_TUI.app:main"
+
+[project.urls]
+Homepage = "https://github.com/ClaudioRMalvino/physics_tui"
+Repository = "https://github.com/ClaudioRMalvino/physics_tui"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+physics_TUI = ["appearance.tcss"]
