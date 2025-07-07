@@ -1,10 +1,9 @@
 from typing import Dict, List, Tuple, Optional
-from math import sqrt
 from physics_TUI.base_chapter import PhysicsChapter, Equation, Definition
+from math import sqrt
 
 # Constant
 g: float = -9.82  # gravitational acceleration on Earth [m/s^2]
-
 
 class Chapter3(PhysicsChapter):
     """

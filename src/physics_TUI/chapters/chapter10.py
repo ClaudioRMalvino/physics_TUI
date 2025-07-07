@@ -696,7 +696,7 @@ class Chapter10(PhysicsChapter):
                 )
                 if radicand < 0:
                     raise ValueError(
-                        "A negative radicand yields a complex number.\
+                        "A negative radicand yields an imaginary number.\
                         Check your values."
                     )
 
@@ -731,7 +731,7 @@ class Chapter10(PhysicsChapter):
 
             if radicand < 0.0:
                 raise ValueError(
-                    "A negative radicand yields a complex number.\
+                    "A negative radicand yields an imaginary number.\
                         Check your values."
                 )
 
@@ -777,7 +777,7 @@ class Chapter10(PhysicsChapter):
 
                 if radicand < 0:
                     raise ValueError(
-                        "A negative radicand yields a complex number.\
+                        "A negative radicand yields an imaginary number.\
                         Check your values."
                     )
 

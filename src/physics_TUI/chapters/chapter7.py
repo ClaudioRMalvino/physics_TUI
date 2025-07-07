@@ -401,7 +401,7 @@ class Chapter7(PhysicsChapter):
                 )
                 if radicand < 0:
                     raise ValueError(
-                        "Negative radicand produces a complex number. \
+                        "Negative radicand produces an imaginary number. \
                         Check your signs."
                     )
                 else:
@@ -412,7 +412,7 @@ class Chapter7(PhysicsChapter):
                 radicand: float = ((-2.0 * net_work) / mass) + (final_vel * final_vel)
                 if radicand < 0:
                     raise ValueError(
-                        "Negative radicand produces a complex number. \
+                        "Negative radicand produces an imaginary number. \
                         Check your signs."
                     )
                 else:

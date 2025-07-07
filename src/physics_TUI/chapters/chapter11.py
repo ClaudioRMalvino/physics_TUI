@@ -221,7 +221,7 @@ class Chapter11(PhysicsChapter):
 
                 if radicand < 0:
                     raise ValueError(
-                        "Negative radicand yields a complex number. \
+                        "Negative radicand yields an imaginary number. \
                         Check your values."
                     )
 
