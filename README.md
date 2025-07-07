@@ -141,7 +141,6 @@ mypy src/physics_TUI/
 While the current version is complete and fully functional, potential future enhancements could include:
 
 - **Unit Conversion Calculator** - Convert between different measurement systems
-- **Graph Plotting** - Visual representations of equations and data
 - **Additional Physics Topics** - electromagnetism, modern physics
 
 
@@ -166,15 +165,13 @@ The project serves as both a useful physics reference tool and an example of wel
 - I have not been able to test on a Windows environment, but as it is a Python program, it should function normally if all dependencies are installed.
 
 **Best terminal experience:**
-- Windows Terminal (Windows)
-- iTerm2 or Terminal.app (macOS)
-- Any modern terminal emulator (Linux)
+- Any modern terminal
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Built with [Textual](https://textual.textualize.io/) - Modern TUI framework
 - Physics content referenced directly from [OpenStax](https://openstax.org/details/books/university-physics-volume-1) University Physics Volume 1 open source textbook for first year undergraduate students.
@@ -190,5 +187,3 @@ While active development is paused for academic commitments, feel free to:
 **Note:** Response times may be limited due to academic commitments, but the project remains open for community contributions and use.
 
 ---
-
-*Developed with ❤️ for physics education and software craftsmanship*
