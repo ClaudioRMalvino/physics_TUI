@@ -4,9 +4,9 @@ from typing import List, Any
 from physics_TUI.chapters.chapter3 import Chapter3
 
 
-class TestPositionFromVelAndAcc(unittest.TestCase):
+class Testposition_from_vel_and_accel(unittest.TestCase):
     """
-    Tests the positionFromVelandAcc calculation method
+    Tests the position_from_vel_and_accel calculation method
     """
 
     def test_solving_for_x_f(self) -> None:
@@ -23,7 +23,7 @@ class TestPositionFromVelAndAcc(unittest.TestCase):
         results = []
 
         for i in range(len(expected)):
-            result = Chapter3.Calculate.positionFromVelAndAcc(
+            result = Chapter3.Calculate.position_from_vel_and_accel(
                 x_0=x_0[i], v_0=v_0[i], t=t[i], accel=accel[i]
             )
             results.append(result)
@@ -46,13 +46,13 @@ class TestPositionFromVelAndAcc(unittest.TestCase):
             if isinstance(expected[i], ValueError):
                 # Check for exception
                 with self.assertRaises(ValueError) as context:
-                    Chapter3.Calculate.positionFromVelAndAcc(
+                    Chapter3.Calculate.position_from_vel_and_accel(
                         x_0=x_0[i], v_0=v_0[i], accel=accel[i], x_f=x_f[i]
                     )
                 self.assertEqual(str(context.exception), str(expected[i]))
             else:
                 # Check for numerical result
-                result = Chapter3.Calculate.positionFromVelAndAcc(
+                result = Chapter3.Calculate.position_from_vel_and_accel(
                     x_0=x_0[i], v_0=v_0[i], accel=accel[i], x_f=x_f[i]
                 )
                 self.assertAlmostEqual(result, expected[i], places=7)
@@ -77,7 +77,7 @@ class TestPositionFromVelAndAcc(unittest.TestCase):
         for i in range(len(expected)):
                 if isinstance(expected[i], ValueError):
                     with self.assertRaises(ValueError) as context:
-                        Chapter3.Calculate.positionFromVelAndAcc(
+                        Chapter3.Calculate.position_from_vel_and_accel(
                             x_0=x_0[i],
                             v_0=v_0[i],
                             t=t[i],
@@ -85,7 +85,7 @@ class TestPositionFromVelAndAcc(unittest.TestCase):
                         )
                     self.assertEqual(str(context.exception), str(expected[i]))
                 else:
-                    result = Chapter3.Calculate.positionFromVelAndAcc(
+                    result = Chapter3.Calculate.position_from_vel_and_accel(
                             x_0=x_0[i],
                             v_0=v_0[i],
                             t=t[i],
@@ -110,7 +110,7 @@ class TestPositionFromVelAndAcc(unittest.TestCase):
         for i in range(len(expected)):
                 if isinstance(expected[i], ValueError):
                     with self.assertRaises(ValueError) as context:
-                        Chapter3.Calculate.positionFromVelAndAcc(
+                        Chapter3.Calculate.position_from_vel_and_accel(
                             accel=accel[i],
                             v_0=v_0[i],
                             t=t[i],
@@ -118,7 +118,7 @@ class TestPositionFromVelAndAcc(unittest.TestCase):
                         )
                     self.assertEqual(str(context.exception), str(expected[i]))
                 else:
-                    result = Chapter3.Calculate.positionFromVelAndAcc(
+                    result = Chapter3.Calculate.position_from_vel_and_accel(
                             accel=accel[i],
                             v_0=v_0[i],
                             t=t[i],
@@ -146,7 +146,7 @@ class TestPositionFromVelAndAcc(unittest.TestCase):
         for i in range(len(expected)):
                 if isinstance(expected[i], ValueError):
                     with self.assertRaises(ValueError) as context:
-                        Chapter3.Calculate.positionFromVelAndAcc(
+                        Chapter3.Calculate.position_from_vel_and_accel(
                             accel=accel[i],
                             x_0=x_0[i],
                             t=t[i],
@@ -154,7 +154,7 @@ class TestPositionFromVelAndAcc(unittest.TestCase):
                         )
                     self.assertEqual(str(context.exception), str(expected[i]))
                 else:
-                    result = Chapter3.Calculate.positionFromVelAndAcc(
+                    result = Chapter3.Calculate.position_from_vel_and_accel(
                             accel=accel[i],
                             x_0=x_0[i],
                             t=t[i],
@@ -164,9 +164,9 @@ class TestPositionFromVelAndAcc(unittest.TestCase):
 
 
 
-class TestVelocityFromDistance(unittest.TestCase):
+class Testvelocity_from_distance(unittest.TestCase):
     """
-    Tests the velocityFromDistance calculation method
+    Tests the velocity_from_distance calculation method
     """
 
     def test_solving_for_v_f(self) -> None:
@@ -184,12 +184,12 @@ class TestVelocityFromDistance(unittest.TestCase):
         for i in range(len(expected)):
             if isinstance(expected[i], ValueError):
                 with self.assertRaises(ValueError) as context:
-                    Chapter3.Calculate.velocityFromDistance(
+                    Chapter3.Calculate.velocity_from_distance(
                         x_0=x_0[i], v_0=v_0[i], x_f=x_f[i], accel=accel[i]
                     )
                 self.assertEqual(str(context.exception), str(expected[i]))
             else:
-                result = Chapter3.Calculate.velocityFromDistance(
+                result = Chapter3.Calculate.velocity_from_distance(
                     x_0=x_0[i], v_0=v_0[i], x_f=x_f[i], accel=accel[i]
                 )
                 self.assertAlmostEqual(result, expected[i], places=2)
@@ -213,13 +213,13 @@ class TestVelocityFromDistance(unittest.TestCase):
             if isinstance(expected[i], ValueError):
                 # Check for exception
                 with self.assertRaises(ValueError) as context:
-                    Chapter3.Calculate.velocityFromDistance(
+                    Chapter3.Calculate.velocity_from_distance(
                         x_f=x_f[i], v_0=v_0[i], accel=accel[i], v_f=v_f[i]
                     )
                 self.assertEqual(str(context.exception), str(expected[i]))
             else:
                 # Check for numerical result
-                result = Chapter3.Calculate.velocityFromDistance(
+                result = Chapter3.Calculate.velocity_from_distance(
                     x_f=x_f[i], v_0=v_0[i], accel=accel[i], v_f=v_f[i]
                 )
                 self.assertAlmostEqual(result, expected[i], places=7)
@@ -238,18 +238,18 @@ class TestVelocityFromDistance(unittest.TestCase):
         for i in range(len(expected)):
             if isinstance(expected[i], ValueError):
                 with self.assertRaises(ValueError) as context:
-                    Chapter3.Calculate.velocityFromDistance(
+                    Chapter3.Calculate.velocity_from_distance(
                         x_0=x_0[i], x_f=x_f[i], accel=accel[i], v_f=v_f[i]
                     )
                 self.assertEqual(str(context.exception), str(expected[i]))
             else:
-                result = Chapter3.Calculate.velocityFromDistance(
+                result = Chapter3.Calculate.velocity_from_distance(
                     x_0=x_0[i], x_f=x_f[i], accel=accel[i], v_f=v_f[i]
                 )
                 self.assertAlmostEqual(result, expected[i], places=2)
 
 
-class TestHeightofFreeFall(unittest.TestCase):
+class Testheight_of_free_fall(unittest.TestCase):
 
     def test_solving_for_y_f(self) -> None:
         """
@@ -264,7 +264,7 @@ class TestHeightofFreeFall(unittest.TestCase):
         results = []
 
         for i in range(len(expected)):
-            result = Chapter3.Calculate.heightOfFreeFall(y_0=y_0[i], v_0=v_0[i], t=t[i])
+            result = Chapter3.Calculate.height_of_free_fall(y_0=y_0[i], v_0=v_0[i], t=t[i])
             results.append(result)
 
         for i in range(len(expected)):
@@ -283,7 +283,7 @@ class TestHeightofFreeFall(unittest.TestCase):
         results = []
 
         for i in range(len(expected)):
-            result = Chapter3.Calculate.heightOfFreeFall(
+            result = Chapter3.Calculate.height_of_free_fall(
                 y_0=y_0[i], v_0=v_0[i], y_f=y_f[i]
             )
             results.append(result)
@@ -292,9 +292,9 @@ class TestHeightofFreeFall(unittest.TestCase):
             self.assertAlmostEqual(results[i], expected[i], places=7)
 
 
-class TestVelFreeFallFromHeight(unittest.TestCase):
+class Testvel_free_fall_from_height(unittest.TestCase):
     """
-    Tests the velFreeFallFromHeight calculation method
+    Tests the vel_free_fall_from_height calculation method
     """
 
     def test_solving_for_v_f(self) -> None:
@@ -310,14 +310,14 @@ class TestVelFreeFallFromHeight(unittest.TestCase):
         for i in range(len(expected)):
             if isinstance(expected[i], ValueError):
                 with self.assertRaises(ValueError) as context:
-                    Chapter3.Calculate.velFreeFallFromHeight(
+                    Chapter3.Calculate.vel_free_fall_from_height(
                         y_0=y_0[i],
                         v_0=v_0[i],
                         y_f=y_f[i],
                     )
                 self.assertEqual(str(context.exception), str(expected[i]))
             else:
-                result = Chapter3.Calculate.velFreeFallFromHeight(
+                result = Chapter3.Calculate.vel_free_fall_from_height(
                     y_0=y_0[i],
                     v_0=v_0[i],
                     y_f=y_f[i],
@@ -337,7 +337,7 @@ class TestVelFreeFallFromHeight(unittest.TestCase):
         results = []
 
         for i in range(len(expected)):
-            result = Chapter3.Calculate.velFreeFallFromHeight(
+            result = Chapter3.Calculate.vel_free_fall_from_height(
                 y_f=y_f[i], v_0=v_0[i], v_f=v_f[i]
             )
             results.append(result)
@@ -358,12 +358,12 @@ class TestVelFreeFallFromHeight(unittest.TestCase):
         for i in range(len(expected)):
             if isinstance(expected[i], ValueError):
                 with self.assertRaises(ValueError) as context:
-                    Chapter3.Calculate.velFreeFallFromHeight(
+                    Chapter3.Calculate.vel_free_fall_from_height(
                         y_0=y_0[i], y_f=y_f[i], v_f=v_f[i]
                     )
                 self.assertEqual(str(context.exception), str(expected[i]))
             else:
-                result = Chapter3.Calculate.velFreeFallFromHeight(
+                result = Chapter3.Calculate.vel_free_fall_from_height(
                     y_0=y_0[i], y_f=y_f[i], v_f=v_f[i]
                 )
                 self.assertAlmostEqual(result, expected[i], places=2)

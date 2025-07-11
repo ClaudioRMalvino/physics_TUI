@@ -167,8 +167,11 @@ class Chapter7(PhysicsChapter):
             if theta is not None:
                 theta_radians: float = theta * (pi / 180.0)
 
-            if cont_F == None:
+            if const_F == None:
                 # Calculates for constant force
+                cos_theta: float = cos(theta_radians)
+                if cos_theta == 0.0 or distance == 0.0:
+                    raise ValueError("Division by zero is undefined.")
                 return work / (cos(theta_radians) * distance)
 
             if distance == None:

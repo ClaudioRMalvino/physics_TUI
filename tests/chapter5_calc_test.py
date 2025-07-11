@@ -3,7 +3,7 @@ import unittest
 from typing import List, Any
 from physics_TUI.chapters.chapter5 import Chapter5
 
-class TestNormalForce(unittest.TestCase):
+class Testnormal_force(unittest.TestCase):
     """
     Tests the main use cases of calculations for the normal force equation.
     """
@@ -27,13 +27,13 @@ class TestNormalForce(unittest.TestCase):
         for i in range(len(expected)):
                 if isinstance(expected[i], ValueError):
                     with self.assertRaises(ValueError) as context:
-                        Chapter5.Calculate.normalForce(
+                        Chapter5.Calculate.normal_force(
                             mass=mass[i],
                             theta=theta[i]
                         )
                     self.assertEqual(str(context.exception), str(expected[i]))
                 else:
-                    result = Chapter5.Calculate.normalForce(
+                    result = Chapter5.Calculate.normal_force(
                             mass=mass[i],
                             theta=theta[i]
                         )
@@ -59,13 +59,13 @@ class TestNormalForce(unittest.TestCase):
         for i in range(len(expected)):
                 if isinstance(expected[i], ValueError):
                     with self.assertRaises(ValueError) as context:
-                        Chapter5.Calculate.normalForce(
+                        Chapter5.Calculate.normal_force(
                             mass=mass[i],
                             normal_F=normal_F[i]
                         )
                     self.assertEqual(str(context.exception), str(expected[i]))
                 else:
-                    result = Chapter5.Calculate.normalForce(
+                    result = Chapter5.Calculate.normal_force(
                             mass=mass[i],
                             normal_F=normal_F[i]
                         )
@@ -91,19 +91,19 @@ class TestNormalForce(unittest.TestCase):
         for i in range(len(expected)):
                 if isinstance(expected[i], ValueError):
                     with self.assertRaises(ValueError) as context:
-                        Chapter5.Calculate.normalForce(
+                        Chapter5.Calculate.normal_force(
                             theta=theta[i],
                             normal_F=normal_F[i]
                         )
                     self.assertEqual(str(context.exception), str(expected[i]))
                 else:
-                    result = Chapter5.Calculate.normalForce(
+                    result = Chapter5.Calculate.normal_force(
                             theta=theta[i],
                             normal_F=normal_F[i]
                         )
                     self.assertAlmostEqual(result, expected[i], places=1)
 
-class TestHookesLaw(unittest.TestCase):
+class Testhookes_law(unittest.TestCase):
     """
     Tests the main use cases of calculations with F = -kx
     """
@@ -128,13 +128,13 @@ class TestHookesLaw(unittest.TestCase):
         for i in range(len(expected)):
                 if isinstance(expected[i], ValueError):
                     with self.assertRaises(ValueError) as context:
-                        Chapter5.Calculate.hookesLaw(
+                        Chapter5.Calculate.hookes_law(
                             spring_const=spring_const[i],
                             displacement=displacement[i]
                         )
                     self.assertEqual(str(context.exception), str(expected[i]))
                 else:
-                    result = Chapter5.Calculate.hookesLaw(
+                    result = Chapter5.Calculate.hookes_law(
                             spring_const=spring_const[i],
                             displacement=displacement[i]
                         )
@@ -162,13 +162,13 @@ class TestHookesLaw(unittest.TestCase):
         for i in range(len(expected)):
                 if isinstance(expected[i], ValueError):
                     with self.assertRaises(ValueError) as context:
-                        Chapter5.Calculate.hookesLaw(
+                        Chapter5.Calculate.hookes_law(
                             force=force[i],
                             displacement=displacement[i]
                         )
                     self.assertEqual(str(context.exception), str(expected[i]))
                 else:
-                    result = Chapter5.Calculate.hookesLaw(
+                    result = Chapter5.Calculate.hookes_law(
                             force=force[i],
                             displacement=displacement[i]
                         )
@@ -194,13 +194,13 @@ class TestHookesLaw(unittest.TestCase):
         for i in range(len(expected)):
                 if isinstance(expected[i], ValueError):
                     with self.assertRaises(ValueError) as context:
-                        Chapter5.Calculate.hookesLaw(
+                        Chapter5.Calculate.hookes_law(
                             force=force[i],
                             spring_const=spring_const[i]
                         )
                     self.assertEqual(str(context.exception), str(expected[i]))
                 else:
-                    result = Chapter5.Calculate.hookesLaw(
+                    result = Chapter5.Calculate.hookes_law(
                             force=force[i],
                             spring_const=spring_const[i]
                         )

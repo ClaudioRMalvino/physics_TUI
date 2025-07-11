@@ -243,11 +243,6 @@ class Chapter6(PhysicsChapter):
                 else:
                     return radius_result
 
-            if radius < 0:
-                raise ValueError("Radius cannot be a negative value.")
-            if radius == 0:
-                raise ValueError("Division by zero is undefined.")
-
             return (mass * (velocity * velocity)) / radius
 
         @staticmethod

@@ -6,7 +6,7 @@ from physics_TUI.chapters.chapter4 import Chapter4
 
 class TestTimeoOfFlight(unittest.TestCase):
     """
-    Calculates the timeofFlight calculation method
+    Calculates the time_of_flight calculation method
     """
 
     def test_solving_for_t(self) -> None:
@@ -23,7 +23,7 @@ class TestTimeoOfFlight(unittest.TestCase):
         results = []
 
         for i in range(len(expected)):
-            result = Chapter4.Calculate.timeOfFlight(
+            result = Chapter4.Calculate.time_of_flight(
                 v_0=v_0[i],
                 theta=theta[i],
             )
@@ -46,7 +46,7 @@ class TestTimeoOfFlight(unittest.TestCase):
         results = []
 
         for i in range(len(expected)):
-            result = Chapter4.Calculate.timeOfFlight(t=t[i], theta=theta[i])
+            result = Chapter4.Calculate.time_of_flight(t=t[i], theta=theta[i])
             results.append(result)
         print(results)
         for i in range(len(expected)):
@@ -71,13 +71,13 @@ class TestTimeoOfFlight(unittest.TestCase):
         for i in range(len(expected)):
             if isinstance(expected[i], ValueError):
                 with self.assertRaises(ValueError) as context:
-                    Chapter4.Calculate.timeOfFlight(
+                    Chapter4.Calculate.time_of_flight(
                         v_0=v_0[i],
                         t=t[i]
                     )
                 self.assertEqual(str(context.exception), str(expected[i]))
             else:
-                result = Chapter4.Calculate.timeOfFlight(
+                result = Chapter4.Calculate.time_of_flight(
                         v_0=v_0[i],
                         t=t[i]
                     )
@@ -232,7 +232,7 @@ class TestRange(unittest.TestCase):
         expected: List[Any] = [0.0, 7.80, 162.93]
 
         for i in range(len(expected)):
-            result = Chapter4.Calculate.projectileRange(
+            result = Chapter4.Calculate.projectile_range(
                 v_0=v_0[i],
                 theta=theta[i]
             )
@@ -256,13 +256,13 @@ class TestRange(unittest.TestCase):
         for i in range(len(expected)):
             if isinstance(expected[i], ValueError):
                 with self.assertRaises(ValueError) as context:
-                    Chapter4.Calculate.projectileRange(
+                    Chapter4.Calculate.projectile_range(
                         theta=theta[i],
                         r_total=R[i]
                     )
                 self.assertEqual(str(context.exception), str(expected[i]))
             else:
-                result = Chapter4.Calculate.projectileRange(
+                result = Chapter4.Calculate.projectile_range(
                         theta=theta[i],
                         r_total=R[i]
                     )
@@ -287,21 +287,21 @@ class TestRange(unittest.TestCase):
         for i in range(len(expected)):
             if isinstance(expected[i], ValueError):
                 with self.assertRaises(ValueError) as context:
-                    Chapter4.Calculate.projectileRange(
+                    Chapter4.Calculate.projectile_range(
                         v_0=v_0[i],
                         r_total=R[i]
                     )
                 self.assertEqual(str(context.exception), str(expected[i]))
             else:
-                result = Chapter4.Calculate.projectileRange(
+                result = Chapter4.Calculate.projectile_range(
                         v_0=v_0[i],
                         r_total=R[i]
                     )
                 self.assertAlmostEqual(result, expected[i], places=1)
 
-class TestCentripetalAccel(unittest.TestCase):
+class Testcentripetal_accel(unittest.TestCase):
     """
-    Conducts test for the centripetalAccel function
+    Conducts test for the centripetal_accel function
     
     """
     
@@ -324,13 +324,13 @@ class TestCentripetalAccel(unittest.TestCase):
         for i in range(len(expected)):
             if isinstance(expected[i], ValueError):
                 with self.assertRaises(ValueError) as context:
-                    Chapter4.Calculate.centripetalAccel(
+                    Chapter4.Calculate.centripetal_accel(
                         velocity=velocity[i],
                         radius=radius[i]
                     )
                 self.assertEqual(str(context.exception), str(expected[i]))
             else:
-                result = Chapter4.Calculate.centripetalAccel(
+                result = Chapter4.Calculate.centripetal_accel(
                         velocity=velocity[i],
                         radius=radius[i]
                     )
@@ -355,13 +355,13 @@ class TestCentripetalAccel(unittest.TestCase):
         for i in range(len(expected)):
             if isinstance(expected[i], ValueError):
                 with self.assertRaises(ValueError) as context:
-                    Chapter4.Calculate.centripetalAccel(
+                    Chapter4.Calculate.centripetal_accel(
                         accel=accel[i],
                         radius=radius[i]
                     )
                 self.assertEqual(str(context.exception), str(expected[i]))
             else:
-                result = Chapter4.Calculate.centripetalAccel(
+                result = Chapter4.Calculate.centripetal_accel(
                         accel=accel[i],
                         radius=radius[i]
                     )
