@@ -169,17 +169,23 @@ class Chapter7(PhysicsChapter):
 
             if const_F == None:
                 # Calculates for constant force
-                cos_theta: float = cos(theta_radians)
-                if cos_theta == 0.0 or distance == 0.0:
+                if theta == 90.0 or theta == 270 or distance == 0.0:
                     raise ValueError("Division by zero is undefined.")
                 return work / (cos(theta_radians) * distance)
 
             if distance == None:
                 # Calculates for distance
+                if theta == 90.0 or theta == 270.0 or distance == 0.0:
+                    raise ValueError("Division by zero is undefined.")
+                if const_F == 0.0:
+                    raise ValueError("Division by zero is undefined.")
                 return work / (const_F * cos(theta_radians))
 
             if theta == None:
                 # Calculates for theta and then converts into degrees
+                if const_F == 0.0 or distance == 0.0:
+                    raise ValueError("Division by zero is undefined.")
+
                 argument: float = work / (const_F * distance)
                 return acos(argument) * (180 / pi)
 
@@ -208,20 +214,22 @@ class Chapter7(PhysicsChapter):
                 float: the result of whichever variable was left equal to None
             """
 
-            if mass is not None and mass < 0:
+            if mass is not None and mass <= 0:
                 raise ValueError(
                     "We are operating with massive objects. \
                 Mass must be greater than zero."
                 )
 
             if mass == None:
+                
+                if final_height == initial_height:
+                    raise ValueError("Division by zero is undefined.")
 
                 result: float = -work / (g * (final_height - initial_height))
 
                 if result < 0:
                     raise ValueError(
-                        "Mass cannot be negative. \
-                        Check your signs or initial and final heights."
+                        "Mass cannot be negative. Check your signs or initial and final heights."
                     )
                 else:
                     return result
@@ -261,6 +269,9 @@ class Chapter7(PhysicsChapter):
                 raise ValueError("Spring constant cannot be a negative value.")
 
             if spring_const == None:
+                if final_xpos == initial_xpos:
+                    raise ValueError("Division by zero is undefined.")
+                    
                 return (-2.0 * work) / (
                     (final_xpos * final_xpos) - (initial_xpos * initial_xpos)
                 )

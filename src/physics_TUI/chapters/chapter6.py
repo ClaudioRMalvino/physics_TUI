@@ -581,5 +581,5 @@ class Chapter6(PhysicsChapter):
                 return (2 * mass * g) / (sqrt(terminal_vel) * drag_coeff * area)
 
             radicand: float = (2 * mass * g) / (fluid_dens * drag_coeff * area)
-
+            
             return sqrt(radicand)

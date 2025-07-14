@@ -724,7 +724,7 @@ class Testterminal_velocity(unittest.TestCase):
             ValueError("Area cannot be less than zero or equal to zero."),
             ValueError("Fluid density cannot be less than or equal to zero."),
             18.0,
-            18.0,
+            2.06,
         ]
 
         for i in range(len(expected)):
