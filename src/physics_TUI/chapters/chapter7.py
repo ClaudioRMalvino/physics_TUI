@@ -280,7 +280,7 @@ class Chapter7(PhysicsChapter):
                 return ((2.0 * work) / spring_const) + (final_xpos * final_xpos)
 
             if final_xpos == None:
-                return ((-2.0 * work) / spring_const) + (final_xpos * final_xpos)
+                return ((-2.0 * work) / spring_const) + (initial_xpos * initial_xpos)
 
             return (
                 -0.5
@@ -309,10 +309,9 @@ class Chapter7(PhysicsChapter):
                 float: the result of whichever variable was left equal to None
             """
 
-            if mass is not None and mass < 0:
+            if mass is not None and mass <= 0:
                 raise ValueError(
-                    "We are operating with massive objects. \
-                Mass must be greater than zero."
+                    "We are operating with massive objects. Mass must be greater than zero."
                 )
 
             if velocity is not None and velocity < 0:
@@ -321,11 +320,19 @@ class Chapter7(PhysicsChapter):
                 )
 
             if mass == None:
-                return kinetic_E * (2.0 / (velocity * velocity))
+                result: float = kinetic_E * (2.0 / (velocity * velocity))
+                if result < 0.0:
+                    raise ValueError(
+                    "We are operating with massive objects. Mass must be greater than zero."
+                )
+                return result
+
 
             if velocity == None:
 
                 radicand: float = kinetic_E * (2.0 / mass)
+                if radicand < 0.0:
+                    raise ValueError("Negative radicand yields an imaginary number. Check the value of your kinetic energy")
                 return sqrt(radicand)
 
             return 0.5 * mass * (velocity * velocity)
@@ -353,21 +360,27 @@ class Chapter7(PhysicsChapter):
 
             if mass is not None and mass < 0:
                 raise ValueError(
-                    "We are operating with massive objects. \
-                Mass must be greater than zero."
+                    "We are operating with massive objects. Mass must be greater than zero."
                 )
-
-            if velocity is not None and velocity < 0:
+            
+            if momentum is not None and momentum < 0:
                 raise ValueError(
                     "This is a scalar product. Velocity cannot be negative"
                 )
 
             if mass == None:
-
-                return (momentum * momentum) / (kinetic_E * 2.0)
+                result: float = (momentum * momentum) / (kinetic_E * 2.0)
+                if result < 0.0:
+                    raise ValueError(
+                    "We are operating with massive objects. Mass must be greater than zero. Check your value for kinetic energy."
+                )   
+                return result 
 
             if momentum == None:
-                return kinetic_E * 2.0 * mass
+                radicand: float = kinetic_E * 2.0 * mass
+                if radicand < 0.0:
+                    raise ValueError("Negative radicand yields an imaginary number. Check the value of your kinetic energy")
+                return sqrt(radicand)
 
             return (momentum * momentum) / (2.0 * mass)
 
@@ -397,15 +410,16 @@ class Chapter7(PhysicsChapter):
 
             if mass is not None and mass < 0:
                 raise ValueError(
-                    "We are operating with massive objects. \
-                Mass must be greater than zero."
+                    "We are operating with massive objects. Mass must be greater than zero."
                 )
 
             if mass == None:
-
-                return (2.0 * net_work) / (
+                result: float = (2.0 * net_work) / (
                     (final_vel * final_vel) - (initial_vel * initial_vel)
                 )
+                if result < 0.0:
+                    raise ValueError("We are operating with massive objects. Mass must be greater than zero. Check your values") 
+                return result 
 
             if final_vel == None:
 
@@ -414,8 +428,7 @@ class Chapter7(PhysicsChapter):
                 )
                 if radicand < 0:
                     raise ValueError(
-                        "Negative radicand produces an imaginary number. \
-                        Check your signs."
+                        "Negative radicand produces an imaginary number. Check your signs."
                     )
                 else:
                     return sqrt(radicand)
@@ -425,8 +438,7 @@ class Chapter7(PhysicsChapter):
                 radicand: float = ((-2.0 * net_work) / mass) + (final_vel * final_vel)
                 if radicand < 0:
                     raise ValueError(
-                        "Negative radicand produces an imaginary number. \
-                        Check your signs."
+                        "Negative radicand produces an imaginary number. Check your signs."
                     )
                 else:
                     return sqrt(radicand)
