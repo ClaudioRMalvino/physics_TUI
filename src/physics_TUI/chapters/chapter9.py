@@ -285,8 +285,7 @@ class Chapter9(PhysicsChapter):
                 and mass_f <= 0
             ):
                 raise ValueError(
-                    "We are operating with massive objects. \
-                    Make sure all objects have a mass greater than zero."
+                    "We are operating with massive objects. Make sure all objects have a mass greater than zero."
                 )
 
             if mass_1 == None:
