@@ -18,7 +18,8 @@ Tree {
 }
 
 #content {
-    padding: 1;
+    text-align: center;
+    content-align: center middle;
 }
 
 /* Header for calculation list */
