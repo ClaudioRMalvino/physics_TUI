@@ -48,7 +48,7 @@ OptionList > Option {
     border: solid white 30%;
 }
 
-/* Calculate button styling */
+/* Calculate button styling 
 #calculate-button, #calc-button {
     margin: 1 12;
     width: 30%;
@@ -57,8 +57,17 @@ OptionList > Option {
     text-style: bold;
     text-align: center;
     
-}
+}*/
 
+#calculate-button, #calc-button {
+    margin: 1 10;
+    width: 30%;
+    background: $primary 20%;
+    color: #c0caf5;
+    text-style: bold;
+    text-align: center;
+    align: center middle;
+}
 #result-display {
     margin-top: 1;
     text-align: center;

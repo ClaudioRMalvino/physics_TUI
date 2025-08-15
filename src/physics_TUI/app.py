@@ -215,14 +215,13 @@ class physicsTUIApp(App):
         welcome_content_widget = self.query_one("#welcome_content", Static)
 
         welcome_content = """
-[bold #bb9af7]┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃            WELCOME TO PHYSICS TUI!               ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛[/]
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
-[bold #7aa2f7]╔══════════════════════════════════════════════════╗
-║  Physics Reference & Calculator                  ║
-╚══════════════════════════════════════════════════╝[/]
-
+╔══════════════════════════════════════════════════╗
+║         Physics Reference & Calculator           ║
+╚══════════════════════════════════════════════════╝
 [bold #9ece6a]▸[/] [#c0caf5]Select a chapter from the left panel[/]
 [bold #9ece6a]▸[/] [#c0caf5]Navigate with arrow keys or mouse[/]
 [bold #9ece6a]▸[/] [#c0caf5]Navigate between window panels with [bold #e0af68]Tab[/]
@@ -277,6 +276,9 @@ class physicsTUIApp(App):
         equation_list = self.query_one("#equation-list")
         equation_list.add_class("hidden")
 
+        welcome_content_widget = self.query_one("#welcome_content", Static)
+        welcome_content_widget.add_class("hidden")
+
         content_widget = self.query_one("#content", Static)
         content_widget.remove_class("hidden")
 
@@ -284,13 +286,13 @@ class physicsTUIApp(App):
         title_length = len(chapter.title)
         padding = max(0, (50 - title_length) // 2)
 
-        content = f"""[bold #bb9af7 on #24283b]┏━{'━' * 50}━┓
-┃{' ' * padding}{chapter.title.upper()}{' ' * (50 - title_length - padding)}┃
-┗━{'━' * 50}━┛[/]
+        content = f"""┏━{'━' * 50}━┓
+┃{' ' * padding}{chapter.title.upper()}{' ' * (50 - title_length - padding)}  ┃
+┗━{'━' * 50}━┛
 
-[bold #7aa2f7]╔══════════════════════════════════════════════════╗
+╔══════════════════════════════════════════════════╗
 ║{'EQUATIONS'.center(50)}║
-╚══════════════════════════════════════════════════╝[/]\n"""
+╚══════════════════════════════════════════════════╝\n"""
 
         for eq in chapter.get_equations():
             name_padding = max(0, 45 - len(eq.name))
@@ -314,19 +316,22 @@ class physicsTUIApp(App):
         equation_list = self.query_one("#equation-list")
         equation_list.add_class("hidden")
 
+        welcome_content_widget = self.query_one("#welcome_content", Static)
+        welcome_content_widget.add_class("hidden")
+
         content_widget = self.query_one("#content", Static)
         content_widget.remove_class("hidden")
 
         title_length = len(chapter.title)
         padding = max(0, (50 - title_length) // 2)
 
-        content = f"""[bold #bb9af7 on #24283b]┏━{'━' * 50}━┓
-┃{' ' * padding}{chapter.title.upper()}{' ' * (50 - title_length - padding)}┃
-┗━{'━' * 50}━┛[/]
+        content = f"""┏━{'━' * 50}━┓
+┃{' ' * padding}{chapter.title.upper()}{' ' * (50 - title_length - padding)}  ┃
+┗━{'━' * 50}━┛
 
-[bold #7aa2f7]╔══════════════════════════════════════════════════╗
+╔══════════════════════════════════════════════════╗
 ║{'DEFINITIONS'.center(50)}║
-╚══════════════════════════════════════════════════╝[/]\n"""
+╚══════════════════════════════════════════════════╝\n"""
 
         for defn in chapter.get_definitions():
             term_padding = max(0, 45 - len(defn.term))
@@ -380,6 +385,9 @@ class physicsTUIApp(App):
         # Hide content and show equation list
         content_widget = self.query_one("#content")
         content_widget.add_class("hidden")
+
+        welcome_content_widget = self.query_one("#welcome_content", Static)
+        welcome_content_widget.add_class("hidden")
 
         equation_list = self.query_one("#equation-list", OptionList)
         equation_list.remove_class("hidden")
