@@ -65,6 +65,7 @@ pip install -e .
 ```
 
 ### Using Virtual Environment (Recommended)
+#### pip Package Manager
 ```bash
 # Create and activate virtual environment
 python -m venv physics_env
@@ -73,8 +74,11 @@ source physics_env/bin/activate  # Linux/macOS
 
 # Install physics-tui
 pip install git+https://github.com/ClaudioRMalvino/physics_tui.git
+```
 
+#### uv Package Manager
 ```bash
+
 # Create a project with uv
 uv init physics-tui-project
 cd physics-tui-project
@@ -84,7 +88,6 @@ uv add git+https://github.com/ClaudioRMalvino/physics_tui.git
 
 # Run your app
 uv run physics-tui
-```
 
 ## Uninstall
 
