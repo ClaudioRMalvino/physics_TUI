@@ -14,6 +14,8 @@ This project is **complete and ready for use** as a comprehensive physics refere
 
 **Development Note:** Active development is paused as I focus on preparing for University of Cambridge (MPhil in Scientific Computing), but the project remains stable and fully usable. I may occasionally tinker with improvements during free time.
 
+**User Note**: This app was developed with dark mode themes in mind and not optimized for light themes. My apologies to anyone who needs to utilize light mode for accessibility purposes. 
+
 ## Features
 
 - **Interactive TUI Interface** - Clean, keyboard-driven navigation
@@ -39,6 +41,23 @@ This project is **complete and ready for use** as a comprehensive physics refere
 10. **Static Equilibrium and Elasticity** - Force balance, material properties
 11. **Gravitation** - Universal gravitation, orbital mechanics, Kepler's laws
 12. **Fluid Dynamics** - Pressure, flow, Bernoulli's equation, viscosity
+
+## Screenshots
+
+### Welcome Screen
+![Welcome Screen](assets/images/welcome_screen.png)
+
+### Calculator Interface
+![Calculator input screen (catppuccin mocha theme)](assets/images/calculator_catppuccin_mocha.png)
+
+### Calculations Options list
+![Calculations options list (nord theme)](assets/images/calculation_option_list_nord.png)
+
+### Equations View
+![Equations list screen (tokyo night theme)](assets/images/equations_list_tokyo_night.png)
+
+### Definitions View
+![Definitions list screen (monokai theme)](assets/images/definitions_list_monokai.png)
 
 ## Installation
 
