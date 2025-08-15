@@ -48,7 +48,13 @@ This project is **complete and ready for use** as a comprehensive physics refere
 
 ### Quick Install (Recommended)
 ```bash
+# Utilizing pip package mananger
 pip install git+https://github.com/ClaudioRMalvino/physics_tui.git
+```
+
+```bash
+# Utilizing uv package manager
+uv install git+https://github.com/ClaudioRMalvino/physics-tui.git
 ```
 
 ### Development Install
@@ -67,6 +73,70 @@ source physics_env/bin/activate  # Linux/macOS
 
 # Install physics-tui
 pip install git+https://github.com/ClaudioRMalvino/physics_tui.git
+
+```bash
+# Create a project with uv
+uv init physics-tui-project
+cd physics-tui-project
+
+# Add your package
+uv add git+https://github.com/ClaudioRMalvino/physics_tui.git
+
+# Run your app
+uv run physics-tui
+```
+
+## Uninstall
+
+### Quick Uninstall
+```bash
+# Utilizing pip package manager
+pip uninstall physics-tui
+```
+```
+```
+
+```bash
+# Utilizing uv package manager
+uv remove physics-tui
+
+# Or if you want to remove the entire uv project
+rm -rf physics-tui-project/
+```
+
+### Development Uninstall
+```bash
+# In the cloned repo with venv activated
+pip uninstall physics-tui
+
+# Remove the cloned repository
+cd ..
+rm -rf physics_tui/
+```
+
+### Virtual Environment Uninstall
+#### pip Package mananger
+```bash
+# Activate the virtual environment
+source ~/venv/physics_tui/bin/activate  # or your venv path
+
+# Uninstall
+pip uninstall physics-tui
+
+# Deactivate and optionally remove venv
+deactivate
+rm -rf ~/venv/physics_tui/
+```
+
+#### uv Package Manager
+```bash
+# If you created a uv project directory
+cd physics-tui-project
+uv remove physics-tui
+
+# Or delete the entire project directory
+cd ..
+rm -rf physics-tui-project/
 ```
 
 ## Usage

@@ -17,9 +17,13 @@ Tree {
     padding: 1;
 }
 
-#content {
+#welcome_content {
     text-align: center;
     content-align: center middle;
+}
+
+#content {
+  padding: 1
 }
 
 /* Header for calculation list */

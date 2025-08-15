@@ -191,10 +191,9 @@ class physicsTUIApp(App):
         with Horizontal():
             yield Tree("Chapters", id="chapter-tree")
             with VerticalScroll(id="content-area"):
-                # Back to using a single Static widget
                 yield Static("", id="content", markup=True)
+                yield Static("", id="welcome_content", markup=True)
                 yield OptionList(id="equation-list", classes="hidden")
-
         yield Footer()
 
     def on_mount(self) -> None:
@@ -213,7 +212,7 @@ class physicsTUIApp(App):
                 chapter_branch.add_leaf("Calculations")
 
         # Set initial content
-        content_widget = self.query_one("#content", Static)
+        welcome_content_widget = self.query_one("#welcome_content", Static)
 
         welcome_content = """
 [bold #bb9af7]┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -241,7 +240,7 @@ class physicsTUIApp(App):
 “I... a universe of atoms, an atom in the universe.” [/]
 [italic #565f89]- Richard Feynman[/]"""
 
-        content_widget.update(welcome_content)
+        welcome_content_widget.update(welcome_content)
 
     def on_tree_node_selected(self, event: Tree.NodeSelected) -> None:
         """Update the content area when a node is selected."""
