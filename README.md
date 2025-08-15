@@ -96,8 +96,6 @@ uv run physics-tui
 # Utilizing pip package manager
 pip uninstall physics-tui
 ```
-```
-```
 
 ```bash
 # Utilizing uv package manager
