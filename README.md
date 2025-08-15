@@ -88,9 +88,9 @@ uv add git+https://github.com/ClaudioRMalvino/physics_tui.git
 
 # Run your app
 uv run physics-tui
+```
 
 ## Uninstall
-
 ### Quick Uninstall
 ```bash
 # Utilizing pip package manager
