@@ -47,16 +47,16 @@ This project is **complete and ready for use** as a comprehensive physics refere
 ### Welcome Screen
 ![Welcome Screen](assets/images/welcome_screen.png)
 
-### Calculator Interface
+### Calculator Interface (catppuccin mocha theme)
 ![Calculator input screen (catppuccin mocha theme)](assets/images/calculator_catppuccin_mocha.png)
 
-### Calculations Options list
+### Calculations Options list (nord theme)
 ![Calculations options list (nord theme)](assets/images/calculation_option_list_nord.png)
 
-### Equations View
+### Equations View (tokyo night theme)
 ![Equations list screen (tokyo night theme)](assets/images/equations_list_tokyo_night.png)
 
-### Definitions View
+### Definitions View (monokai theme)
 ![Definitions list screen (monokai theme)](assets/images/definitions_list_monokai.png)
 
 ## Installation
