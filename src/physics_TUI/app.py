@@ -1,10 +1,10 @@
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Optional
 import re
 
 from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.widgets import Header, Footer, Tree, Button, Static, Input, OptionList
-from textual.containers import Horizontal, VerticalScroll, Vertical
+from textual.containers import Horizontal, VerticalScroll
 from textual.screen import Screen
 
 from physics_TUI.chapters.chapter3 import Chapter3

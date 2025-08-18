@@ -13,7 +13,33 @@ class Chapter14(PhysicsChapter):
     def __init__(self) -> None:
         super().__init__("Ch.14 - Fluid Dynamics")
 
-        self.var_mapping: Dict[str, str] = {}
+        self.var_mapping: Dict[str, str] = {
+            "p": "pressure",
+            "p₀": "pressure_atm",
+            "ρ": "density",
+            "h": "depth",
+            "F(1)": "force_1",
+            "A(1)": "area_1",
+            "F(2)": "force_2",
+            "A(2)": "area_2",
+            "v(1)": "velocity_1",
+            "v(2)": "Velocity_2",
+            "ρ(1)": "density_1",
+            "ρ(2)": "density_2",
+            "p(1)": "pressure_1",
+            "p(2)": "pressure_2",
+            "y(1)": "height_1",
+            "y(2)": "height_2",
+            "η": "viscocity",
+            "F": "force",
+            "L": "distance",
+            "A": "area",
+            "v": "velocity",
+            "R": "resistance",
+            "l": "length",
+            "r": "radius",
+            "Q": "flow",      
+        }
 
         self.equations: List[Equation] = [
             Equation(
