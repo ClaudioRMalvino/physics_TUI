@@ -26,6 +26,46 @@ Tree {
   padding: 1
 }
 
+/*------------------- UNIT CONVERTER SCREEN ----------*/
+
+/* Header for unit converter */ 
+#unit-converter-title {
+    text-align: center;
+    margin-top: 2;
+    margin-bottom: 2;
+    text-style: bold;
+    color: white;
+}
+/* Quantity selection widget styling */
+#quantity-selection {
+    padding: 2;
+}
+
+/* Input box for scalar input styling */
+#unit-converter-input1 {
+    padding: 2;
+}
+
+/* Unit selection styling */
+#unit-converter-unit1-selection {
+    padding: 2;
+}
+
+#unit-converter-unit2-selection {
+    padding: 2;
+}
+
+/* Convert button styling 
+#convert-button {
+    margin: 1 12;
+    width: 30%;
+    background: $primary 20%;
+    color: #c0caf5;
+    text-style: bold;
+    text-align: center;
+
+
+
 /* Header for calculation list */
 #calc-header {
     text-align: center;

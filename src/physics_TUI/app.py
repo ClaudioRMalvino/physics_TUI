@@ -1,14 +1,13 @@
-from typing import Any, List, Dict, Optional
+from typing import Any, List, Dict, Tuple, Optional
 import re
 
-from src.physics_TUI import unit_converter
 from textual.app import App, ComposeResult
 from textual.binding import Binding
-from textual.widgets import Header, Footer, Tree, Button, Static, Input, OptionList
+from textual.widgets import Header, Footer, Tree, Button, Static, Input, OptionList, Select
 from textual.containers import Horizontal, VerticalScroll
 from textual.screen import Screen
 
-from physics_TUI.base_chapter import PhysicsChapter, Equation, Definition
+from physics_TUI.base_chapter import *
 from physics_TUI.chapters.chapter3 import Chapter3
 from physics_TUI.chapters.chapter4 import Chapter4
 from physics_TUI.chapters.chapter5 import Chapter5
@@ -22,7 +21,7 @@ from physics_TUI.chapters.chapter12 import Chapter12
 from physics_TUI.chapters.chapter13 import Chapter13
 from physics_TUI.chapters.chapter14 import Chapter14
 
-from physics_TUI.unit_converter import Quantity, Length, Time, Mass, Force, Energy
+from physics_TUI.unit_converter import *
 
 
 class UnitConverterScreen(Screen):
@@ -34,24 +33,32 @@ class UnitConverterScreen(Screen):
 
     def __init__(self) -> None:
         super().__init__()
-        self.quanity_list[Any] = [
-            Length,
-            Time,
-            Mass,
-            Force,
-            Energy,
+        self.quanity_list: List[Any] = [
+            Length(),
+            Time(),
+            Mass(),
+            Force(),
+            Energy(),
         ]
 
     def compose(self) -> ComposeResult:
         """Creates the unit converter selection layout"""
-
+        
+        quantity_options: List[Tuple[str, str]]= [(quantity.name, quantity.name) for quantity in self.quanity_list]
         yield Header()
 
         with VerticalScroll(id="unit-converter-contianer"):
-            yield Static("Unit Converter Tool")
-            yield Input()
-            yield Input()
-
+            yield Static("Unit Converter Tool", id="unit-converter-title")
+            yield Select(quantity_options, prompt="Select a quantity type",id="quantity-selection")
+            yield Input(placeholder="Enter a value", id="unit-converter-input1", type="number")
+            yield Select(options=(), allow_blank=True, prompt="Select unit you are converting from", id="unit-converter-unit1-selection")
+            yield Select(options=(), allow_blank=True, prompt="Select unit you are converting to", id="unit-converter-unit2-selection") 
+            yield Button("Convert", id="convert-button", variant="primary")
+            yield Footer()
+    
+    def action_go_back(self) -> None:
+        """Go back to the previous screen"""
+        self.app.pop_screen()
 
 class CalculatorScreen(Screen):
     """Screen for displaying calculator form for an equation"""
@@ -296,7 +303,7 @@ class physicsTUIApp(App):
             parent, chapter_title, leaf_type = selected_path
 
             if leaf_type == "Unit Converter":
-                self.push_screen(UnitConverterScreen)
+                self.push_screen(UnitConverterScreen())
 
             # Find the selected chapter
             for chapter in self.chapters:
@@ -481,14 +488,6 @@ class physicsTUIApp(App):
             # Push to the calculator screen instead of modifying the current screen
             self.push_screen(CalculatorScreen(
                 selected_equation, self.current_chapter))
-
-    def show_unit_converter_screen(self):
-        """
-        Action pushes the unit converter screen to appear on unit converter
-        leaf selection
-        """
-
-        self.push_screen(UnitConverterScreen)
 
     def action_toggle_dark(self) -> None:
         """An action to toggle dark mode."""
