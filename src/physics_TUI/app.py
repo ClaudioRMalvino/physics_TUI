@@ -1,12 +1,14 @@
-from typing import List, Dict, Optional
+from typing import Any, List, Dict, Optional
 import re
 
+from src.physics_TUI import unit_converter
 from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.widgets import Header, Footer, Tree, Button, Static, Input, OptionList
 from textual.containers import Horizontal, VerticalScroll
 from textual.screen import Screen
 
+from physics_TUI.base_chapter import PhysicsChapter, Equation, Definition
 from physics_TUI.chapters.chapter3 import Chapter3
 from physics_TUI.chapters.chapter4 import Chapter4
 from physics_TUI.chapters.chapter5 import Chapter5
@@ -20,7 +22,36 @@ from physics_TUI.chapters.chapter12 import Chapter12
 from physics_TUI.chapters.chapter13 import Chapter13
 from physics_TUI.chapters.chapter14 import Chapter14
 
-from physics_TUI.base_chapter import PhysicsChapter, Equation, Definition
+from physics_TUI.unit_converter import Quantity, Length, Time, Mass, Force, Energy
+
+
+class UnitConverterScreen(Screen):
+    """Screen for displaying the unit converter form for conversions"""
+
+    BINDING = [
+        Binding("escape", "go_back", "Back")
+    ]
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.quanity_list[Any] = [
+            Length,
+            Time,
+            Mass,
+            Force,
+            Energy,
+        ]
+
+    def compose(self) -> ComposeResult:
+        """Creates the unit converter selection layout"""
+
+        yield Header()
+
+        with VerticalScroll(id="unit-converter-contianer"):
+            yield Static("Unit Converter Tool")
+            yield Input()
+            yield Input()
+
 
 class CalculatorScreen(Screen):
     """Screen for displaying calculator form for an equation"""
@@ -29,7 +60,7 @@ class CalculatorScreen(Screen):
         Binding("escape", "go_back", "Back")
     ]
 
-    def __init__(self, equation: Equation, current_chapter: Optional[PhysicsChapter]=None) -> None:
+    def __init__(self, equation: Equation, current_chapter: Optional[PhysicsChapter] = None) -> None:
         super().__init__()
         self.equation = equation
         self.calc_inputs: Dict[str, Input] = {}
@@ -37,6 +68,7 @@ class CalculatorScreen(Screen):
 
     def compose(self) -> ComposeResult:
         """Create the calculator form layout"""
+
         yield Header()
 
         # Single scrollable container
@@ -69,13 +101,13 @@ class CalculatorScreen(Screen):
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         """Handle calculate button press"""
-        
+
         if event.button.id == "calc-button":
             try:
                 # Get values from input fields
                 input_values = {}
                 empty_field = None
-                
+
                 for var, input_widget in self.calc_inputs.items():
                     value_str = input_widget.value.strip()
                     if value_str:
@@ -83,7 +115,8 @@ class CalculatorScreen(Screen):
                             input_values[var] = float(value_str)
                         except ValueError:
                             self.query_one("#calc-result", Static).update(
-                                f"[red]Error: '{value_str}' is not a valid number for {var}[/]"
+                                f"[red]Error: '{
+                                    value_str}' is not a valid number for {var}[/]"
                             )
                             return
                     else:
@@ -94,14 +127,14 @@ class CalculatorScreen(Screen):
                                 "[red]Error: Leave exactly one field empty to solve for it[/]"
                             )
                             return
-                
+
                 # Check if we have exactly one empty field
                 if empty_field is None:
                     self.query_one("#calc-result", Static).update(
                         "[red]Error: Leave one field empty to solve for it[/]"
                     )
                     return
-                
+
                 # Map display variables to calculation function parameters
                 if self.current_chapter:
                     mapped_values = {}
@@ -112,30 +145,33 @@ class CalculatorScreen(Screen):
                         else:
                             calc_var = display_var
                         mapped_values[calc_var] = value
-                    
+
                     # Map the empty field too
                     if hasattr(self.current_chapter, 'var_mapping') and empty_field in self.current_chapter.var_mapping:
                         empty_calc_var = self.current_chapter.var_mapping[empty_field]
                     else:
                         empty_calc_var = empty_field
-                
+
                     mapped_values[empty_calc_var] = None
-                    
+
                     # Call the calculation function
                     if self.equation.calculation:
                         result = self.equation.calculation(**mapped_values)
-                          
+
                         result_text = f"[green]✓ {empty_field} = {result}[/]"
-                        
+
                         # Add units if available in variable description
                         if empty_field in self.equation.variables:
                             var_desc = self.equation.variables[empty_field]
-                            # Try to extract units from description 
+                            # Try to extract units from description
                             if '(' in var_desc and ')' in var_desc:
-                                units = var_desc[var_desc.find('(')+1:var_desc.find(')')]
-                                result_text = f"[green]✓ {empty_field} = {result} {units} [/]"
-                        
-                        self.query_one("#calc-result", Static).update(result_text)
+                                units = var_desc[var_desc.find(
+                                    '(')+1:var_desc.find(')')]
+                                result_text = f"[green]✓ {
+                                    empty_field} = {result} {units} [/]"
+
+                        self.query_one(
+                            "#calc-result", Static).update(result_text)
                     else:
                         self.query_one("#calc-result", Static).update(
                             "[red]Error: No calculation function available for this equation[/]"
@@ -144,11 +180,12 @@ class CalculatorScreen(Screen):
                     self.query_one("#calc-result", Static).update(
                         "[red]Error: No chapter context available[/]"
                     )
-                    
+
             except Exception as e:
                 # Handle calculation errors
                 error_msg = str(e)
-                self.query_one("#calc-result", Static).update(f"[red]Error: {error_msg}[/]")
+                self.query_one(
+                    "#calc-result", Static).update(f"[red]Error: {error_msg}[/]")
 
     def action_go_back(self) -> None:
         """Go back to the previous screen"""
@@ -189,7 +226,7 @@ class physicsTUIApp(App):
         """Create child widgets for the app."""
         yield Header()
         with Horizontal():
-            yield Tree("Chapters", id="chapter-tree")
+            yield Tree("Physics TUI", id="chapter-tree")
             with VerticalScroll(id="content-area"):
                 yield Static("", id="content", markup=True)
                 yield Static("", id="welcome_content", markup=True)
@@ -197,9 +234,12 @@ class physicsTUIApp(App):
         yield Footer()
 
     def on_mount(self) -> None:
-        tree = self.query_one(Tree)
+
+        physics_tui_tree = self.query_one(Tree)
+        physics_tui_tree.root.add("Tools").add_leaf("Unit Converter")
+
         for chapter in self.chapters:
-            chapter_branch = tree.root.add(chapter.title)
+            chapter_branch = physics_tui_tree.root.add(chapter.title)
 
             if chapter.equations:
                 chapter_branch.add_leaf("Equations")
@@ -255,6 +295,9 @@ class physicsTUIApp(App):
         if len(selected_path) == 3:
             parent, chapter_title, leaf_type = selected_path
 
+            if leaf_type == "Unit Converter":
+                self.push_screen(UnitConverterScreen)
+
             # Find the selected chapter
             for chapter in self.chapters:
                 if chapter.title == chapter_title:
@@ -296,14 +339,16 @@ class physicsTUIApp(App):
 
         for eq in chapter.get_equations():
             name_padding = max(0, 45 - len(eq.name))
-            content += f"\n[bold #2ac3de]┌─ {eq.name} {'─' * name_padding}┐[/]\n"
+            content += f"\n[bold #2ac3de]┌─ {
+                eq.name} {'─' * name_padding}┐[/]\n"
             content += f"[#c0caf5]│ Formula:[/] [#e0af68]{eq.formula}[/]\n"
 
             if eq.variables:
                 content += f"[#c0caf5]│[/]\n"
                 content += f"[#c0caf5]│ Variables:[/]\n"
                 for var, desc in eq.variables.items():
-                    content += f"[#c0caf5]│[/]   [#9ece6a]◆[/] [bold #ff9e64]{var}[/]: [#c0caf5]{desc}[/]\n"
+                    content += f"[#c0caf5]│[/]   [#9ece6a]◆[/] [bold #ff9e64]{
+                        var}[/]: [#c0caf5]{desc}[/]\n"
 
             content += f"[bold #2ac3de]└{'─' * 48}┘[/]"
 
@@ -335,7 +380,8 @@ class physicsTUIApp(App):
 
         for defn in chapter.get_definitions():
             term_padding = max(0, 45 - len(defn.term))
-            content += f"\n[bold #2ac3de]╭─ {defn.term} {'─' * term_padding}╮[/]\n"
+            content += f"\n[bold #2ac3de]╭─ {
+                defn.term} {'─' * term_padding}╮[/]\n"
 
             words = defn.meaning.split()
             lines = []
@@ -346,7 +392,7 @@ class physicsTUIApp(App):
                     current_line += (" " + word) if current_line else word
                 else:
                     lines.append(current_line)
-                    current_line = word 
+                    current_line = word
 
             if current_line:
                 lines.append(current_line)
@@ -398,14 +444,15 @@ class physicsTUIApp(App):
         # Clear and populate the option list
         equation_list.clear_options()
 
-        calc_header = self.query_one("#content-area").query_one("#calc-header", Static) if self.query_one("#content-area").query("#calc-header") else None
+        calc_header = self.query_one("#content-area").query_one("#calc-header",
+                                                                Static) if self.query_one("#content-area").query("#calc-header") else None
 
         if calc_header:
             calc_header.update(f"Calculable Equations for {chapter.title}")
         else:
-            header = Static(f"Calculable Equations for {chapter.title}", id="calc-header")
+            header = Static(f"Calculable Equations for {
+                            chapter.title}", id="calc-header")
             self.query_one("#content-area").mount(header, before=equation_list)
-
 
         equation_names = []
 
@@ -432,7 +479,16 @@ class physicsTUIApp(App):
         if 0 <= selected_index < len(self.calculable_equations):
             selected_equation = self.calculable_equations[selected_index]
             # Push to the calculator screen instead of modifying the current screen
-            self.push_screen(CalculatorScreen(selected_equation, self.current_chapter))
+            self.push_screen(CalculatorScreen(
+                selected_equation, self.current_chapter))
+
+    def show_unit_converter_screen(self):
+        """
+        Action pushes the unit converter screen to appear on unit converter
+        leaf selection
+        """
+
+        self.push_screen(UnitConverterScreen)
 
     def action_toggle_dark(self) -> None:
         """An action to toggle dark mode."""
@@ -440,10 +496,12 @@ class physicsTUIApp(App):
             "textual-dark" if self.theme == "textual-light" else "textual-light"
         )
 
+
 def main() -> None:
     """Main entry point for the physics TUI application."""
     app = physicsTUIApp()
     app.run()
+
 
 if __name__ == "__main__":
     main()
