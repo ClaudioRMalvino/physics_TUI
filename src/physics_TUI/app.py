@@ -27,13 +27,13 @@ from physics_TUI.unit_converter import *
 class UnitConverterScreen(Screen):
     """Screen for displaying the unit converter form for conversions"""
 
-    BINDING = [
+    BINDINGS = [
         Binding("escape", "go_back", "Back")
     ]
 
     def __init__(self) -> None:
         super().__init__()
-        self.quanity_list: List[Any] = [
+        self.quantity_list: List[Any] = [
             Length(),
             Time(),
             Mass(),
@@ -44,18 +44,117 @@ class UnitConverterScreen(Screen):
     def compose(self) -> ComposeResult:
         """Creates the unit converter selection layout"""
         
-        quantity_options: List[Tuple[str, str]]= [(quantity.name, quantity.name) for quantity in self.quanity_list]
+        quantity_options: List[Tuple[str, str]]= [(quantity.name, quantity.name) for quantity in self.quantity_list]
         yield Header()
 
         with VerticalScroll(id="unit-converter-contianer"):
             yield Static("Unit Converter Tool", id="unit-converter-title")
             yield Select(quantity_options, prompt="Select a quantity type",id="quantity-selection")
-            yield Input(placeholder="Enter a value", id="unit-converter-input1", type="number")
+            yield Input(placeholder="Enter a value", id="unit-converter-input")
             yield Select(options=(), allow_blank=True, prompt="Select unit you are converting from", id="unit-converter-unit1-selection")
             yield Select(options=(), allow_blank=True, prompt="Select unit you are converting to", id="unit-converter-unit2-selection") 
             yield Button("Convert", id="convert-button", variant="primary")
+            yield Static("", id="conversion-result")
             yield Footer()
     
+        
+    def on_select_changed(self, event: Select.Changed) -> None:
+        """Handle quantity selection change to populate unit options"""
+        if event.select.id == "quantity-selection":
+            selected_quantity_name = event.value
+            
+            # Find the selected quantity object
+            selected_quantity = None
+            for quantity in self.quantity_list:
+                if quantity.name == selected_quantity_name:
+                    selected_quantity = quantity
+                    break
+            
+            if selected_quantity:
+                # Get unit options for the selected quantity
+                unit_options = [(unit, unit) for unit in selected_quantity.get_units().keys()]
+                
+                # Update both unit selection widgets
+                unit1_select = self.query_one("#unit-converter-unit1-selection", Select)
+                unit2_select = self.query_one("#unit-converter-unit2-selection", Select)
+                
+                unit1_select.set_options(unit_options)
+                unit2_select.set_options(unit_options)
+    
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        """Handle convert button press"""
+        if event.button.id == "convert-button":
+            try:
+                # Get input value
+                input_widget = self.query_one("#unit-converter-input", Input)
+                value_str = input_widget.value.strip()
+                
+                if not value_str:
+                    self.query_one("#conversion-result", Static).update(
+                        "[red]Error: Please enter a value[/]"
+                    )
+                    return
+                
+                try:
+                    value = float(value_str)
+                except ValueError:
+                    self.query_one("#conversion-result", Static).update(
+                        f"[red]Error: '{value_str}' is not a valid number[/]"
+                    )
+                    return
+                
+                # Get selected quantity
+                quantity_select = self.query_one("#quantity-selection", Select)
+                if quantity_select.value == Select.BLANK:
+                    self.query_one("#conversion-result", Static).update(
+                        "[red]Error: Please select a quantity type[/]"
+                    )
+                    return
+                
+                # Get selected units
+                unit1_select = self.query_one("#unit-converter-unit1-selection", Select)
+                unit2_select = self.query_one("#unit-converter-unit2-selection", Select)
+                
+                if unit1_select.value == Select.BLANK:
+                    self.query_one("#conversion-result", Static).update(
+                        "[red]Error: Please select the unit you are converting from[/]"
+                    )
+                    return
+                
+                if unit2_select.value == Select.BLANK:
+                    self.query_one("#conversion-result", Static).update(
+                        "[red]Error: Please select the unit you are converting to[/]"
+                    )
+                    return
+                
+                from_unit = unit1_select.value
+                to_unit = unit2_select.value
+                
+                # Find the quantity object
+                selected_quantity = None
+                for quantity in self.quantity_list:
+                    if quantity.name == quantity_select.value:
+                        selected_quantity = quantity
+                        break
+                
+                if selected_quantity:
+                    # Perform conversion
+                    result = selected_quantity.conversion(value, from_unit, to_unit)
+                    
+                    # Display result
+                    self.query_one("#conversion-result", Static).update(
+                        f"[green]✓ {value} {from_unit} = {result:.6g} {to_unit}[/]"
+                    )
+                else:
+                    self.query_one("#conversion-result", Static).update(
+                        "[red]Error: Quantity not found[/]"
+                    )
+                    
+            except Exception as e:
+                self.query_one("#conversion-result", Static).update(
+                    f"[red]Error: {str(e)}[/]"
+                )
+                
     def action_go_back(self) -> None:
         """Go back to the previous screen"""
         self.app.pop_screen()

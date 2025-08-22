@@ -26,7 +26,7 @@ Tree {
   padding: 1
 }
 
-/*------------------- UNIT CONVERTER SCREEN ----------*/
+/*---------- UNIT CONVERTER SCREEN ----------*/
 
 /* Header for unit converter */ 
 #unit-converter-title {
@@ -36,35 +36,54 @@ Tree {
     text-style: bold;
     color: white;
 }
+
 /* Quantity selection widget styling */
 #quantity-selection {
     padding: 2;
+    width: 90%
 }
 
-/* Input box for scalar input styling */
-#unit-converter-input1 {
-    padding: 2;
+#unit-converter-input {
+    width: 90%;
+    height: auto;
+    border: solid $primary;
+    background: $surface;
+    color: $text;
+    padding: 1 1;
 }
 
 /* Unit selection styling */
 #unit-converter-unit1-selection {
+    width: 90%;
     padding: 2;
 }
 
+/* Unit selection styling */
 #unit-converter-unit2-selection {
+    width: 90%;
     padding: 2;
 }
 
-/* Convert button styling 
+/* Convert button styling */
 #convert-button {
-    margin: 1 12;
-    width: 30%;
+    margin: 1 25;
+    width: 45%;
     background: $primary 20%;
     color: #c0caf5;
     text-style: bold;
     text-align: center;
+}
 
+/* Conversion result display */
+#conversion-result {
+    margin-top: 2;
+    text-align: center;
+    min-height: 3;
+    border-top: solid gray;
+    padding-top: 1;
+}
 
+/*-------Calculation Screen Styling---------*/
 
 /* Header for calculation list */
 #calc-header {
