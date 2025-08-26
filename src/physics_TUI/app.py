@@ -21,7 +21,7 @@ from physics_TUI.chapters.chapter12 import Chapter12
 from physics_TUI.chapters.chapter13 import Chapter13
 from physics_TUI.chapters.chapter14 import Chapter14
 
-from physics_TUI.unit_converter import *
+from physics_TUI.unit_converter import Length, Time, Mass, Force, Energy, Pressure, Speed
 
 
 class UnitConverterScreen(Screen):
@@ -39,6 +39,8 @@ class UnitConverterScreen(Screen):
             Mass(),
             Force(),
             Energy(),
+            Pressure(),
+            Speed(),
         ]
 
     def compose(self) -> ComposeResult:
@@ -57,7 +59,6 @@ class UnitConverterScreen(Screen):
             yield Static("", id="conversion-result")
             yield Footer()
     
-        
     def on_select_changed(self, event: Select.Changed) -> None:
         """Handle quantity selection change to populate unit options"""
         if event.select.id == "quantity-selection":
