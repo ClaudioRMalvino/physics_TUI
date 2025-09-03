@@ -133,6 +133,7 @@ OptionList > Option {
     min-height: 3;
     border-top: solid gray;
     padding-top: 1;
+    
 }
 
 /* Additional utility styles */
